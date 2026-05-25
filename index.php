@@ -19,8 +19,8 @@
     <!-- Swiper CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
     
-    <!-- FontAwesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Tabler Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
     
     <!-- Custom CSS -->
     <link rel="stylesheet" href="assets/css/style.css">
@@ -74,21 +74,21 @@
                 <div class="row g-5">
                     <div class="col-md-4 expertise-col stagger-up">
                         <div class="expertise-card">
-                            <i class="fa-solid fa-wand-magic-sparkles text-accent mb-4 fs-1"></i>
+                            <i class="ti ti-wand text-accent mb-4" style="font-size: 2.5rem;"></i>
                             <h4 class="mb-3">Advanced Interactivity</h4>
                             <p>GSAP, ScrollTrigger, Swiper.js, Custom Micro-interactions.</p>
                         </div>
                     </div>
                     <div class="col-md-4 expertise-col stagger-up">
                         <div class="expertise-card">
-                            <i class="fa-solid fa-layer-group text-accent mb-4 fs-1"></i>
+                            <i class="ti ti-layers-intersect text-accent mb-4" style="font-size: 2.5rem;"></i>
                             <h4 class="mb-3">Architecture & Frameworks</h4>
                             <p>Vue.js/Vue 3, React UI, Bootstrap 5, Tailwind CSS, Semantics.</p>
                         </div>
                     </div>
                     <div class="col-md-4 expertise-col stagger-up">
                         <div class="expertise-card">
-                            <i class="fa-solid fa-rocket text-accent mb-4 fs-1"></i>
+                            <i class="ti ti-rocket text-accent mb-4" style="font-size: 2.5rem;"></i>
                             <h4 class="mb-3">Modern Delivery</h4>
                             <p>Git/GitHub workflows, AWS Cloud deployments, Automated Pipelines, Google Apps Script APIs.</p>
                         </div>
@@ -242,7 +242,7 @@
                                     </div>
                                 </div>
                                 <div class="col-12 text-center mt-5">
-                                    <button type="submit" class="btn-custom">SEND MESSAGE <i class="fa-solid fa-arrow-right ms-2"></i></button>
+                                    <button type="submit" class="btn-custom">SEND MESSAGE <i class="ti ti-arrow-right ms-2 fs-4"></i></button>
                                 </div>
                             </div>
                         </form>
@@ -269,6 +269,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
     <script src="assets/js/script.js"></script>
 </body>
 </html>
