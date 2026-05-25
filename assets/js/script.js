@@ -30,14 +30,14 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Interactive Hover States
-    const interactables = document.querySelectorAll('a, button, .project-card, input, textarea');
+    const interactables = document.querySelectorAll('a, button, input, textarea');
     interactables.forEach(el => {
         el.addEventListener('mouseenter', () => {
             gsap.to(cursor, { scale: 0.5, opacity: 0.5, duration: 0.3 });
             gsap.to(follower, { 
                 scale: 1.5, 
                 borderColor: 'transparent', 
-                backgroundColor: 'rgba(203, 251, 69, 0.1)', 
+                backgroundColor: 'rgba(56, 189, 248, 0.1)', 
                 duration: 0.3 
             });
         });
@@ -45,7 +45,32 @@ document.addEventListener('DOMContentLoaded', () => {
             gsap.to(cursor, { scale: 1, opacity: 1, duration: 0.3 });
             gsap.to(follower, { 
                 scale: 1, 
-                borderColor: '#cbfb45', 
+                borderColor: '#38bdf8', 
+                backgroundColor: 'transparent', 
+                duration: 0.3 
+            });
+        });
+    });
+
+    // Exciting Project Card Hover
+    const projectCards = document.querySelectorAll('.project-card');
+    projectCards.forEach(card => {
+        card.addEventListener('mouseenter', () => {
+            gsap.to(cursor, { scale: 0, opacity: 0, duration: 0.3 });
+            follower.innerHTML = '<span style="color:#020617; font-family:var(--font-mono); font-size:10px; font-weight:bold; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); pointer-events:none; letter-spacing:1px;">DRAG</span>';
+            gsap.to(follower, { 
+                scale: 2.5, 
+                borderColor: 'transparent', 
+                backgroundColor: '#38bdf8', 
+                duration: 0.3 
+            });
+        });
+        card.addEventListener('mouseleave', () => {
+            gsap.to(cursor, { scale: 1, opacity: 1, duration: 0.3 });
+            follower.innerHTML = '';
+            gsap.to(follower, { 
+                scale: 1, 
+                borderColor: '#38bdf8', 
                 backgroundColor: 'transparent', 
                 duration: 0.3 
             });
@@ -170,27 +195,22 @@ document.addEventListener('DOMContentLoaded', () => {
        Swiper.js Initialization
        ========================================== */
     const workSwiper = new Swiper('.work-swiper', {
-        slidesPerView: 1.1,
-        spaceBetween: 20,
-        centeredSlides: true,
+        effect: 'coverflow',
         grabCursor: true,
+        centeredSlides: true,
+        slidesPerView: 'auto',
         loop: true,
         speed: 800,
+        coverflowEffect: {
+            rotate: 20,
+            stretch: 0,
+            depth: 250,
+            modifier: 1,
+            slideShadows: true,
+        },
         pagination: {
             el: '.swiper-pagination',
             clickable: true,
-        },
-        breakpoints: {
-            768: {
-                slidesPerView: 2.2,
-                spaceBetween: 40,
-                centeredSlides: false
-            },
-            1200: {
-                slidesPerView: 2.5,
-                spaceBetween: 50,
-                centeredSlides: false
-            }
         }
     });
 

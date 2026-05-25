@@ -2,11 +2,11 @@
    Base & Variables
    ========================================== */
 :root {
-    --bg-color: #0d0d0d;
-    --text-main: #ffffff;
-    --text-muted: #888888;
-    --accent-color: #cbfb45; /* Neon lime accent */
-    --border-color: rgba(255, 255, 255, 0.1);
+    --bg-color: #020617;
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --accent-color: #38bdf8; /* Premium Sky Blue */
+    --border-color: rgba(56, 189, 248, 0.15);
     
     --font-heading: 'Outfit', sans-serif;
     --font-body: 'Inter', sans-serif;
@@ -175,14 +175,14 @@ h1, h2, h3, h4, h5, h6 {
 .shape-1 {
     width: 400px;
     height: 400px;
-    background: var(--accent-color);
+    background: #0284c7; /* Deep Sky Blue */
     top: 10%;
     right: -10%;
 }
 .shape-2 {
     width: 300px;
     height: 300px;
-    background: #6a00ff;
+    background: #312e81; /* Indigo */
     bottom: 10%;
     left: -5%;
 }
@@ -243,7 +243,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .swiper-slide {
-    width: 80%;
+    width: 65%; /* Adjusted for Coverflow */
     transition: var(--transition);
 }
 
@@ -278,11 +278,16 @@ h1, h2, h3, h4, h5, h6 {
 
 .project-content {
     position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    padding: 3rem;
-    transform: translateY(20px);
+    bottom: 20px;
+    left: 20px;
+    width: calc(100% - 40px);
+    padding: 2.5rem;
+    background: rgba(2, 6, 23, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    transform: translateY(30px);
     opacity: 0;
     transition: var(--transition);
 }
@@ -364,7 +369,7 @@ h1, h2, h3, h4, h5, h6 {
    Footer & Contact Form
    ========================================== */
 .footer-section {
-    background-color: #080808;
+    background-color: #010409;
 }
 
 .footer-headline {
@@ -454,7 +459,7 @@ h1, h2, h3, h4, h5, h6 {
     .ai-stats-box { border-left: none; padding-left: 0; border-top: 2px solid var(--border-color); padding-top: 2rem; }
 }
 @media (max-width: 768px) {
-    .swiper-slide { width: 95%; }
+    .swiper-slide { width: 90%; }
     .project-title { font-size: 1.8rem; }
     .project-content { padding: 1.5rem; }
     .social-links { justify-content: center; }
