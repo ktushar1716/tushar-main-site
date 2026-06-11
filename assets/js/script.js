@@ -20,6 +20,69 @@ document.addEventListener('DOMContentLoaded', () => {
     gsap.ticker.lagSmoothing(0);
 
     /* ==========================================
+       Navbar Scroll Behavior
+       ========================================== */
+    const siteNav = document.getElementById('siteNav');
+    const navLinks = document.querySelectorAll('.nav-link');
+    const sections = document.querySelectorAll('section[id], footer[id]');
+
+    // Transparent → glassmorphic on scroll
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+            siteNav.classList.add('scrolled');
+        } else {
+            siteNav.classList.remove('scrolled');
+        }
+    });
+
+    // Active section highlighting
+    const observerOptions = {
+        root: null,
+        rootMargin: '-20% 0px -60% 0px',
+        threshold: 0
+    };
+
+    const sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const id = entry.target.getAttribute('id');
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${id}`) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+        });
+    }, observerOptions);
+
+    sections.forEach(section => sectionObserver.observe(section));
+
+    /* ==========================================
+       Mobile Hamburger Menu
+       ========================================== */
+    const hamburger = document.getElementById('navHamburger');
+    const mobileOverlay = document.getElementById('mobileNavOverlay');
+    const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+
+    if (hamburger && mobileOverlay) {
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            mobileOverlay.classList.toggle('active');
+            document.body.style.overflow = mobileOverlay.classList.contains('active') ? 'hidden' : '';
+        });
+
+        // Close on link click
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                mobileOverlay.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        });
+    }
+
+    /* ==========================================
        Custom Cursor Implementation
        ========================================== */
     const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
@@ -48,7 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         // Interactive Hover States
-        const interactables = document.querySelectorAll('a, button, input, textarea');
+        const interactables = document.querySelectorAll('a, button, input, textarea, .skill-pill, .ai-tool-pill');
         interactables.forEach(el => {
             el.addEventListener('mouseenter', () => {
                 gsap.to(cursor, { scale: 0.5, opacity: 0.5, duration: 0.3 });
@@ -95,8 +158,10 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     } else {
+        // Touch device: hide custom cursor, restore default
         if(cursor) cursor.style.display = 'none';
         if(follower) follower.style.display = 'none';
+        document.body.style.cursor = 'auto';
     }
 
     /* ==========================================
@@ -131,18 +196,24 @@ document.addEventListener('DOMContentLoaded', () => {
        ========================================== */
     const tl = gsap.timeline();
 
+    // Fade in navbar
+    tl.fromTo('.site-nav',
+        { y: -20, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out' }
+    );
+
     // Reveal staggered hero text
     tl.to('.split-text .word span', {
         y: '0%',
         duration: 1.2,
         stagger: 0.05,
         ease: 'power4.out'
-    });
+    }, "-=0.4");
 
-    // Reveal subheadings
+    // Reveal subheadings & hero meta
     tl.fromTo('.hero-section .reveal-up', 
         { y: 30, opacity: 0 }, 
-        { y: 0, opacity: 1, duration: 1, ease: 'power3.out' }, 
+        { y: 0, opacity: 1, duration: 1, ease: 'power3.out', stagger: 0.15 }, 
         "-=0.8"
     );
     
@@ -186,6 +257,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 3. General Elements Reveal Up
     gsap.utils.toArray('.reveal-up').forEach(elem => {
+        // Skip hero ones (handled by initial timeline)
+        if (elem.closest('.hero-section')) return;
+        
         gsap.fromTo(elem, 
             { y: 50, opacity: 0 },
             {
@@ -211,6 +285,60 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     );
 
+    // 5. Counter Animations
+    const counterNums = document.querySelectorAll('.counter-num');
+    counterNums.forEach(counter => {
+        const target = parseInt(counter.getAttribute('data-target'));
+        
+        ScrollTrigger.create({
+            trigger: counter,
+            start: 'top 85%',
+            onEnter: () => {
+                gsap.to(counter, {
+                    innerText: target,
+                    duration: 2,
+                    ease: 'power2.out',
+                    snap: { innerText: 1 },
+                    onUpdate: function() {
+                        counter.textContent = Math.round(parseFloat(counter.textContent));
+                    }
+                });
+            },
+            once: true
+        });
+    });
+
+    // 6. Timeline Cards Staggered Reveal
+    gsap.utils.toArray('.timeline-reveal').forEach((item, i) => {
+        gsap.fromTo(item, 
+            { x: -30, opacity: 0 },
+            {
+                x: 0, opacity: 1, duration: 0.8, ease: 'power3.out',
+                scrollTrigger: {
+                    trigger: item,
+                    start: 'top 85%',
+                    toggleActions: 'play none none reverse'
+                },
+                delay: i * 0.15
+            }
+        );
+    });
+
+    // 7. Skill Categories Staggered Reveal
+    gsap.utils.toArray('.skill-category').forEach((cat, i) => {
+        gsap.fromTo(cat, 
+            { y: 30, opacity: 0 },
+            {
+                y: 0, opacity: 1, duration: 0.6, ease: 'power3.out',
+                scrollTrigger: {
+                    trigger: '.skills-grid',
+                    start: 'top 80%',
+                },
+                delay: i * 0.08
+            }
+        );
+    });
+
     /* ==========================================
        Swiper.js Initialization
        ========================================== */
@@ -231,7 +359,29 @@ document.addEventListener('DOMContentLoaded', () => {
         pagination: {
             el: '.swiper-pagination',
             clickable: true,
-        }
+        },
+        navigation: {
+            nextEl: '.swiper-btn-next',
+            prevEl: '.swiper-btn-prev',
+        },
+        // Better touch settings for mobile
+        touchRatio: 1.5,
+        simulateTouch: true,
+    });
+
+    /* ==========================================
+       Smooth scroll for anchor links
+       ========================================== */
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            if (targetId === '#') return;
+            const targetEl = document.querySelector(targetId);
+            if (targetEl) {
+                lenis.scrollTo(targetEl, { offset: -72 }); // offset for navbar height
+            }
+        });
     });
 
 });
