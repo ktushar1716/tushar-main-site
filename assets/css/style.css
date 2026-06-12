@@ -19,6 +19,26 @@
     
     --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     --nav-height: 72px;
+
+    /* Brand colors for tech icons */
+    --clr-html5: #E44D26;
+    --clr-css3: #264DE4;
+    --clr-js: #F7DF1E;
+    --clr-vue: #42B883;
+    --clr-react: #61DAFB;
+    --clr-bootstrap: #7952B3;
+    --clr-tailwind: #06B6D4;
+    --clr-wordpress: #21759B;
+    --clr-figma: #F24E1E;
+    --clr-git: #F05032;
+    --clr-vscode: #007ACC;
+    --clr-chrome: #4285F4;
+    --clr-php: #777BB4;
+    --clr-google: #4285F4;
+    --clr-openai: #10A37F;
+    --clr-aws: #FF9900;
+    --clr-mysql: #4479A1;
+    --clr-mongodb: #47A248;
 }
 
 * {
@@ -34,6 +54,47 @@ body {
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
     cursor: none; /* Hide default cursor for custom GSAP cursor */
+}
+
+/* ==========================================
+   Animated Tech Grid Background (Full Page)
+   ========================================== */
+#techGridCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.4;
+}
+
+/* Section-level glow accents */
+.section-glow {
+    position: relative;
+}
+.section-glow::before {
+    content: '';
+    position: absolute;
+    top: -120px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(56, 189, 248, 0.06) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Glowing separator line between sections */
+.glow-separator {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
+    opacity: 0.2;
+    margin: 0;
+    border: none;
 }
 
 ::selection {
@@ -288,15 +349,23 @@ h1, h2, h3, h4, h5, h6 {
     overflow: hidden;
 }
 
-/* Dot grid background */
+/* Hero grid overlay (supplements canvas grid) */
 .hero-grid-bg {
     position: absolute;
     inset: 0;
-    background-image: radial-gradient(circle, rgba(56, 189, 248, 0.08) 1px, transparent 1px);
-    background-size: 40px 40px;
     z-index: 1;
-    mask-image: radial-gradient(ellipse 60% 60% at 50% 50%, #000 20%, transparent 100%);
-    -webkit-mask-image: radial-gradient(ellipse 60% 60% at 50% 50%, #000 20%, transparent 100%);
+    background-image: 
+        linear-gradient(rgba(56, 189, 248, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(56, 189, 248, 0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, #000 20%, transparent 100%);
+    -webkit-mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, #000 20%, transparent 100%);
+    animation: gridPulse 8s ease-in-out infinite;
+}
+
+@keyframes gridPulse {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
 }
 
 .z-index-content {
@@ -740,18 +809,60 @@ h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-body);
     font-size: 0.85rem;
     font-weight: 500;
-    padding: 6px 14px;
+    padding: 8px 16px;
     background: var(--accent-subtle);
     border: 1px solid var(--border-color);
     color: var(--text-main);
     transition: var(--transition);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border-radius: 6px;
+}
+.skill-pill i {
+    font-size: 1.15rem;
+    transition: var(--transition);
 }
 .skill-pill:hover {
     border-color: var(--accent-color);
-    box-shadow: 0 0 16px var(--accent-glow);
+    box-shadow: 0 0 20px var(--accent-glow);
     color: var(--accent-color);
-    transform: translateY(-2px);
+    transform: translateY(-3px);
+    background: rgba(56, 189, 248, 0.12);
 }
+.skill-pill:hover i {
+    filter: brightness(1.3) drop-shadow(0 0 4px currentColor);
+    transform: scale(1.2);
+}
+
+/* ---- Brand-colored tech icons ---- */
+.devicon-html5-plain { color: var(--clr-html5); }
+.devicon-css3-plain { color: var(--clr-css3); }
+.devicon-javascript-plain { color: var(--clr-js); }
+.devicon-vuejs-plain { color: var(--clr-vue); }
+.devicon-react-original { color: var(--clr-react); }
+.devicon-bootstrap-plain { color: var(--clr-bootstrap); }
+.devicon-tailwindcss-original { color: var(--clr-tailwind); }
+.devicon-wordpress-plain { color: var(--clr-wordpress); }
+.devicon-figma-plain { color: var(--clr-figma); }
+.devicon-git-plain { color: var(--clr-git); }
+.devicon-vscode-plain { color: var(--clr-vscode); }
+.devicon-chrome-plain { color: var(--clr-chrome); }
+.devicon-php-plain { color: var(--clr-php); }
+.devicon-google-plain { color: var(--clr-google); }
+.ti.ti-brand-openai { color: var(--clr-openai); }
+.ti.ti-sparkles { color: #c084fc; }  /* Antigravity purple */
+.ti.ti-video { color: #f472b6; }
+.ti.ti-wand { color: #fbbf24; }
+.ti.ti-needle { color: #34d399; }
+.ti.ti-carousel-horizontal { color: #60a5fa; }
+.ti.ti-scroll { color: #a78bfa; }
+.ti.ti-brand-gsap { color: #88CE02; }
+.devicon-amazonwebservices-plain-wordmark { color: var(--clr-aws); }
+.devicon-mysql-plain { color: var(--clr-mysql); }
+.devicon-mongodb-plain { color: var(--clr-mongodb); }
+.ti.ti-server { color: var(--clr-aws); }
+.ti.ti-terminal-2 { color: #a78bfa; }
 
 /* Marquee */
 .marquee-wrapper {

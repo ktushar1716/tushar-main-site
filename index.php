@@ -24,11 +24,17 @@
     <!-- Tabler Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
 
+    <!-- Devicon (Tech Logos) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+
     <!-- Custom CSS -->
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 
 <body class="dark-theme">
+    <!-- Animated Tech Grid Background -->
+    <canvas id="techGridCanvas"></canvas>
+
     <div class="custom-cursor"></div>
     <div class="custom-cursor-follower"></div>
 
@@ -92,8 +98,10 @@
             <div class="shape shape-3 parallax" data-speed="1"></div>
         </section>
 
+        <hr class="glow-separator">
+
         <!-- 2. PHILOSOPHY / ABOUT SECTION -->
-        <section class="philosophy-section py-8" id="about">
+        <section class="philosophy-section py-8 section-glow" id="about">
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-lg-10 text-center">
@@ -167,8 +175,10 @@
             </div>
         </section>
 
+        <hr class="glow-separator">
+
         <!-- 4. SELECTED WORKS CAROUSEL -->
-        <section class="work-section py-8" id="work">
+        <section class="work-section py-8 section-glow" id="work">
             <div class="container-fluid px-0">
                 <div class="container mb-5">
                     <h3 class="section-title reveal-up">02. / SELECTED WORKS</h3>
@@ -188,9 +198,11 @@
                                     <h4 class="project-title">Central Park Studioverse</h4>
                                     <p class="project-desc">Luxury real estate showcase with immersive visual experience and premium UI design.</p>
                                     <div class="project-tags">
-                                        <span>Real Estate</span>
-                                        <span>Premium UI</span>
-                                        <span>Responsive</span>
+                                        <span>HTML5</span>
+                                        <span>CSS3</span>
+                                        <span>JavaScript</span>
+                                        <span>GSAP</span>
+                                        <span>Swiper.js</span>
                                     </div>
                                     <a href="https://www.centralpark.in/studioverse/" target="_blank" rel="noopener" class="project-link">Visit Live <i class="ti ti-external-link"></i></a>
                                 </div>
@@ -206,10 +218,10 @@
                                     <h4 class="project-title">Daawat.com</h4>
                                     <p class="project-desc">Performance optimization on Laravel-based site — improved PageSpeed scores from 20s–50s range to 90+ across all metrics.</p>
                                     <div class="project-tags">
+                                        <span>Laravel</span>
+                                        <span>PageSpeed</span>
                                         <span>Performance</span>
                                         <span>SEO</span>
-                                        <span>Laravel</span>
-                                        <span>PageSpeed 90+</span>
                                     </div>
                                     <a href="https://daawat.com/" target="_blank" rel="noopener" class="project-link">Visit Live <i class="ti ti-external-link"></i></a>
                                 </div>
@@ -225,9 +237,10 @@
                                     <h4 class="project-title">Dream Ad with SRK</h4>
                                     <p class="project-desc">Interactive campaign microsite for Daawat featuring celebrity-driven engagement and dynamic user flow.</p>
                                     <div class="project-tags">
-                                        <span>Campaign</span>
-                                        <span>Interactive</span>
-                                        <span>Celebrity</span>
+                                        <span>HTML5</span>
+                                        <span>CSS3</span>
+                                        <span>JavaScript</span>
+                                        <span>Microsite</span>
                                     </div>
                                     <a href="https://dreamadwithsrk.daawat.com/" target="_blank" rel="noopener" class="project-link">Visit Live <i class="ti ti-external-link"></i></a>
                                 </div>
@@ -243,9 +256,10 @@
                                     <h4 class="project-title">Central Park Floral Vista</h4>
                                     <p class="project-desc">2026 luxury property landing page with elegant visuals and lead capture forms.</p>
                                     <div class="project-tags">
+                                        <span>HTML5</span>
+                                        <span>CSS3</span>
+                                        <span>Bootstrap</span>
                                         <span>Landing Page</span>
-                                        <span>Luxury</span>
-                                        <span>Lead Gen</span>
                                     </div>
                                     <a href="https://www.centralpark.in/floral-vista-2026/" target="_blank" rel="noopener" class="project-link">Visit Live <i class="ti ti-external-link"></i></a>
                                 </div>
@@ -261,9 +275,10 @@
                                     <h4 class="project-title">iCubesWire 15th Anniversary</h4>
                                     <p class="project-desc">Celebratory milestone page with timeline-driven storytelling and branded animations.</p>
                                     <div class="project-tags">
-                                        <span>Anniversary</span>
-                                        <span>Storytelling</span>
                                         <span>GSAP</span>
+                                        <span>ScrollTrigger</span>
+                                        <span>JavaScript</span>
+                                        <span>CSS3</span>
                                     </div>
                                     <a href="https://www.icubeswire.com/15year/" target="_blank" rel="noopener" class="project-link">Visit Live <i class="ti ti-external-link"></i></a>
                                 </div>
@@ -277,11 +292,12 @@
                                 <div class="overlay"></div>
                                 <div class="project-content">
                                     <h4 class="project-title">Chintamani</h4>
-                                    <p class="project-desc">Movie campaign microsite with rich visual storytelling and interactive promotional elements.</p>
+                                    <p class="project-desc">Movie campaign microsite with PHP blog dashboard, secure admin login, TinyMCE editor, and MongoDB integration.</p>
                                     <div class="project-tags">
-                                        <span>Movie Campaign</span>
-                                        <span>Microsite</span>
-                                        <span>Interactive</span>
+                                        <span>PHP</span>
+                                        <span>MongoDB</span>
+                                        <span>TinyMCE</span>
+                                        <span>Admin Panel</span>
                                     </div>
                                     <a href="https://icubeswire.com/projects/chintamani2" target="_blank" rel="noopener" class="project-link">Visit Live <i class="ti ti-external-link"></i></a>
                                 </div>
@@ -295,10 +311,12 @@
                                 <div class="overlay"></div>
                                 <div class="project-content">
                                     <h4 class="project-title">Chintamani — Phase 2</h4>
-                                    <p class="project-desc">Extended campaign phase with enhanced UI elements and deeper engagement features.</p>
+                                    <p class="project-desc">Extended campaign with CRUD blog system, secure authentication, and enhanced interactive UI features.</p>
                                     <div class="project-tags">
-                                        <span>Campaign Phase 2</span>
-                                        <span>UI Enhancements</span>
+                                        <span>PHP</span>
+                                        <span>MySQL</span>
+                                        <span>GSAP</span>
+                                        <span>JavaScript</span>
                                     </div>
                                     <a href="https://icubeswire.com/projects/chintamani2/phase-2" target="_blank" rel="noopener" class="project-link">Visit Live <i class="ti ti-external-link"></i></a>
                                 </div>
@@ -314,9 +332,9 @@
                                     <h4 class="project-title">Central Park Selene</h4>
                                     <p class="project-desc">Theme-based luxury real estate landing page with high-end conversion-focused design.</p>
                                     <div class="project-tags">
-                                        <span>Theme Based</span>
                                         <span>Figma to Code</span>
-                                        <span>Luxury UI</span>
+                                        <span>Tailwind CSS</span>
+                                        <span>Landing Page</span>
                                     </div>
                                     <a href="https://www.centralpark.in/selene-lp/" target="_blank" rel="noopener" class="project-link">Visit Live <i class="ti ti-external-link"></i></a>
                                 </div>
@@ -332,8 +350,9 @@
                                     <h4 class="project-title">India Influencer Conclave 2023</h4>
                                     <p class="project-desc">Major influencer event platform with dynamic content sections and registration system.</p>
                                     <div class="project-tags">
-                                        <span>Event Platform</span>
-                                        <span>Registration</span>
+                                        <span>HTML5</span>
+                                        <span>Bootstrap</span>
+                                        <span>JavaScript</span>
                                         <span>Multi-page</span>
                                     </div>
                                     <a href="https://indiainfluencerconclave.com/iic23/" target="_blank" rel="noopener" class="project-link">Visit Live <i class="ti ti-external-link"></i></a>
@@ -350,9 +369,10 @@
                                     <h4 class="project-title">India Influencer Conclave 2024</h4>
                                     <p class="project-desc">Updated event platform with refreshed design, speaker showcase, and agenda integration.</p>
                                     <div class="project-tags">
-                                        <span>Event Platform</span>
+                                        <span>HTML5</span>
+                                        <span>Bootstrap</span>
+                                        <span>JavaScript</span>
                                         <span>Responsive</span>
-                                        <span>2024 Edition</span>
                                     </div>
                                     <a href="https://indiainfluencerconclave.com/conclave24/" target="_blank" rel="noopener" class="project-link">Visit Live <i class="ti ti-external-link"></i></a>
                                 </div>
@@ -368,9 +388,10 @@
                                     <h4 class="project-title">Central Park Belanova</h4>
                                     <p class="project-desc">Elegant property landing page with premium UI, gallery showcase, and lead capture.</p>
                                     <div class="project-tags">
+                                        <span>Figma to Code</span>
+                                        <span>HTML5</span>
+                                        <span>CSS3</span>
                                         <span>Landing Page</span>
-                                        <span>Real Estate</span>
-                                        <span>Lead Capture</span>
                                     </div>
                                     <a href="https://www.centralpark.in/belanova-lp/" target="_blank" rel="noopener" class="project-link">Visit Live <i class="ti ti-external-link"></i></a>
                                 </div>
@@ -386,8 +407,10 @@
                                     <h4 class="project-title">Central Park Belaperla</h4>
                                     <p class="project-desc">High-end property showcase with immersive hero visuals and conversion-optimized layout.</p>
                                     <div class="project-tags">
-                                        <span>Luxury Real Estate</span>
                                         <span>Figma to Code</span>
+                                        <span>HTML5</span>
+                                        <span>CSS3</span>
+                                        <span>Bootstrap</span>
                                     </div>
                                     <a href="https://www.centralpark.in/belaperla/" target="_blank" rel="noopener" class="project-link">Visit Live <i class="ti ti-external-link"></i></a>
                                 </div>
@@ -403,9 +426,10 @@
                                     <h4 class="project-title">Digital Market Survey</h4>
                                     <p class="project-desc">Full-stack survey platform with custom PHP admin dashboard panels for data management and analytics.</p>
                                     <div class="project-tags">
-                                        <span>PHP Dashboard</span>
+                                        <span>PHP</span>
+                                        <span>MySQL</span>
                                         <span>Admin Panel</span>
-                                        <span>Full Stack</span>
+                                        <span>JavaScript</span>
                                     </div>
                                     <a href="https://digitalmarketsurvey.com/" target="_blank" rel="noopener" class="project-link">Visit Live <i class="ti ti-external-link"></i></a>
                                 </div>
@@ -421,9 +445,10 @@
                                     <h4 class="project-title">IIGC</h4>
                                     <p class="project-desc">Indian Influencer Governing Council — responsive governance platform with dynamic content sections.</p>
                                     <div class="project-tags">
-                                        <span>Platform</span>
+                                        <span>HTML5</span>
+                                        <span>CSS3</span>
+                                        <span>JavaScript</span>
                                         <span>Responsive</span>
-                                        <span>Governance</span>
                                     </div>
                                     <a href="https://iigc.org" target="_blank" rel="noopener" class="project-link">Visit Live <i class="ti ti-external-link"></i></a>
                                 </div>
@@ -439,9 +464,10 @@
                                     <h4 class="project-title">Central Park The Orchard</h4>
                                     <p class="project-desc">Property landing page with nature-inspired visuals and responsive lead generation flow.</p>
                                     <div class="project-tags">
+                                        <span>HTML5</span>
+                                        <span>CSS3</span>
+                                        <span>Bootstrap</span>
                                         <span>Landing Page</span>
-                                        <span>Real Estate</span>
-                                        <span>Responsive</span>
                                     </div>
                                     <a href="https://www.centralpark.in/the-orchard-lp-test/" target="_blank" rel="noopener" class="project-link">Visit Live <i class="ti ti-external-link"></i></a>
                                 </div>
@@ -457,9 +483,10 @@
                                     <h4 class="project-title">iCubesWire</h4>
                                     <p class="project-desc">Corporate website UI maintenance, component optimization, and ongoing layout improvements.</p>
                                     <div class="project-tags">
-                                        <span>Corporate</span>
+                                        <span>WordPress</span>
+                                        <span>CSS3</span>
+                                        <span>JavaScript</span>
                                         <span>Maintenance</span>
-                                        <span>Optimization</span>
                                     </div>
                                     <a href="https://icubeswire.com" target="_blank" rel="noopener" class="project-link">Visit Live <i class="ti ti-external-link"></i></a>
                                 </div>
@@ -475,8 +502,9 @@
                                     <h4 class="project-title">Studioverse (Legacy)</h4>
                                     <p class="project-desc">Original Studioverse property page — earlier iteration with full responsive implementation.</p>
                                     <div class="project-tags">
-                                        <span>Real Estate</span>
-                                        <span>Legacy</span>
+                                        <span>HTML5</span>
+                                        <span>CSS3</span>
+                                        <span>JavaScript</span>
                                         <span>Responsive</span>
                                     </div>
                                     <a href="https://www.centralpark.in/studioverse-old/" target="_blank" rel="noopener" class="project-link">Visit Live <i class="ti ti-external-link"></i></a>
@@ -492,18 +520,23 @@
                         <button class="swiper-btn swiper-btn-next"><i class="ti ti-arrow-right"></i></button>
                     </div>
                 </div>
+                <div class="container text-center mt-5 reveal-up">
+                    <a href="projects.php" class="nav-cta" style="display: inline-flex; text-decoration: none;">View All Projects <i class="ti ti-arrow-right ms-2"></i></a>
+                </div>
             </div>
         </section>
 
+        <hr class="glow-separator">
+
         <!-- 5. THE ENGINE (AI Workflows) -->
-        <section class="engine-section py-8" id="engine">
+        <section class="engine-section py-8 section-glow" id="engine">
             <div class="container">
                 <div class="row align-items-center">
                     <div class="col-lg-6 mb-5 mb-lg-0 reveal-up">
                         <h3 class="section-title">03. / THE ENGINE</h3>
-                        <h2 class="display-4 fw-bold mb-4 mt-4">AI-Driven <br>Workflow</h2>
+                        <h2 class="display-4 fw-bold mb-4 mt-4">AI-Augmented<br>Workflow</h2>
                         <p class="lead text-light-gray" style="line-height: 1.8;">
-                            Leveraging modern AI tools like <span class="text-white fw-bold">Antigravity, Google Gemini, ChatGPT, Veo, Whisk & Stitch</span> to accelerate prototyping, automate repetitive tasks, and ship pixel-perfect interfaces at <span class="text-accent fw-bold fs-4">3x</span> velocity.
+                            I've always been a hands-on UI developer — writing every line of code myself, from pixel-perfect layouts to complex GSAP animations. Now, with AI agents like <span class="text-white fw-bold">Antigravity, Google Gemini, ChatGPT, Veo, Whisk & Stitch</span>, I use them as force multipliers — speeding up my workflow while keeping full creative control over the output. The craft stays mine, the <span class="text-accent fw-bold fs-4">speed just triples</span>.
                         </p>
                         <div class="ai-tools-list">
                             <span class="ai-tool-pill">Antigravity</span>
@@ -534,8 +567,10 @@
             </div>
         </section>
 
+        <hr class="glow-separator">
+
         <!-- 6. TECH STACK / SKILLS -->
-        <section class="skills-section py-8" id="skills">
+        <section class="skills-section py-8 section-glow" id="skills">
             <div class="container">
                 <div class="row mb-5">
                     <div class="col-12">
@@ -548,65 +583,81 @@
                     <div class="skill-category">
                         <h5 class="skill-cat-title">Frontend</h5>
                         <div class="skill-pills">
-                            <span class="skill-pill">HTML5</span>
-                            <span class="skill-pill">CSS3</span>
-                            <span class="skill-pill">JavaScript (ES6)</span>
+                            <span class="skill-pill"><i class="devicon-html5-plain"></i> HTML5</span>
+                            <span class="skill-pill"><i class="devicon-css3-plain"></i> CSS3</span>
+                            <span class="skill-pill"><i class="devicon-javascript-plain"></i> JavaScript (ES6)</span>
                         </div>
                     </div>
                     <div class="skill-category">
                         <h5 class="skill-cat-title">Frameworks</h5>
                         <div class="skill-pills">
-                            <span class="skill-pill">Vue.js (Vue 3)</span>
-                            <span class="skill-pill">React (UI Level)</span>
+                            <span class="skill-pill"><i class="devicon-vuejs-plain"></i> Vue.js (Vue 3)</span>
+                            <span class="skill-pill"><i class="devicon-react-original"></i> React (UI Level)</span>
                         </div>
                     </div>
                     <div class="skill-category">
                         <h5 class="skill-cat-title">CSS Frameworks</h5>
                         <div class="skill-pills">
-                            <span class="skill-pill">Bootstrap</span>
-                            <span class="skill-pill">Tailwind CSS</span>
+                            <span class="skill-pill"><i class="devicon-bootstrap-plain"></i> Bootstrap</span>
+                            <span class="skill-pill"><i class="devicon-tailwindcss-original"></i> Tailwind CSS</span>
                         </div>
                     </div>
                     <div class="skill-category">
                         <h5 class="skill-cat-title">Animation & UI</h5>
                         <div class="skill-pills">
-                            <span class="skill-pill">GSAP</span>
-                            <span class="skill-pill">Swiper.js</span>
-                            <span class="skill-pill">ScrollTrigger</span>
+                            <span class="skill-pill"><i class="ti ti-brand-gsap"></i> GSAP</span>
+                            <span class="skill-pill"><i class="ti ti-carousel-horizontal"></i> Swiper.js</span>
+                            <span class="skill-pill"><i class="ti ti-scroll"></i> ScrollTrigger</span>
                         </div>
                     </div>
                     <div class="skill-category">
                         <h5 class="skill-cat-title">CMS</h5>
                         <div class="skill-pills">
-                            <span class="skill-pill">WordPress</span>
+                            <span class="skill-pill"><i class="devicon-wordpress-plain"></i> WordPress</span>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <h5 class="skill-cat-title">Backend & Cloud</h5>
+                        <div class="skill-pills">
+                            <span class="skill-pill"><i class="devicon-php-plain"></i> PHP</span>
+                            <span class="skill-pill"><i class="devicon-amazonwebservices-plain-wordmark"></i> AWS</span>
+                            <span class="skill-pill"><i class="ti ti-server"></i> EC2 / S3</span>
+                            <span class="skill-pill"><i class="ti ti-terminal-2"></i> PuTTY</span>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <h5 class="skill-cat-title">Databases</h5>
+                        <div class="skill-pills">
+                            <span class="skill-pill"><i class="devicon-mysql-plain"></i> MySQL</span>
+                            <span class="skill-pill"><i class="devicon-mongodb-plain"></i> MongoDB</span>
                         </div>
                     </div>
                     <div class="skill-category">
                         <h5 class="skill-cat-title">Tools & Platforms</h5>
                         <div class="skill-pills">
-                            <span class="skill-pill">VS Code</span>
-                            <span class="skill-pill">Git / GitHub</span>
-                            <span class="skill-pill">Figma</span>
-                            <span class="skill-pill">Chrome DevTools</span>
-                            <span class="skill-pill">Antigravity</span>
+                            <span class="skill-pill"><i class="devicon-vscode-plain"></i> VS Code</span>
+                            <span class="skill-pill"><i class="devicon-git-plain"></i> Git / GitHub</span>
+                            <span class="skill-pill"><i class="devicon-figma-plain"></i> Figma</span>
+                            <span class="skill-pill"><i class="devicon-chrome-plain"></i> Chrome DevTools</span>
+                            <span class="skill-pill"><i class="ti ti-sparkles"></i> Antigravity</span>
                         </div>
                     </div>
                     <div class="skill-category">
                         <h5 class="skill-cat-title">Integrations</h5>
                         <div class="skill-pills">
-                            <span class="skill-pill">Form → Google Sheets</span>
-                            <span class="skill-pill">Google Apps Script</span>
-                            <span class="skill-pill">Basic PHP Forms</span>
+                            <span class="skill-pill"><i class="devicon-google-plain"></i> Form → Google Sheets</span>
+                            <span class="skill-pill"><i class="devicon-google-plain"></i> Google Apps Script</span>
+                            <span class="skill-pill"><i class="devicon-php-plain"></i> PHP Forms</span>
                         </div>
                     </div>
                     <div class="skill-category">
                         <h5 class="skill-cat-title">AI Tools</h5>
                         <div class="skill-pills">
-                            <span class="skill-pill">ChatGPT</span>
-                            <span class="skill-pill">Google Gemini</span>
-                            <span class="skill-pill">Veo</span>
-                            <span class="skill-pill">Whisk</span>
-                            <span class="skill-pill">Stitch</span>
+                            <span class="skill-pill"><i class="ti ti-brand-openai"></i> ChatGPT</span>
+                            <span class="skill-pill"><i class="devicon-google-plain"></i> Google Gemini</span>
+                            <span class="skill-pill"><i class="ti ti-video"></i> Veo</span>
+                            <span class="skill-pill"><i class="ti ti-wand"></i> Whisk</span>
+                            <span class="skill-pill"><i class="ti ti-needle"></i> Stitch</span>
                         </div>
                     </div>
                 </div>
@@ -615,17 +666,19 @@
                 <div class="marquee-wrapper reveal-up">
                     <div class="marquee-track">
                         <div class="marquee-content">
-                            <span>HTML5</span><span>CSS3</span><span>JavaScript</span><span>Vue.js</span><span>React</span><span>Bootstrap</span><span>Tailwind CSS</span><span>GSAP</span><span>Swiper.js</span><span>ScrollTrigger</span><span>WordPress</span><span>Git</span><span>Figma</span><span>Google Apps Script</span><span>Antigravity</span><span>Gemini</span><span>ChatGPT</span>
+                            <span>HTML5</span><span>CSS3</span><span>JavaScript</span><span>Vue.js</span><span>React</span><span>Bootstrap</span><span>Tailwind CSS</span><span>GSAP</span><span>Swiper.js</span><span>ScrollTrigger</span><span>WordPress</span><span>Git</span><span>Figma</span><span>PHP</span><span>MySQL</span><span>MongoDB</span><span>AWS</span><span>Google Apps Script</span><span>Antigravity</span><span>Gemini</span><span>ChatGPT</span>
                             <!-- Duplicate for seamless loop -->
-                            <span>HTML5</span><span>CSS3</span><span>JavaScript</span><span>Vue.js</span><span>React</span><span>Bootstrap</span><span>Tailwind CSS</span><span>GSAP</span><span>Swiper.js</span><span>ScrollTrigger</span><span>WordPress</span><span>Git</span><span>Figma</span><span>Google Apps Script</span><span>Antigravity</span><span>Gemini</span><span>ChatGPT</span>
+                            <span>HTML5</span><span>CSS3</span><span>JavaScript</span><span>Vue.js</span><span>React</span><span>Bootstrap</span><span>Tailwind CSS</span><span>GSAP</span><span>Swiper.js</span><span>ScrollTrigger</span><span>WordPress</span><span>Git</span><span>Figma</span><span>PHP</span><span>MySQL</span><span>MongoDB</span><span>AWS</span><span>Google Apps Script</span><span>Antigravity</span><span>Gemini</span><span>ChatGPT</span>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
+        <hr class="glow-separator">
+
         <!-- 7. EXPERIENCE TIMELINE -->
-        <section class="experience-section py-8" id="experience">
+        <section class="experience-section py-8 section-glow" id="experience">
             <div class="container">
                 <div class="row mb-5">
                     <div class="col-12">
@@ -653,6 +706,8 @@
                                 <li>Converted Figma designs into pixel-perfect responsive websites using HTML, CSS, and JavaScript.</li>
                                 <li>Implemented interactive UI components, sliders, and scroll-based animations using GSAP and Swiper.</li>
                                 <li>Built and integrated lead-generation forms, sending user data to Google Sheets via Apps Script.</li>
+                                <li>Created a secure PHP blog dashboard with TinyMCE editor, CRUD operations, and MongoDB integration for the Chintamani campaign.</li>
+                                <li>Managed AWS infrastructure — EC2 instances, Elastic IPs, S3 bucket configuration, and server access via PuTTY.</li>
                                 <li>Ensured cross-browser compatibility and mobile responsiveness across major devices and browsers.</li>
                                 <li>Maintained and updated live client websites based on campaign updates and change requests.</li>
                                 <li>Collaborated closely with designers and backend developers to deliver optimized UI implementations.</li>
@@ -681,27 +736,15 @@
                         </div>
                     </div>
 
-                    <!-- Education -->
-                    <div class="timeline-item timeline-reveal">
-                        <div class="timeline-marker">
-                            <div class="marker-dot marker-edu"></div>
-                        </div>
-                        <div class="timeline-card timeline-card-edu">
-                            <div class="timeline-header">
-                                <div>
-                                    <h4 class="timeline-role">BBA – E-Commerce</h4>
-                                    <p class="timeline-company">Alliance College of Hotel Management</p>
-                                </div>
-                                <span class="timeline-period">2018 – 2021</span>
-                            </div>
-                        </div>
-                    </div>
+
                 </div>
             </div>
         </section>
 
+        <hr class="glow-separator">
+
         <!-- 8. FOOTER & CONTACT -->
-        <footer class="footer-section py-8" id="contact">
+        <footer class="footer-section py-8 section-glow" id="contact">
             <div class="container">
                 <div class="row justify-content-center text-center mb-5 reveal-up">
                     <div class="col-lg-8">
@@ -766,6 +809,146 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+
+    <!-- Animated Tech Grid Background -->
+    <script>
+        (function() {
+            const canvas = document.getElementById('techGridCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+
+            let w, h, cols, rows;
+            const cellSize = 60;
+            const lines = [];
+            const maxLines = 8;
+            const accentColor = {
+                r: 56,
+                g: 189,
+                b: 248
+            };
+
+            function resize() {
+                w = canvas.width = window.innerWidth;
+                h = canvas.height = window.innerHeight;
+                cols = Math.ceil(w / cellSize);
+                rows = Math.ceil(h / cellSize);
+            }
+
+            class GridLine {
+                constructor() {
+                    this.reset();
+                }
+                reset() {
+                    // Randomly choose horizontal or vertical
+                    this.horizontal = Math.random() > 0.5;
+                    if (this.horizontal) {
+                        this.row = Math.floor(Math.random() * rows);
+                        this.pos = -cellSize * 2;
+                        this.speed = 0.5 + Math.random() * 1.5;
+                        this.length = cellSize * (3 + Math.floor(Math.random() * 5));
+                    } else {
+                        this.col = Math.floor(Math.random() * cols);
+                        this.pos = -cellSize * 2;
+                        this.speed = 0.3 + Math.random() * 1.2;
+                        this.length = cellSize * (3 + Math.floor(Math.random() * 6));
+                    }
+                    this.opacity = 0.15 + Math.random() * 0.35;
+                    this.width = 1 + Math.random() * 1.5;
+                }
+                update() {
+                    this.pos += this.speed;
+                    const limit = this.horizontal ? w + this.length : h + this.length;
+                    if (this.pos > limit) this.reset();
+                }
+                draw() {
+                    const {
+                        r,
+                        g,
+                        b
+                    } = accentColor;
+                    const grad = this.horizontal ?
+                        ctx.createLinearGradient(this.pos - this.length, 0, this.pos, 0) :
+                        ctx.createLinearGradient(0, this.pos - this.length, 0, this.pos);
+
+                    grad.addColorStop(0, `rgba(${r},${g},${b},0)`);
+                    grad.addColorStop(0.3, `rgba(${r},${g},${b},${this.opacity * 0.3})`);
+                    grad.addColorStop(0.8, `rgba(${r},${g},${b},${this.opacity})`);
+                    grad.addColorStop(1, `rgba(${r},${g},${b},${this.opacity * 0.6})`);
+
+                    ctx.strokeStyle = grad;
+                    ctx.lineWidth = this.width;
+                    ctx.beginPath();
+                    if (this.horizontal) {
+                        const y = this.row * cellSize;
+                        ctx.moveTo(this.pos - this.length, y);
+                        ctx.lineTo(this.pos, y);
+                    } else {
+                        const x = this.col * cellSize;
+                        ctx.moveTo(x, this.pos - this.length);
+                        ctx.lineTo(x, this.pos);
+                    }
+                    ctx.stroke();
+                }
+            }
+
+            function drawGrid() {
+                const {
+                    r,
+                    g,
+                    b
+                } = accentColor;
+                ctx.strokeStyle = `rgba(${r},${g},${b},0.04)`;
+                ctx.lineWidth = 0.5;
+                // Vertical lines
+                for (let i = 0; i <= cols; i++) {
+                    ctx.beginPath();
+                    ctx.moveTo(i * cellSize, 0);
+                    ctx.lineTo(i * cellSize, h);
+                    ctx.stroke();
+                }
+                // Horizontal lines
+                for (let j = 0; j <= rows; j++) {
+                    ctx.beginPath();
+                    ctx.moveTo(0, j * cellSize);
+                    ctx.lineTo(w, j * cellSize);
+                    ctx.stroke();
+                }
+                // Intersection dots
+                ctx.fillStyle = `rgba(${r},${g},${b},0.08)`;
+                for (let i = 0; i <= cols; i++) {
+                    for (let j = 0; j <= rows; j++) {
+                        ctx.beginPath();
+                        ctx.arc(i * cellSize, j * cellSize, 1.2, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                }
+            }
+
+            function init() {
+                resize();
+                for (let i = 0; i < maxLines; i++) {
+                    const line = new GridLine();
+                    line.pos = Math.random() * (w + h); // stagger starting positions
+                    lines.push(line);
+                }
+            }
+
+            function animate() {
+                ctx.clearRect(0, 0, w, h);
+                drawGrid();
+                lines.forEach(line => {
+                    line.update();
+                    line.draw();
+                });
+                requestAnimationFrame(animate);
+            }
+
+            window.addEventListener('resize', resize);
+            init();
+            animate();
+        })();
+    </script>
+
     <script src="assets/js/script.js"></script>
 </body>
 
