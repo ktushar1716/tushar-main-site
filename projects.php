@@ -37,6 +37,7 @@
             position: relative;
             overflow: hidden;
         }
+
         .projects-page-hero .hero-grid-bg {
             position: absolute;
             inset: 0;
@@ -61,6 +62,7 @@
             transition: var(--transition);
             margin-bottom: 1.5rem;
         }
+
         .back-link:hover {
             color: var(--text-main);
             transform: translateX(-4px);
@@ -80,6 +82,7 @@
             gap: 10px;
             margin-bottom: 3rem;
         }
+
         .filter-tab {
             font-family: var(--font-mono);
             font-size: 0.78rem;
@@ -93,10 +96,12 @@
             transition: var(--transition);
             border-radius: 4px;
         }
+
         .filter-tab:hover {
             border-color: var(--accent-color);
             color: var(--accent-color);
         }
+
         .filter-tab.active {
             background: var(--accent-color);
             border-color: var(--accent-color);
@@ -108,6 +113,7 @@
         .client-group {
             margin-bottom: 5rem;
         }
+
         .client-group-header {
             display: flex;
             align-items: center;
@@ -116,6 +122,7 @@
             padding-bottom: 1rem;
             border-bottom: 1px solid var(--border-color);
         }
+
         .client-group-name {
             font-family: var(--font-heading);
             font-size: 1.6rem;
@@ -123,6 +130,7 @@
             color: var(--text-main);
             margin: 0;
         }
+
         .client-group-count {
             font-family: var(--font-mono);
             font-size: 0.75rem;
@@ -143,6 +151,7 @@
             overflow: hidden;
             border-radius: 8px;
         }
+
         .project-detail-card:hover {
             border-color: rgba(56, 189, 248, 0.35);
             background: rgba(255, 255, 255, 0.04);
@@ -157,6 +166,7 @@
             background-position: top center;
             position: relative;
         }
+
         .project-detail-image::after {
             content: '';
             position: absolute;
@@ -191,6 +201,7 @@
             padding: 0;
             margin: 0 0 1.5rem 0;
         }
+
         .project-detail-highlights li {
             font-size: 0.85rem;
             color: var(--text-muted);
@@ -198,6 +209,7 @@
             padding-left: 20px;
             position: relative;
         }
+
         .project-detail-highlights li::before {
             content: '→';
             position: absolute;
@@ -211,6 +223,7 @@
             gap: 6px;
             margin-bottom: 1.5rem;
         }
+
         .project-detail-tags span {
             font-family: var(--font-mono);
             font-size: 0.7rem;
@@ -234,6 +247,7 @@
             gap: 6px;
             transition: var(--transition);
         }
+
         .project-detail-link:hover {
             color: var(--text-main);
         }
@@ -246,6 +260,7 @@
             color: var(--text-muted);
             margin-bottom: 1rem;
         }
+
         .project-role strong {
             color: var(--accent-color);
         }
@@ -262,9 +277,11 @@
             .projects-page-hero {
                 min-height: 40vh;
             }
+
             .project-detail-body {
                 padding: 1.2rem 1.4rem 1.5rem;
             }
+
             .client-group-name {
                 font-size: 1.3rem;
             }
@@ -275,6 +292,9 @@
 <body class="dark-theme">
     <!-- Animated Tech Grid Background -->
     <canvas id="techGridCanvas"></canvas>
+
+    <div class="custom-cursor"></div>
+    <div class="custom-cursor-follower"></div>
 
     <!-- STICKY NAVBAR -->
     <nav class="site-nav scrolled" id="siteNav">
@@ -763,6 +783,7 @@
     <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
 
     <!-- Animated Tech Grid Background -->
     <script>
@@ -774,7 +795,11 @@
             const cellSize = 60;
             const lines = [];
             const maxLines = 8;
-            const accentColor = { r: 56, g: 189, b: 248 };
+            const accentColor = {
+                r: 56,
+                g: 189,
+                b: 248
+            };
 
             function resize() {
                 w = canvas.width = window.innerWidth;
@@ -784,7 +809,9 @@
             }
 
             class GridLine {
-                constructor() { this.reset(); }
+                constructor() {
+                    this.reset();
+                }
                 reset() {
                     this.horizontal = Math.random() > 0.5;
                     if (this.horizontal) {
@@ -806,10 +833,14 @@
                     if (this.pos > (this.horizontal ? w : h) + this.length) this.reset();
                 }
                 draw() {
-                    const { r, g, b } = accentColor;
-                    const grad = this.horizontal
-                        ? ctx.createLinearGradient(this.pos - this.length, 0, this.pos, 0)
-                        : ctx.createLinearGradient(0, this.pos - this.length, 0, this.pos);
+                    const {
+                        r,
+                        g,
+                        b
+                    } = accentColor;
+                    const grad = this.horizontal ?
+                        ctx.createLinearGradient(this.pos - this.length, 0, this.pos, 0) :
+                        ctx.createLinearGradient(0, this.pos - this.length, 0, this.pos);
                     grad.addColorStop(0, `rgba(${r},${g},${b},0)`);
                     grad.addColorStop(0.3, `rgba(${r},${g},${b},${this.opacity * 0.3})`);
                     grad.addColorStop(0.8, `rgba(${r},${g},${b},${this.opacity})`);
@@ -829,47 +860,93 @@
             }
 
             function drawGrid() {
-                const { r, g, b } = accentColor;
+                const {
+                    r,
+                    g,
+                    b
+                } = accentColor;
                 ctx.strokeStyle = `rgba(${r},${g},${b},0.04)`;
                 ctx.lineWidth = 0.5;
-                for (let i = 0; i <= cols; i++) { ctx.beginPath(); ctx.moveTo(i * cellSize, 0); ctx.lineTo(i * cellSize, h); ctx.stroke(); }
-                for (let j = 0; j <= rows; j++) { ctx.beginPath(); ctx.moveTo(0, j * cellSize); ctx.lineTo(w, j * cellSize); ctx.stroke(); }
+                for (let i = 0; i <= cols; i++) {
+                    ctx.beginPath();
+                    ctx.moveTo(i * cellSize, 0);
+                    ctx.lineTo(i * cellSize, h);
+                    ctx.stroke();
+                }
+                for (let j = 0; j <= rows; j++) {
+                    ctx.beginPath();
+                    ctx.moveTo(0, j * cellSize);
+                    ctx.lineTo(w, j * cellSize);
+                    ctx.stroke();
+                }
                 ctx.fillStyle = `rgba(${r},${g},${b},0.08)`;
                 for (let i = 0; i <= cols; i++) {
-                    for (let j = 0; j <= rows; j++) { ctx.beginPath(); ctx.arc(i * cellSize, j * cellSize, 1.2, 0, Math.PI * 2); ctx.fill(); }
+                    for (let j = 0; j <= rows; j++) {
+                        ctx.beginPath();
+                        ctx.arc(i * cellSize, j * cellSize, 1.2, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
                 }
             }
 
             resize();
-            for (let i = 0; i < maxLines; i++) { const line = new GridLine(); line.pos = Math.random() * (w + h); lines.push(line); }
+            for (let i = 0; i < maxLines; i++) {
+                const line = new GridLine();
+                line.pos = Math.random() * (w + h);
+                lines.push(line);
+            }
             (function animate() {
                 ctx.clearRect(0, 0, w, h);
                 drawGrid();
-                lines.forEach(l => { l.update(); l.draw(); });
+                lines.forEach(l => {
+                    l.update();
+                    l.draw();
+                });
                 requestAnimationFrame(animate);
             })();
             window.addEventListener('resize', resize);
         })();
     </script>
 
-    <!-- Mobile nav toggle -->
+    <script src="assets/js/script.js"></script>
+
+    <!-- Project card cursor hover (extends script.js cursor) -->
     <script>
-        const hamburger = document.getElementById('navHamburger');
-        const overlay = document.getElementById('mobileNavOverlay');
-        if (hamburger && overlay) {
-            hamburger.addEventListener('click', () => {
-                hamburger.classList.toggle('active');
-                overlay.classList.toggle('active');
-                document.body.style.overflow = overlay.classList.contains('active') ? 'hidden' : '';
-            });
-            overlay.querySelectorAll('.mobile-nav-link').forEach(link => {
-                link.addEventListener('click', () => {
-                    hamburger.classList.remove('active');
-                    overlay.classList.remove('active');
-                    document.body.style.overflow = '';
+        document.addEventListener('DOMContentLoaded', () => {
+            const cursor = document.querySelector('.custom-cursor');
+            const follower = document.querySelector('.custom-cursor-follower');
+            const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
+            if (isTouchDevice || !cursor || !follower) return;
+
+            document.querySelectorAll('.project-detail-card').forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    gsap.to(cursor, {
+                        scale: 0.5,
+                        opacity: 0.5,
+                        duration: 0.3
+                    });
+                    gsap.to(follower, {
+                        scale: 1.5,
+                        borderColor: 'transparent',
+                        backgroundColor: 'rgba(56, 189, 248, 0.1)',
+                        duration: 0.3
+                    });
+                });
+                card.addEventListener('mouseleave', () => {
+                    gsap.to(cursor, {
+                        scale: 1,
+                        opacity: 1,
+                        duration: 0.3
+                    });
+                    gsap.to(follower, {
+                        scale: 1,
+                        borderColor: '#38bdf8',
+                        backgroundColor: 'transparent',
+                        duration: 0.3
+                    });
                 });
             });
-        }
+        });
     </script>
 </body>
 
