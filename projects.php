@@ -273,6 +273,19 @@
             margin-top: 4rem;
         }
 
+        /* Non-draggable images */
+        img,
+        .project-detail-image {
+            -webkit-user-drag: none;
+            -khtml-user-drag: none;
+            -moz-user-drag: none;
+            -o-user-drag: none;
+            user-drag: none;
+            -webkit-user-select: none;
+            user-select: none;
+            pointer-events: auto;
+        }
+
         @media (max-width: 768px) {
             .projects-page-hero {
                 min-height: 40vh;
@@ -336,7 +349,7 @@
             <div class="container z-index-content">
                 <a href="index.php" class="back-link"><i class="ti ti-arrow-left"></i> BACK TO HOME</a>
                 <h1 class="display-title" style="font-size: clamp(2rem, 6vw, 5rem);">ALL PROJECTS</h1>
-                <p class="projects-count mt-3">17 LIVE CLIENT PROJECTS</p>
+                <p class="projects-count mt-3">20 LIVE CLIENT PROJECTS</p>
             </div>
         </section>
 
@@ -506,11 +519,90 @@
 
                 <hr class="glow-separator" style="margin-bottom: 5rem;">
 
+                <!-- ==================== CHINTAMANI ==================== -->
+                <div class="client-group" data-group="chintamani">
+                    <div class="client-group-header">
+                        <h2 class="client-group-name">Chintamani</h2>
+                        <span class="client-group-count">3 PROJECTS</span>
+                    </div>
+
+                    <div class="row">
+                        <!-- Chintamani Campaign Website -->
+                        <div class="col-lg-6 col-md-6">
+                            <div class="project-detail-card">
+                                <div class="project-detail-image" style="background-image: url('assets/images/projects/chintamani2.png');"></div>
+                                <div class="project-detail-body">
+                                    <h3 class="project-detail-title">Chintamani — Campaign Website</h3>
+                                    <p class="project-role"><strong>Role:</strong> Full Stack Developer</p>
+                                    <p class="project-detail-desc">Movie campaign microsite featuring interactive visual storytelling, GSAP scroll-driven animations, and immersive UI design. Connected to MongoDB for data storage and deployed on AWS EC2.</p>
+                                    <ul class="project-detail-highlights">
+                                        <li>Interactive campaign microsite with scroll-based storytelling</li>
+                                        <li>GSAP ScrollTrigger animations & parallax effects</li>
+                                        <li>MongoDB cluster integration for data storage</li>
+                                        <li>AWS EC2 deployment with Elastic IP</li>
+                                    </ul>
+                                    <div class="project-detail-tags">
+                                        <span>PHP</span><span>MongoDB</span><span>GSAP</span><span>AWS</span><span>JavaScript</span>
+                                    </div>
+                                    <a href="https://icubeswire.com/projects/chintamani2" target="_blank" rel="noopener" class="project-detail-link">Visit Live <i class="ti ti-external-link"></i></a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Chintamani Phase 2 Website -->
+                        <div class="col-lg-6 col-md-6">
+                            <div class="project-detail-card">
+                                <div class="project-detail-image" style="background-image: url('assets/images/projects/chintamani2-phase2.png');"></div>
+                                <div class="project-detail-body">
+                                    <h3 class="project-detail-title">Chintamani — Phase 2 Website</h3>
+                                    <p class="project-role"><strong>Role:</strong> Full Stack Developer</p>
+                                    <p class="project-detail-desc">Second phase of the Chintamani campaign — a separate microsite with enhanced interactive UI, advanced GSAP animations, and MySQL-backed data management.</p>
+                                    <ul class="project-detail-highlights">
+                                        <li>Separate campaign microsite with refreshed design</li>
+                                        <li>Enhanced GSAP ScrollTrigger animations</li>
+                                        <li>MySQL database integration</li>
+                                        <li>Responsive across all devices</li>
+                                    </ul>
+                                    <div class="project-detail-tags">
+                                        <span>PHP</span><span>MySQL</span><span>GSAP</span><span>JavaScript</span>
+                                    </div>
+                                    <a href="https://icubeswire.com/projects/chintamani2/phase-2" target="_blank" rel="noopener" class="project-detail-link">Visit Live <i class="ti ti-external-link"></i></a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Chintamani CRM/LMS Dashboard -->
+                        <div class="col-lg-6 col-md-6">
+                            <div class="project-detail-card">
+                                <div class="project-detail-image" style="background-image: url('assets/images/projects/chintamani-php-dashboard.png');"></div>
+                                <div class="project-detail-body">
+                                    <h3 class="project-detail-title">Chintamani — CRM/LMS Admin Dashboard</h3>
+                                    <p class="project-role"><strong>Role:</strong> Full Stack Developer (PHP)</p>
+                                    <p class="project-detail-desc">Unified real estate CRM & Lead Management dashboard powering both Chintamani campaign websites. Built entirely in PHP with AJAX-driven SPA-style navigation, complete lead lifecycle tracking, blog CMS, and role-based user management.</p>
+                                    <ul class="project-detail-highlights">
+                                        <li>Shared admin panel for both Campaign & Phase 2 websites</li>
+                                        <li>Lead lifecycle — follow-ups → site visits → booking with auto-assignment (Round Robin, Random, Manual)</li>
+                                        <li>Blog CMS — list, add, edit posts with TinyMCE rich text editor</li>
+                                        <li>User management with role-based login & access control</li>
+                                        <li>AJAX-powered SPA-style dashboard — zero page refreshes</li>
+                                        <li>Secure session handling, input sanitization & authentication</li>
+                                    </ul>
+                                    <div class="project-detail-tags">
+                                        <span>PHP</span><span>MySQL</span><span>AJAX</span><span>TinyMCE</span><span>CRM</span><span>Lead Management</span><span>Admin Panel</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="glow-separator" style="margin-bottom: 5rem;">
+
                 <!-- ==================== iCubesWire ==================== -->
                 <div class="client-group" data-group="icubeswire">
                     <div class="client-group-header">
                         <h2 class="client-group-name">iCubesWire</h2>
-                        <span class="client-group-count">4 PROJECTS</span>
+                        <span class="client-group-count">6 PROJECTS</span>
                     </div>
 
                     <div class="row">
@@ -536,53 +628,7 @@
                             </div>
                         </div>
 
-                        <!-- Chintamani -->
-                        <div class="col-lg-6 col-md-6">
-                            <div class="project-detail-card">
-                                <div class="project-detail-image" style="background-image: url('assets/images/projects/chintamani2.png');"></div>
-                                <div class="project-detail-body">
-                                    <h3 class="project-detail-title">Chintamani Campaign</h3>
-                                    <p class="project-role"><strong>Role:</strong> UI Developer + Backend (Full Stack)</p>
-                                    <p class="project-detail-desc">Movie campaign microsite with a complete PHP blog dashboard. Built a secure admin login system, integrated TinyMCE rich text editor for blog content creation, and connected MongoDB for data storage.</p>
-                                    <ul class="project-detail-highlights">
-                                        <li>Custom PHP admin dashboard with secure login</li>
-                                        <li>TinyMCE editor integration for WYSIWYG blog management</li>
-                                        <li>Full CRUD operations (Create, Read, Update, Delete blogs)</li>
-                                        <li>MongoDB cluster integration for data storage</li>
-                                        <li>Interactive campaign microsite with visual storytelling</li>
-                                        <li>AWS EC2 deployment with Elastic IP</li>
-                                    </ul>
-                                    <div class="project-detail-tags">
-                                        <span>PHP</span><span>MongoDB</span><span>TinyMCE</span><span>Admin Panel</span><span>AWS</span><span>JavaScript</span>
-                                    </div>
-                                    <a href="https://icubeswire.com/projects/chintamani2" target="_blank" rel="noopener" class="project-detail-link">Visit Live <i class="ti ti-external-link"></i></a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Chintamani Phase 2 -->
-                        <div class="col-lg-6 col-md-6">
-                            <div class="project-detail-card">
-                                <div class="project-detail-image" style="background-image: url('assets/images/projects/chintamani2-phase2.png');"></div>
-                                <div class="project-detail-body">
-                                    <h3 class="project-detail-title">Chintamani — Phase 2</h3>
-                                    <p class="project-role"><strong>Role:</strong> UI Developer + Backend</p>
-                                    <p class="project-detail-desc">Extended campaign with CRUD blog system, secure authentication, enhanced interactive UI features, and MySQL database management.</p>
-                                    <ul class="project-detail-highlights">
-                                        <li>Extended blog CRUD functionality</li>
-                                        <li>MySQL database table creation & management</li>
-                                        <li>Enhanced GSAP animations</li>
-                                        <li>Secure authentication system</li>
-                                    </ul>
-                                    <div class="project-detail-tags">
-                                        <span>PHP</span><span>MySQL</span><span>GSAP</span><span>JavaScript</span>
-                                    </div>
-                                    <a href="https://icubeswire.com/projects/chintamani2/phase-2" target="_blank" rel="noopener" class="project-detail-link">Visit Live <i class="ti ti-external-link"></i></a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- iCubesWire Main -->
+                        <!-- iCubesWire Corporate -->
                         <div class="col-lg-6 col-md-6">
                             <div class="project-detail-card">
                                 <div class="project-detail-image" style="background-image: url('assets/images/projects/icubeswire.png');"></div>
@@ -603,74 +649,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
 
-                <hr class="glow-separator" style="margin-bottom: 5rem;">
-
-                <!-- ==================== DAAWAT ==================== -->
-                <div class="client-group" data-group="daawat">
-                    <div class="client-group-header">
-                        <h2 class="client-group-name">Daawat / LT Foods</h2>
-                        <span class="client-group-count">2 PROJECTS</span>
-                    </div>
-
-                    <div class="row">
-                        <!-- Daawat Main -->
-                        <div class="col-lg-6 col-md-6">
-                            <div class="project-detail-card">
-                                <div class="project-detail-image" style="background-image: url('assets/images/projects/daawat.png');"></div>
-                                <div class="project-detail-body">
-                                    <h3 class="project-detail-title">Daawat.com</h3>
-                                    <p class="project-role"><strong>Role:</strong> Performance Optimization</p>
-                                    <p class="project-detail-desc">Performance optimization on Laravel-based site — improved PageSpeed scores from 20s–50s range to 90+ across all metrics (Performance, Accessibility, Best Practices, SEO).</p>
-                                    <ul class="project-detail-highlights">
-                                        <li>PageSpeed scores improved from 20s–50s to 90+ across all metrics</li>
-                                        <li>Image optimization, lazy loading, and compression</li>
-                                        <li>CSS/JS minification and critical path optimization</li>
-                                        <li>Core Web Vitals improvements (LCP, CLS, FID)</li>
-                                    </ul>
-                                    <div class="project-detail-tags">
-                                        <span>Laravel</span><span>PageSpeed</span><span>Performance</span><span>SEO</span>
-                                    </div>
-                                    <a href="https://daawat.com/" target="_blank" rel="noopener" class="project-detail-link">Visit Live <i class="ti ti-external-link"></i></a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Dream Ad with SRK -->
-                        <div class="col-lg-6 col-md-6">
-                            <div class="project-detail-card">
-                                <div class="project-detail-image" style="background-image: url('assets/images/projects/dreamad-srk.png');"></div>
-                                <div class="project-detail-body">
-                                    <h3 class="project-detail-title">Dream Ad with SRK</h3>
-                                    <p class="project-role"><strong>Role:</strong> UI Developer (Full Build)</p>
-                                    <p class="project-detail-desc">Interactive campaign microsite for Daawat featuring celebrity-driven engagement and dynamic user flow. Built as a single-page experience.</p>
-                                    <ul class="project-detail-highlights">
-                                        <li>Celebrity-driven interactive campaign</li>
-                                        <li>Dynamic user engagement flow</li>
-                                        <li>Responsive microsite design</li>
-                                    </ul>
-                                    <div class="project-detail-tags">
-                                        <span>HTML5</span><span>CSS3</span><span>JavaScript</span><span>Microsite</span>
-                                    </div>
-                                    <a href="https://dreamadwithsrk.daawat.com/" target="_blank" rel="noopener" class="project-detail-link">Visit Live <i class="ti ti-external-link"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <hr class="glow-separator" style="margin-bottom: 5rem;">
-
-                <!-- ==================== INDIA INFLUENCER CONCLAVE ==================== -->
-                <div class="client-group" data-group="conclave">
-                    <div class="client-group-header">
-                        <h2 class="client-group-name">India Influencer Conclave / IIGC</h2>
-                        <span class="client-group-count">3 PROJECTS</span>
-                    </div>
-
-                    <div class="row">
                         <!-- IIC 2023 -->
                         <div class="col-lg-6 col-md-6">
                             <div class="project-detail-card">
@@ -734,19 +713,8 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
 
-                <hr class="glow-separator" style="margin-bottom: 5rem;">
-
-                <!-- ==================== DIGITAL MARKET SURVEY ==================== -->
-                <div class="client-group" data-group="dms">
-                    <div class="client-group-header">
-                        <h2 class="client-group-name">Digital Market Survey</h2>
-                        <span class="client-group-count">1 PROJECT</span>
-                    </div>
-
-                    <div class="row">
+                        <!-- Digital Market Survey -->
                         <div class="col-lg-6 col-md-6">
                             <div class="project-detail-card">
                                 <div class="project-detail-image" style="background-image: url('assets/images/projects/dms.png');"></div>
@@ -765,6 +733,107 @@
                                         <span>PHP</span><span>MySQL</span><span>Admin Panel</span><span>AWS S3</span><span>JavaScript</span>
                                     </div>
                                     <a href="https://digitalmarketsurvey.com/" target="_blank" rel="noopener" class="project-detail-link">Visit Live <i class="ti ti-external-link"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="glow-separator" style="margin-bottom: 5rem;">
+
+                <!-- ==================== DAAWAT / LT FOODS ==================== -->
+                <div class="client-group" data-group="daawat">
+                    <div class="client-group-header">
+                        <h2 class="client-group-name">Daawat / LT Foods</h2>
+                        <span class="client-group-count">4 PROJECTS</span>
+                    </div>
+
+                    <div class="row">
+                        <!-- Daawat Main -->
+                        <div class="col-lg-6 col-md-6">
+                            <div class="project-detail-card">
+                                <div class="project-detail-image" style="background-image: url('assets/images/projects/daawat.png');"></div>
+                                <div class="project-detail-body">
+                                    <h3 class="project-detail-title">Daawat.com</h3>
+                                    <p class="project-role"><strong>Role:</strong> Performance Optimization</p>
+                                    <p class="project-detail-desc">Performance optimization on Laravel-based site — improved PageSpeed scores from 20s–50s range to 90+ across all metrics (Performance, Accessibility, Best Practices, SEO).</p>
+                                    <ul class="project-detail-highlights">
+                                        <li>PageSpeed scores improved from 20s–50s to 90+ across all metrics</li>
+                                        <li>Image optimization, lazy loading, and compression</li>
+                                        <li>CSS/JS minification and critical path optimization</li>
+                                        <li>Core Web Vitals improvements (LCP, CLS, FID)</li>
+                                    </ul>
+                                    <div class="project-detail-tags">
+                                        <span>Laravel</span><span>PageSpeed</span><span>Performance</span><span>SEO</span>
+                                    </div>
+                                    <a href="https://daawat.com/" target="_blank" rel="noopener" class="project-detail-link">Visit Live <i class="ti ti-external-link"></i></a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Daawat Saffron Rice -->
+                        <div class="col-lg-6 col-md-6">
+                            <div class="project-detail-card">
+                                <div class="project-detail-image" style="background-image: url('assets/images/projects/saffron-rice.png');"></div>
+                                <div class="project-detail-body">
+                                    <h3 class="project-detail-title">Daawat Saffron Rice</h3>
+                                    <p class="project-role"><strong>Role:</strong> UI Developer (Full Build)</p>
+                                    <p class="project-detail-desc">Premium product showcase website for Daawat's luxury Saffron Rice line. Immersive visual experience with cinematic hero video, scroll-driven storytelling, Swiper galleries, and a refined luxury aesthetic throughout.</p>
+                                    <ul class="project-detail-highlights">
+                                        <li>Cinematic full-screen video hero with autoplay</li>
+                                        <li>Premium luxury UI with AOS scroll animations</li>
+                                        <li>Swiper.js product galleries & sticky scroll sections</li>
+                                        <li>Request form modal with lead capture</li>
+                                        <li>Fully responsive multi-page PHP site</li>
+                                    </ul>
+                                    <div class="project-detail-tags">
+                                        <span>HTML5</span><span>CSS3</span><span>PHP</span><span>Swiper.js</span><span>AOS</span><span>Bootstrap</span>
+                                    </div>
+                                    <a href="https://www.daawat.com/saffron-rice" target="_blank" rel="noopener" class="project-detail-link">Visit Live <i class="ti ti-external-link"></i></a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- RYA (Rice Your Awareness) -->
+                        <div class="col-lg-6 col-md-6">
+                            <div class="project-detail-card">
+                                <div class="project-detail-image" style="background-image: url('assets/images/projects/rya.png');"></div>
+                                <div class="project-detail-body">
+                                    <h3 class="project-detail-title">RYA — Rice Your Awareness</h3>
+                                    <p class="project-role"><strong>Role:</strong> UI Developer (Full Build)</p>
+                                    <p class="project-detail-desc">Interactive awareness campaign website for Daawat's #OnlyRiceNovember initiative. Features dynamic stats counters, myth-busting sections, FAQ accordions, influencer showcase sliders, and social sharing integration.</p>
+                                    <ul class="project-detail-highlights">
+                                        <li>Campaign microsite with animated stat counters (67K+ challenges, 88M+ reach)</li>
+                                        <li>Swiper.js influencer showcase carousel</li>
+                                        <li>Interactive myth-busting cards & FAQ sections</li>
+                                        <li>Social sharing integration (Facebook, LinkedIn, Twitter)</li>
+                                        <li>Responsive Bootstrap 5 layout with custom design</li>
+                                    </ul>
+                                    <div class="project-detail-tags">
+                                        <span>HTML5</span><span>CSS3</span><span>Bootstrap 5</span><span>JavaScript</span><span>Swiper.js</span><span>Campaign</span>
+                                    </div>
+                                    <a href="https://www.daawat.com/rya/" target="_blank" rel="noopener" class="project-detail-link">Visit Live <i class="ti ti-external-link"></i></a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Dream Ad with SRK -->
+                        <div class="col-lg-6 col-md-6">
+                            <div class="project-detail-card">
+                                <div class="project-detail-image" style="background-image: url('assets/images/projects/dreamad-srk.png');"></div>
+                                <div class="project-detail-body">
+                                    <h3 class="project-detail-title">Dream Ad with SRK</h3>
+                                    <p class="project-role"><strong>Role:</strong> UI Developer (Full Build)</p>
+                                    <p class="project-detail-desc">Interactive campaign microsite for Daawat featuring celebrity-driven engagement and dynamic user flow. Built as a single-page experience.</p>
+                                    <ul class="project-detail-highlights">
+                                        <li>Celebrity-driven interactive campaign</li>
+                                        <li>Dynamic user engagement flow</li>
+                                        <li>Responsive microsite design</li>
+                                    </ul>
+                                    <div class="project-detail-tags">
+                                        <span>HTML5</span><span>CSS3</span><span>JavaScript</span><span>Microsite</span>
+                                    </div>
+                                    <a href="https://dreamadwithsrk.daawat.com/" target="_blank" rel="noopener" class="project-detail-link">Visit Live <i class="ti ti-external-link"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -945,6 +1014,18 @@
                         duration: 0.3
                     });
                 });
+            });
+        });
+    </script>
+
+    <!-- Disable image dragging -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('img').forEach(img => {
+                img.setAttribute('draggable', 'false');
+            });
+            document.querySelectorAll('.project-detail-image').forEach(el => {
+                el.addEventListener('dragstart', e => e.preventDefault());
             });
         });
     </script>
