@@ -167,5 +167,5 @@ $letters = [
 </div>
 
 <?php
-$nextPage = ['playlist.php', 'Playlist'];
+$nextPage = ['game.php', 'Bring Me Home'];
 require 'includes/footer.php';

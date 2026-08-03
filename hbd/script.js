@@ -16,8 +16,15 @@
    13. Reason cards (flip)
    14. Gallery lightbox
    15. Open-when letters
-   16. Countdown
-   17. Easter eggs
+   16. The game ("Bring me home")
+   17. Make a wish (the cake)
+   18. Easter eggs
+   19. Stickers
+   20. Confetti
+   21. Hidden hearts
+   22. The puzzle
+   23. The finale
+   24. Secret page gate
    ========================================================================== */
 
 (function () {
@@ -456,7 +463,7 @@
 
         function setPlayingState(playing) {
             musicWrap.classList.toggle('is-playing', playing);
-            // The playlist dancer only dances while there's something to dance to
+            // The cake dancer picks up the tempo when there's a tempo to pick up
             document.body.classList.toggle('music-playing', playing);
             musicBtn.setAttribute('aria-pressed', String(playing));
             musicBtn.setAttribute('aria-label', playing ? 'Pause background music' : 'Play background music');
@@ -677,67 +684,727 @@
 
 
     /* ======================================================================
-       16. COUNTDOWN
+       16. THE GAME — "Bring me home"
+
+       A DOM runner rather than a canvas one, on purpose: the characters are
+       real <img> elements, so the animated GIFs keep animating while they
+       move. Everything is positioned with transforms, so it stays cheap.
+
+       Distances are in CSS pixels of travel. TOTAL_PX is mapped onto the
+       real-world kilometres from $DISTANCE_KM, so the progress bar is the
+       actual distance between them.
        ====================================================================== */
-    const countdownEl = $('#countdown');
+    const gameEl = $('#game');
 
-    if (countdownEl) {
-        const target = new Date(countdownEl.dataset.target).getTime();
+    if (gameEl) (function initGame() {
+        const world    = $('#world');
+        const obsLayer = $('#worldObs');
+        const groundEl = $('#worldGround');
+        const farEl    = $('#worldFar');
+        const bubuEl   = $('#worldBubu');
+        const duduEl   = $('#worldDudu');
+        const hugEl    = $('#worldHug');
+        const msEl     = $('#worldMilestone');
 
-        const fields = {
-            days:    $('#cdDays'),
-            hours:   $('#cdHours'),
-            minutes: $('#cdMinutes'),
-            seconds: $('#cdSeconds')
+        const kmEl     = $('#gameKm');
+        const fillEl   = $('#gameFill');
+        const pipsEl   = $('#gamePips');
+        const livesEl  = $('#gameLives');
+        const bestEl   = $('#gameBest');
+        const bestVal  = $('#gameBestVal');
+
+        const startPanel = $('#gameStart');
+        const overPanel  = $('#gameOver');
+        const winPanel   = $('#gameWin');
+        const calmPanel  = $('#gameCalm');
+        const overKmEl   = $('#gameOverKm');
+
+        /* --- Tuning -------------------------------------------------------
+           Nothing here is in absolute pixels except the speeds. Obstacle
+           heights and the jump are both derived from how much room the strip
+           actually has, so a phone and a desktop play exactly the same. */
+        const TOTAL_KM   = parseInt(gameEl.dataset.distance, 10) || 2000;
+        const TOTAL_PX   = 21000;      // a clean run lands around 50 seconds
+        const SPEED_MIN  = 330;        // px per second at the start
+        const SPEED_MAX  = 620;        // …and by the time she's nearly there
+        const LIVES      = 3;
+        const AIRTIME    = 0.74;       // seconds off the ground, at any size
+        const APEX       = 0.56;       // …reaching this much of the free height
+        const OBS_H      = [0.20, 0.30, 0.39];   // the three obstacle sizes
+        const HIT_MERCY  = 1100;       // ms of blinking after a hit
+        const MS_MS      = 3000;       // how long a milestone holds the world
+
+        const readJSON = (id) => {
+            const tag = document.getElementById(id);
+            if (!tag) return [];
+            try { return JSON.parse(tag.textContent) || []; } catch (e) { return []; }
         };
-        const grid       = $('#countdownGrid');
-        const doneBlock  = $('#countdownDone');
-        const factSleeps = $('#factSleeps');
-        const factWeeks  = $('#factWeeks');
 
-        const pad = (n) => String(n).padStart(2, '0');
-        let timer = null;
+        const MILESTONES = readJSON('gameMilestones');
+        const OBSTACLES  = readJSON('gameObstacles');
 
-        function setField(el, value) {
-            if (!el || el.textContent === value) return;
-            el.textContent = value;
-            el.classList.add('is-tick');
-            setTimeout(() => el.classList.remove('is-tick'), 320);
+        const best = {
+            key: 'gameBest',
+            get() {
+                try { return parseInt(window.localStorage.getItem(this.key), 10) || 0; }
+                catch (e) { return 0; }
+            },
+            set(v) {
+                try { window.localStorage.setItem(this.key, String(v)); }
+                catch (e) { /* ignore */ }
+            }
+        };
+
+        /* --- State -------------------------------------------------------- */
+        let state    = 'ready';   // ready | running | slow | ending | over | won
+        let travel   = 0;         // px covered
+        let lives    = LIVES;
+        let y        = 0;         // height above the ground, px
+        let vy       = 0;
+        let jumps    = 0;         // 0 = grounded, 1 = single jumped, 2 = spent
+        let mercyTil = 0;
+        let slowTil  = 0;
+        let msDone   = [];
+        let nextSpawn = 900;
+        let obstacles = [];
+        let lastT    = 0;
+        let raf      = null;
+        let visible  = true;
+
+        // All written by measure()
+        let width  = 800;
+        let free   = 280;   // usable height above the ground
+        let gravity = 2900;
+        let jumpV   = 950;
+        let bubuBox = { x: 130, w: 50, h: 60 };
+
+        /* --- Set-up ------------------------------------------------------- */
+        function measure() {
+            width = world.clientWidth || 800;
+
+            const groundH = groundEl ? groundEl.offsetHeight : 46;
+            free = Math.max(120, (world.clientHeight || 320) - groundH);
+
+            // apex = v²/2g and airtime = 2v/g, solved for v and g
+            const apex = free * APEX;
+            jumpV   = (4 * apex) / AIRTIME;
+            gravity = (8 * apex) / (AIRTIME * AIRTIME);
+
+            // Hitbox: the middle of him, not the whole sticker. Generous on
+            // purpose — she should lose to the game, not to the maths.
+            const bw = (bubuEl.offsetWidth  || 90) * 0.5;
+            const bh = (bubuEl.offsetHeight || 90) * 0.62;
+            bubuBox = { x: width * 0.16 + bw * 0.5, w: bw, h: bh };
         }
 
-        function tick() {
-            if (isNaN(target)) return;
+        function showBest() {
+            const b = best.get();
+            if (!bestEl) return;
+            bestEl.hidden = b <= 0;
+            if (bestVal) bestVal.textContent = String(b);
+        }
 
-            const diff = target - Date.now();
+        // Milestone markers on the rail
+        if (pipsEl) {
+            MILESTONES.forEach((m) => {
+                const pip = document.createElement('i');
+                pip.className = 'game__pip';
+                pip.style.left = clamp(Number(m.at) || 0, 0, 100) + '%';
+                pipsEl.appendChild(pip);
+            });
+        }
 
-            if (diff <= 0) {
-                grid.hidden = true;
-                doneBlock.hidden = false;
-                clearInterval(timer);
+        function setPanel(panel) {
+            [startPanel, overPanel, winPanel, calmPanel].forEach((p) => {
+                if (p) p.hidden = p !== panel;
+            });
+        }
+
+        /* --- Reduced motion: no running, just the words ------------------- */
+        if (prefersReducedMotion) {
+            const lines = $('#gameCalmLines');
+            if (lines) {
+                MILESTONES.forEach((m) => {
+                    const p = document.createElement('p');
+                    p.className = 'game__calm-line';
+                    p.textContent = m.line;
+                    lines.appendChild(p);
+                });
+                const winText = winPanel && $('.game__win-text', winPanel);
+                if (winText) {
+                    const p = document.createElement('p');
+                    p.className = 'game__calm-line game__calm-line--last';
+                    p.textContent = winText.textContent.trim();
+                    lines.appendChild(p);
+                }
+            }
+            gameEl.classList.add('is-calm');
+            setPanel(calmPanel);
+            showBest();
+            return;
+        }
+
+        /* --- Drawing ------------------------------------------------------ */
+        function paintHud() {
+            const pct = clamp(travel / TOTAL_PX, 0, 1);
+            const left = Math.max(0, Math.round(TOTAL_KM * (1 - pct)));
+
+            if (kmEl)   kmEl.textContent = left.toLocaleString();
+            if (fillEl) fillEl.style.width = (pct * 100).toFixed(2) + '%';
+
+            if (livesEl) {
+                $$('.game__life', livesEl).forEach((el, i) => {
+                    el.classList.toggle('is-gone', i >= lives);
+                });
+            }
+        }
+
+        function paintWorld() {
+            // Ground and backdrop scroll at different rates for depth
+            if (groundEl) groundEl.style.backgroundPositionX = -travel + 'px';
+            if (farEl)    farEl.style.backgroundPositionX    = -(travel * 0.25) + 'px';
+
+            bubuEl.style.transform =
+                'translate3d(0,' + (-y).toFixed(1) + 'px,0)' +
+                (y > 4 ? ' rotate(-6deg)' : '');
+
+            obstacles.forEach((o) => {
+                o.el.style.transform = 'translate3d(' + o.x.toFixed(1) + 'px,0,0)';
+            });
+        }
+
+        /* --- Obstacles ---------------------------------------------------- */
+        function spawn() {
+            if (!OBSTACLES.length) return;
+
+            const spec = OBSTACLES[Math.floor(Math.random() * OBSTACLES.length)];
+            const h    = clamp(parseInt(spec.h, 10) || 1, 1, 3);
+
+            const height = Math.round(free * OBS_H[h - 1]);
+
+            const el = document.createElement('span');
+            el.className = 'obs obs--h' + h;
+            el.style.height = height + 'px';
+            el.innerHTML = '<i class="obs__label"></i>';
+            $('.obs__label', el).textContent = spec.label || '';
+            obsLayer.appendChild(el);
+
+            obstacles.push({
+                el,
+                x: width + 60,
+                w: el.offsetWidth || 42,
+                h: height,
+                hit: false
+            });
+        }
+
+        function clearObstacles(fade) {
+            obstacles.forEach((o) => {
+                if (fade) {
+                    o.el.classList.add('is-gone');
+                    setTimeout(() => o.el.remove(), 500);
+                } else {
+                    o.el.remove();
+                }
+            });
+            obstacles = [];
+        }
+
+        /* --- Milestones --------------------------------------------------- */
+        function checkMilestone() {
+            const pct = (travel / TOTAL_PX) * 100;
+
+            for (let i = 0; i < MILESTONES.length; i++) {
+                if (msDone[i]) continue;
+                if (pct < (Number(MILESTONES[i].at) || 0)) continue;
+
+                msDone[i] = true;
+                state    = 'slow';
+                slowTil  = performance.now() + MS_MS;
+
+                clearObstacles(true);
+                nextSpawn = travel + 1200;
+
+                msEl.textContent = MILESTONES[i].line;
+                msEl.classList.add('is-on');
+                world.classList.add('is-slow');
+
+                const pip = pipsEl && pipsEl.children[i];
+                if (pip) pip.classList.add('is-hit');
+                break;
+            }
+        }
+
+        function endMilestone() {
+            state = 'running';
+            msEl.classList.remove('is-on');
+            world.classList.remove('is-slow');
+            setTimeout(() => {
+                if (!msEl.classList.contains('is-on')) msEl.textContent = '';
+            }, 600);
+        }
+
+        /* --- Collisions --------------------------------------------------- */
+        function collide(now) {
+            if (now < mercyTil) return;
+
+            for (let i = 0; i < obstacles.length; i++) {
+                const o = obstacles[i];
+                if (o.hit) continue;
+
+                // A few pixels of forgiveness on every side
+                const overlapX = o.x + 5 < bubuBox.x + bubuBox.w - 5 &&
+                                 o.x + o.w - 5 > bubuBox.x + 5;
+                if (!overlapX) continue;
+                if (y >= o.h - 5) continue;      // cleared it
+
+                o.hit = true;
+                takeHit(now, o);
                 return;
             }
-
-            const seconds = Math.floor(diff / 1000);
-            const days    = Math.floor(seconds / 86400);
-            const hours   = Math.floor((seconds % 86400) / 3600);
-            const minutes = Math.floor((seconds % 3600) / 60);
-
-            setField(fields.days,    String(days));
-            setField(fields.hours,   pad(hours));
-            setField(fields.minutes, pad(minutes));
-            setField(fields.seconds, pad(seconds % 60));
-
-            if (factSleeps) factSleeps.textContent = String(days);
-            if (factWeeks)  factWeeks.textContent  = String(Math.floor(days / 7));
         }
 
-        tick();
-        timer = setInterval(tick, 1000);
-    }
+        function takeHit(now, o) {
+            lives -= 1;
+            mercyTil = now + HIT_MERCY;
+
+            o.el.classList.add('is-gone');
+            setTimeout(() => o.el.remove(), 400);
+            obstacles = obstacles.filter((x) => x !== o);
+
+            world.classList.add('is-shaking');
+            bubuEl.classList.add('is-hurt');
+            setTimeout(() => world.classList.remove('is-shaking'), 420);
+            setTimeout(() => bubuEl.classList.remove('is-hurt'), HIT_MERCY);
+
+            paintHud();
+
+            if (lives <= 0) gameOver();
+        }
+
+        /* --- Endings ------------------------------------------------------ */
+        function gameOver() {
+            state = 'over';
+            cancelAnimationFrame(raf);
+            raf = null;
+
+            const pct = Math.round(clamp(travel / TOTAL_PX, 0, 1) * 100);
+            if (pct > best.get()) best.set(pct);
+            showBest();
+
+            if (overKmEl) {
+                overKmEl.textContent = Math.round(TOTAL_KM * (pct / 100)).toLocaleString();
+            }
+
+            clearObstacles(true);
+            world.classList.add('is-over');
+            setPanel(overPanel);
+        }
+
+        function win() {
+            state = 'ending';
+            clearObstacles(true);
+            best.set(100);
+            showBest();
+
+            travel = TOTAL_PX;
+            paintHud();
+
+            world.classList.add('is-ending');
+
+            // She's been standing there the whole time, off screen right.
+            // Unhide, force the layout, then add the class — doing it on a
+            // frame callback instead would leave her invisible if the frame
+            // never comes (background tab, throttled renderer).
+            duduEl.hidden = false;
+            void duduEl.offsetWidth;
+            duduEl.classList.add('is-here');
+
+            // Walk toward each other, meet, hug.
+            setTimeout(() => {
+                bubuEl.classList.add('is-meeting');
+                duduEl.classList.add('is-meeting');
+            }, 260);
+
+            setTimeout(() => {
+                bubuEl.classList.add('is-done');
+                duduEl.classList.add('is-done');
+                hugEl.hidden = false;
+                void hugEl.offsetWidth;
+                hugEl.classList.add('is-here');
+                confetti(3400);
+            }, 1500);
+
+            setTimeout(() => {
+                state = 'won';
+                setPanel(winPanel);
+            }, 2500);
+
+            cancelAnimationFrame(raf);
+            raf = null;
+        }
+
+        /* --- The loop ----------------------------------------------------- */
+        function frame(now) {
+            if (state !== 'running' && state !== 'slow') { raf = null; return; }
+
+            const dt = Math.min((now - lastT) / 1000, 0.05);   // cap after a stall
+            lastT = now;
+
+            const pct   = clamp(travel / TOTAL_PX, 0, 1);
+            const base  = SPEED_MIN + (SPEED_MAX - SPEED_MIN) * pct;
+            const speed = state === 'slow' ? base * 0.3 : base;
+
+            travel += speed * dt;
+
+            if (y > 0 || vy > 0) {
+                vy -= gravity * dt;
+                y  += vy * dt;
+                if (y <= 0) { y = 0; vy = 0; jumps = 0; }
+            }
+
+            // Obstacles
+            obstacles.forEach((o) => { o.x -= speed * dt; });
+            obstacles = obstacles.filter((o) => {
+                if (o.x > -140) return true;
+                o.el.remove();
+                return false;
+            });
+
+            if (state === 'running' && travel > nextSpawn && travel < TOTAL_PX - 1600) {
+                spawn();
+                // Never closer together than a jump can clear
+                nextSpawn = travel + speed * (1.15 + Math.random() * 0.85);
+            }
+
+            if (state === 'running') collide(now);
+            if (state === 'slow' && now >= slowTil) endMilestone();
+            if (state === 'running') checkMilestone();
+
+            paintWorld();
+            paintHud();
+
+            if (travel >= TOTAL_PX) { win(); return; }
+
+            raf = requestAnimationFrame(frame);
+        }
+
+        function run() {
+            if (raf) return;
+            lastT = performance.now();
+            raf = requestAnimationFrame(frame);
+        }
+
+        /* --- Controls ----------------------------------------------------- */
+        function jump() {
+            if (state !== 'running' && state !== 'slow') return;
+            if (jumps >= 2) return;
+
+            // The second jump is a little weaker, so it's a save and not a fly
+            vy = jumps === 0 ? jumpV : jumpV * 0.82;
+            jumps += 1;
+
+            bubuEl.classList.remove('is-jumping');
+            void bubuEl.offsetWidth;
+            bubuEl.classList.add('is-jumping');
+        }
+
+        function start() {
+            measure();
+
+            travel = 0;
+            lives  = LIVES;
+            y = 0; vy = 0; jumps = 0;
+            mercyTil = 0;
+            msDone = [];
+            nextSpawn = 1000;
+
+            clearObstacles(false);
+            msEl.textContent = '';
+            msEl.classList.remove('is-on');
+
+            world.classList.remove('is-over', 'is-ending', 'is-slow');
+            bubuEl.classList.remove('is-meeting', 'is-done', 'is-hurt');
+            duduEl.classList.remove('is-here', 'is-meeting', 'is-done');
+            hugEl.classList.remove('is-here');
+            duduEl.hidden = true;
+            hugEl.hidden = true;
+
+            if (pipsEl) $$('.game__pip', pipsEl).forEach((p) => p.classList.remove('is-hit'));
+
+            setPanel(null);
+            paintHud();
+            paintWorld();
+
+            state = 'running';
+            run();
+        }
+
+        $('#gameStartBtn').addEventListener('click', start);
+        $('#gameRetryBtn').addEventListener('click', start);
+        $('#gameAgainBtn').addEventListener('click', start);
+
+        // Tapping the strip jumps — but not when a panel is asking for a click,
+        // and never in a way that stops her scrolling past a game she isn't
+        // playing.
+        world.addEventListener('pointerdown', (ev) => {
+            if (state !== 'running' && state !== 'slow') return;
+            if (ev.target.closest('.game__panel')) return;
+            ev.preventDefault();
+            jump();
+        });
+
+        document.addEventListener('keydown', (ev) => {
+            if (ev.key !== ' ' && ev.key !== 'Spacebar' &&
+                ev.key !== 'ArrowUp' && ev.key !== 'w') return;
+
+            // Don't steal the spacebar from buttons or from the rest of the page.
+            // The target isn't always an element — it's the document itself when
+            // nothing on the page has focus.
+            if (state !== 'running' && state !== 'slow') return;
+
+            const t = ev.target;
+            if (t && t.closest && t.closest('button, a, input, textarea')) return;
+
+            ev.preventDefault();
+            jump();
+        });
+
+        // Stop the loop when the strip scrolls away or the tab is hidden —
+        // otherwise she comes back to a game she has already lost.
+        function pauseIfHidden() {
+            if (state !== 'running' && state !== 'slow') return;
+            if (visible && !document.hidden) {
+                lastT = performance.now();
+                run();
+            } else {
+                cancelAnimationFrame(raf);
+                raf = null;
+            }
+        }
+
+        document.addEventListener('visibilitychange', pauseIfHidden);
+
+        if ('IntersectionObserver' in window) {
+            new IntersectionObserver((entries) => {
+                visible = entries[0].isIntersecting;
+                pauseIfHidden();
+            }, { threshold: 0.35 }).observe(world);
+        }
+
+        window.addEventListener('resize', onFrame(() => {
+            measure();
+            paintWorld();
+        }));
+
+        measure();
+        showBest();
+        paintHud();
+    })();
 
 
     /* ======================================================================
-       17. EASTER EGGS
+       17. MAKE A WISH — the cake
+
+       One candle per year. Tap them, or actually blow into the microphone
+       if she lets the page listen. The whole scene dims as they go out and
+       comes back all at once when the last one dies.
+       ====================================================================== */
+    const wishEl = $('#wish');
+
+    if (wishEl) (function initWish() {
+        const cake     = $('#cake');
+        const candles  = $$('.candle', cake);
+        const outEl    = $('#wishOut');
+        const doneEl   = $('#wishDone');
+        const danceEl  = $('#cakeDance');
+        const relight  = $('#wishRelight');
+        const micBtn   = $('#wishMic');
+        const micNote  = $('#wishMicNote');
+
+        const TOTAL = candles.length;
+        let out = 0;
+        let finished = false;
+        let mic = null;      // { ctx, stream, raf }
+
+        // Written onto <html> rather than the section, so the fixed page
+        // background — which isn't a descendant of anything here — dims too.
+        function setLit() {
+            const lit = TOTAL ? (TOTAL - out) / TOTAL : 0;
+            document.documentElement.style.setProperty('--lit', lit.toFixed(3));
+            if (outEl) outEl.textContent = String(out);
+        }
+
+        function blow(candle) {
+            if (finished || !candle || candle.classList.contains('is-out')) return false;
+
+            candle.classList.add('is-out');
+            candle.disabled = true;
+            out += 1;
+            setLit();
+
+            if (out >= TOTAL) finish();
+            return true;
+        }
+
+        /** Blows out the leftmost candle still burning. Used by the mic. */
+        function blowNext() {
+            return blow(candles.find((c) => !c.classList.contains('is-out')));
+        }
+
+        function finish() {
+            finished = true;
+            stopMic();
+
+            cake.classList.add('is-done');
+            wishEl.classList.add('is-dark');
+
+            // A beat of darkness, then everything comes back at once
+            setTimeout(() => {
+                wishEl.classList.remove('is-dark');
+                wishEl.classList.add('is-done');
+
+                // Unhide, force layout, then add the class. A frame callback
+                // would be prettier and would also leave the whole message
+                // stuck at opacity 0 if that frame never arrives.
+                if (danceEl) {
+                    danceEl.hidden = false;
+                    void danceEl.offsetWidth;
+                    danceEl.classList.add('is-here');
+                }
+
+                if (doneEl) {
+                    doneEl.hidden = false;
+                    void doneEl.offsetWidth;
+                    doneEl.classList.add('is-in');
+                }
+
+                confetti(3800);
+
+                try { window.localStorage.setItem('wishMade', '1'); } catch (e) { /* ignore */ }
+            }, 900);
+        }
+
+        function relightAll() {
+            finished = false;
+            out = 0;
+
+            candles.forEach((c) => {
+                c.classList.remove('is-out');
+                c.disabled = false;
+            });
+
+            cake.classList.remove('is-done');
+            wishEl.classList.remove('is-done', 'is-dark');
+
+            if (danceEl) { danceEl.classList.remove('is-here'); danceEl.hidden = true; }
+            if (doneEl)  { doneEl.classList.remove('is-in');  doneEl.hidden  = true; }
+
+            setLit();
+            if (candles[0]) candles[0].focus();
+        }
+
+        candles.forEach((c) => {
+            c.addEventListener('click', () => blow(c));
+            // Dragging a finger across the cake blows out everything it touches
+            c.addEventListener('pointerenter', (ev) => {
+                if (ev.pressure > 0 || ev.buttons === 1) blow(c);
+            });
+        });
+
+        if (relight) relight.addEventListener('click', relightAll);
+
+        /* --- The microphone ----------------------------------------------
+           Opt-in only: nothing is requested until she presses the button,
+           and the stream is torn down the moment the last candle is out.
+           ------------------------------------------------------------------ */
+        function stopMic() {
+            if (!mic) return;
+            cancelAnimationFrame(mic.raf);
+            mic.stream.getTracks().forEach((t) => t.stop());
+            if (mic.ctx.state !== 'closed') mic.ctx.close();
+            mic = null;
+            if (micBtn) micBtn.classList.remove('is-live');
+        }
+
+        function say(text) {
+            if (!micNote) return;
+            micNote.textContent = text;
+            micNote.hidden = !text;
+        }
+
+        async function startMic() {
+            if (mic) { stopMic(); say(''); return; }
+
+            if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                say('This browser won’t let me listen. Tapping works just as well.');
+                return;
+            }
+
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                const Ctx    = window.AudioContext || window.webkitAudioContext;
+                const ctx    = new Ctx();
+                const src    = ctx.createMediaStreamSource(stream);
+                const node   = ctx.createAnalyser();
+
+                node.fftSize = 1024;
+                node.smoothingTimeConstant = 0.6;
+                src.connect(node);
+
+                const bins = new Uint8Array(node.frequencyBinCount);
+                const wave = new Uint8Array(node.fftSize);
+                let lastBlow = 0;
+
+                mic = { ctx, stream, raf: 0 };
+                micBtn.classList.add('is-live');
+                say('Listening. Blow at your phone.');
+
+                (function listen() {
+                    if (!mic) return;
+                    mic.raf = requestAnimationFrame(listen);
+
+                    node.getByteFrequencyData(bins);
+                    node.getByteTimeDomainData(wave);
+
+                    // Loudness…
+                    let sum = 0;
+                    for (let i = 0; i < wave.length; i++) {
+                        const v = (wave[i] - 128) / 128;
+                        sum += v * v;
+                    }
+                    const rms = Math.sqrt(sum / wave.length);
+
+                    // …and how much of it is low rumble rather than voice
+                    let low = 0, all = 0;
+                    for (let i = 0; i < bins.length; i++) {
+                        if (i < 12) low += bins[i];
+                        all += bins[i];
+                    }
+                    const ratio = all > 0 ? low / all : 0;
+
+                    const now = performance.now();
+                    if (rms > 0.09 && ratio > 0.34 && now - lastBlow > 150) {
+                        lastBlow = now;
+                        blowNext();
+                        micBtn.classList.add('is-hit');
+                        setTimeout(() => micBtn.classList.remove('is-hit'), 200);
+                    }
+                })();
+            } catch (e) {
+                say('No microphone, then. Tapping is allowed too.');
+            }
+        }
+
+        if (micBtn) micBtn.addEventListener('click', startMic);
+        window.addEventListener('pagehide', stopMic);
+
+        setLit();
+    })();
+
+
+    /* ======================================================================
+       18. EASTER EGGS
        Four of them. Find all four and you get a fifth.
        ====================================================================== */
     const foundEggs = new Set();
@@ -836,15 +1503,23 @@
 
 
     /* ======================================================================
-       18. STICKERS
+       19. STICKERS
        Bubu & Dudu fade in with a small bounce the first time they scroll
        into view, then float gently. Any GIF that hasn't been added yet
        turns into a labelled dashed slot so you can see where it belongs.
        ====================================================================== */
     function initStickers() {
-        // The loader and the finale run their own choreography — skip those.
-        const boxes = $$('.sticker-box').filter(
-            (box) => !box.closest('.loader__stage') && !box.closest('.finale__stage')
+        // The loader, the finale, the two runners and the cake dancer all run
+        // their own choreography — the shared float would fight every one of
+        // them. Everything else on those pages (panel stickers included) still
+        // gets the normal entrance.
+        const OWN_CHOREOGRAPHY =
+            '.world__bubu, .world__dudu, .world__hug, .cake-stage__dance';
+
+        const boxes = $$('.sticker-box').filter((box) =>
+            !box.closest('.loader__stage') &&
+            !box.closest('.finale__stage') &&
+            !box.matches(OWN_CHOREOGRAPHY)
         );
 
         if (!('IntersectionObserver' in window) || prefersReducedMotion) {
@@ -882,7 +1557,7 @@
 
 
     /* ======================================================================
-       19. CONFETTI
+       20. CONFETTI
        A single soft burst. Draws itself, then removes its own canvas.
        ====================================================================== */
     function confetti(duration = 2600) {
@@ -962,7 +1637,7 @@
 
 
     /* ======================================================================
-       20. HIDDEN HEARTS
+       21. HIDDEN HEARTS
        Sixteen hearts, spread over the seven pages. Each one is dropped into
        the corner of an existing element, so they never land on top of text.
        Progress is kept in localStorage — she can find them over several days.
@@ -991,12 +1666,13 @@
             // the envelopes themselves are buttons — hang this one off the grid
             ['h11', '.envelopes',                   'tl']
         ],
-        playlist: [
-            ['h12', '.playlist-head__meta',         'tr'],
-            ['h13', '.embeds .embed:nth-child(2)',  'tr']
+        game: [
+            ['h12', '.page-head',                   'tr'],
+            // not on the strip itself — she'd hit it mid-jump
+            ['h13', '.game__note',                  'cl']
         ],
-        countdown: [
-            ['h14', '.countdown',                   'tl']
+        wish: [
+            ['h14', '.wish__note',                  'br']
         ],
         final: [
             ['h15', '.final__head',                 'tl'],
@@ -1142,7 +1818,7 @@
 
 
     /* ======================================================================
-       21. THE PUZZLE
+       22. THE PUZZLE
        Drag a piece onto another to swap them, or tap one then the other.
        Keyboard works the same way: Enter to pick up, Enter to place.
        ====================================================================== */
@@ -1350,7 +2026,7 @@
 
 
     /* ======================================================================
-       22. THE FINALE
+       23. THE FINALE
        Scrolls into view → they walk toward each other → hug → confetti,
        once → the last line fades in.
        ====================================================================== */
@@ -1394,7 +2070,7 @@
 
 
     /* ======================================================================
-       23. SECRET PAGE GATE
+       24. SECRET PAGE GATE
        ====================================================================== */
     if (document.body.dataset.page === 'secret') {
         const locked   = $('#secretLocked');

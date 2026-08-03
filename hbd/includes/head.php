@@ -11,12 +11,13 @@
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
-   ❤  YOUR SETTINGS — change these five lines and the whole site updates.
+   ❤  YOUR SETTINGS — change these four lines and the whole site updates.
    -------------------------------------------------------------------------- */
-$HER_NICKNAME  = 'Sunshine';                 // your nickname for her
-$YOUR_NAME     = 'Yours, always';            // how you sign the letters
-$COUNTDOWN_TO  = '2026-12-24T18:00:00';      // the day you finally see her
-$COUNTDOWN_WHY = 'Until I get to hold you again';
+$HER_NICKNAME  = 'Abbbyyy shuuuuuu';         // your nickname for her
+$YOUR_NAME     = 'Abbbyyy carrrr, always';   // how you sign the letters
+$HER_AGE       = 16;                         // how many candles go on the cake
+$DISTANCE_KM   = 2140;                       // how far apart you actually are —
+                                             // this is the game's finish line
 $SITE_TITLE    = 'Happy Birthday, ' . $HER_NICKNAME;
 /* -------------------------------------------------------------------------- */
 

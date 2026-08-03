@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cp style.css __TRACKED_VAR__/style.css.bak)",
+      "Bash(sed -i -e '3247,3260d' -e '3233,3242d' -e '2728,2762d' -e '2525d' -e '2489,2497d' -e '2412,2429d' -e '1713,2190d' style.css)",
+      "Bash(curl -s \"http://127.0.0.1:8765/game.php\")",
+      "Bash(curl -s \"http://127.0.0.1:8765/wish.php\")",
+      "Bash(curl -s \"http://127.0.0.1:8765/index.php\")",
+      "Read(//c/Program Files/Google/Chrome/Application/**)",
+      "Bash(npm ls *)",
+      "Read(//c/tmp/**)",
+      "Bash(\"/c/Program Files/Google/Chrome/Application/chrome.exe\" --headless=new --disable-gpu --no-sandbox --virtual-time-budget=120000 --window-size=1200,900 --dump-dom \"http://127.0.0.1:8765/_test.html\")",
+      "Bash(\"/c/Program Files/Google/Chrome/Application/chrome.exe\" --headless=new --disable-gpu --no-sandbox --virtual-time-budget=30000 --window-size=1200,900 --dump-dom \"http://127.0.0.1:8765/_test.html\")",
+      "Bash(\"/c/Program Files/Google/Chrome/Application/chrome.exe\" --headless=new --disable-gpu --no-sandbox --virtual-time-budget=150000 --window-size=1200,900 --dump-dom \"http://127.0.0.1:8765/_test.php\")",
+      "Bash(\"/c/Program Files/Google/Chrome/Application/chrome.exe\" --headless=new --disable-gpu --no-sandbox --virtual-time-budget=200000 --window-size=1200,900 --dump-dom \"http://127.0.0.1:8765/_test.php\")",
+      "Bash(\"/c/Program Files/Google/Chrome/Application/chrome.exe\" --headless=new --disable-gpu --no-sandbox --virtual-time-budget=250000 --window-size=1200,900 --dump-dom \"http://127.0.0.1:8765/_test.php\")"
+    ]
+  }
+}

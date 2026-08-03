@@ -1269,21 +1269,18 @@ em { font-style: italic; }
 }
 
 /* Placeholder shown when the image file isn't there yet */
-.shot__media img.is-missing,
-.track__cover img.is-missing {
+.shot__media img.is-missing {
     opacity: 0;
 }
 
-.shot__media.is-empty,
-.track__cover.is-empty {
+.shot__media.is-empty {
     position: relative;
     background:
         linear-gradient(140deg, rgba(139, 92, 246, .22), rgba(244, 114, 182, .14)),
         var(--ink-3);
 }
 
-.shot__media.is-empty::after,
-.track__cover.is-empty::after {
+.shot__media.is-empty::after {
     content: attr(data-empty);
     position: absolute;
     inset: 0;
@@ -1711,481 +1708,858 @@ em { font-style: italic; }
 
 
 /* ==========================================================================
-   13. PLAYLIST
+   13. THE GAME — "Bring me home"
+
+   Nothing here is a canvas. The runner, the obstacles and the two of them
+   are ordinary elements moved with transforms, so the GIFs keep playing
+   while they travel. script.js writes the transforms; this file decides
+   what everything looks like.
    ========================================================================== */
-.playlist-head {
+.game {
     max-width: var(--max);
     margin-inline: auto;
-    padding: clamp(120px, 16vh, 190px) var(--gutter) clamp(16px, 3vw, 30px);
     display: grid;
-    grid-template-columns: clamp(180px, 22vw, 250px) 1fr;
-    gap: clamp(24px, 4vw, 48px);
-    align-items: end;
+    gap: 12px;
 }
 
-.playlist-head__art {
-    aspect-ratio: 1;
-    border-radius: var(--r-md);
-    padding: 3px;
-    background: linear-gradient(140deg, rgba(167, 139, 250, .7), rgba(244, 114, 182, .5));
-    box-shadow: var(--shadow-lg), var(--glow-purple);
+/* --- HUD ----------------------------------------------------------------- */
+.game__hud {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px;
+    padding-inline: 4px;
 }
 
-.playlist-head__art-inner {
-    width: 100%;
-    height: 100%;
-    display: grid;
-    place-items: center;
-    border-radius: calc(var(--r-md) - 3px);
-    background:
-        radial-gradient(circle at 30% 25%, rgba(167, 139, 250, .45), transparent 60%),
-        radial-gradient(circle at 75% 80%, rgba(244, 114, 182, .40), transparent 60%),
-        var(--ink-2);
+.game__lives {
+    display: flex;
+    gap: 7px;
+    align-items: center;
 }
 
-.playlist-head__note {
-    font-size: clamp(3rem, 7vw, 4.6rem);
-    color: rgba(255, 255, 255, .8);
-    text-shadow: 0 0 40px rgba(244, 114, 182, .7);
-    animation: moonFloat 4s var(--ease) infinite alternate;
+.game__life {
+    width: 15px;
+    height: 15px;
+    display: block;
+    background: var(--pink);
+    filter: drop-shadow(0 0 10px rgba(244, 114, 182, .55));
+    /* a heart, without needing a glyph that changes shape per platform */
+    clip-path: path('M7.5 14C7.5 14 0 9.5 0 4.8 0 2.1 2.1 0 4.6 0c1.3 0 2.4.6 2.9 1.4C8 .6 9.1 0 10.4 0 12.9 0 15 2.1 15 4.8 15 9.5 7.5 14 7.5 14z');
+    transition: opacity var(--t-fast) var(--ease), transform var(--t-fast) var(--ease-out);
 }
 
-.playlist-head__kind {
-    font-size: 10px;
-    letter-spacing: .34em;
-    text-transform: uppercase;
-    color: var(--text-3);
-    margin-bottom: 14px;
+.game__life.is-gone {
+    opacity: .16;
+    filter: none;
+    transform: scale(.8);
 }
 
-.playlist-head__title {
-    font-size: clamp(2.1rem, 6vw, 4rem);
+.game__dist {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin-inline: auto;
+}
+
+.game__dist-value {
+    font-family: var(--font-display);
+    font-size: clamp(1.6rem, 5vw, 2.5rem);
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
     background: var(--grad-text);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    padding-bottom: .06em;
 }
 
-.playlist-head__sub {
-    margin-top: 16px;
-    font-size: .86rem;
-    letter-spacing: .05em;
-    color: var(--text-3);
-}
-
-.playlist-head__lede {
-    margin-top: 18px;
-    max-width: 520px;
-    color: var(--text-2);
-    font-size: .98rem;
-}
-
-/* --- Track list ---------------------------------------------------------- */
-.tracks {
-    border: 1px solid var(--line);
-    border-radius: var(--r-lg);
-    background: rgba(255, 255, 255, .022);
-    backdrop-filter: blur(var(--blur));
-    -webkit-backdrop-filter: blur(var(--blur));
-    overflow: hidden;
-}
-
-.tracks__head,
-.track {
-    display: grid;
-    grid-template-columns: 52px minmax(0, 1fr) minmax(0, .55fr) 64px;
-    align-items: center;
-    gap: 14px;
-    padding: 0 clamp(14px, 2vw, 24px);
-}
-
-.tracks__head {
-    height: 44px;
-    border-bottom: 1px solid var(--line);
-    font-size: 10px;
-    letter-spacing: .22em;
+.game__dist-label {
+    font-size: 9.5px;
+    letter-spacing: .28em;
     text-transform: uppercase;
     color: var(--text-4);
 }
 
-.tracks__head-time { text-align: right; }
-
-.track {
-    position: relative;
-    padding-block: 12px;
-    border-bottom: 1px solid rgba(255, 255, 255, .04);
-    transition: background var(--t-fast) var(--ease);
-}
-
-.track:last-child { border-bottom: 0; }
-
-.track:hover { background: rgba(255, 255, 255, .045); }
-
-.track__index {
-    position: relative;
-    display: grid;
-    place-items: center;
-    height: 20px;
-}
-
-.track__no {
-    font-size: .82rem;
-    font-variant-numeric: tabular-nums;
+.game__best {
+    font-size: 11px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
     color: var(--text-4);
-    transition: opacity var(--t-fast) var(--ease);
+    white-space: nowrap;
 }
 
-.track:hover .track__no { opacity: 0; }
-
-/* Little equaliser that appears on hover */
-.track__eq {
-    position: absolute;
-    display: flex;
-    align-items: flex-end;
-    gap: 2px;
-    height: 14px;
-    opacity: 0;
-    transition: opacity var(--t-fast) var(--ease);
-}
-
-.track:hover .track__eq { opacity: 1; }
-
-.track__eq i {
-    width: 2.5px;
+/* --- Progress rail ------------------------------------------------------- */
+.game__rail {
+    position: relative;
     height: 4px;
-    border-radius: 2px;
-    background: var(--pink);
-    animation: eq .8s var(--ease) infinite alternate;
+    border-radius: var(--r-pill);
+    background: rgba(255, 255, 255, .07);
 }
 
-.track__eq i:nth-child(2) { animation-delay: .2s; }
-.track__eq i:nth-child(3) { animation-delay: .4s; }
-
-.track__main {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    min-width: 0;
+.game__rail-fill {
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 0;
+    border-radius: inherit;
+    background: var(--grad-accent);
+    box-shadow: 0 0 18px rgba(167, 139, 250, .5);
 }
 
-.track__cover {
-    position: relative;
-    flex: 0 0 auto;
-    width: 48px;
-    height: 48px;
-    border-radius: 8px;
-    overflow: hidden;
-    background: var(--ink-3);
-    box-shadow: var(--shadow-sm);
+.game__pip {
+    position: absolute;
+    top: 50%;
+    width: 5px;
+    height: 5px;
+    margin-left: -2.5px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, .3);
+    transform: translateY(-50%);
+    transition: background var(--t-fast) var(--ease), box-shadow var(--t-fast) var(--ease);
 }
 
-.track__cover img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+.game__pip.is-hit {
+    background: var(--pink-soft);
+    box-shadow: 0 0 14px rgba(251, 207, 232, .9);
 }
 
-.track__cover.is-empty::after { font-size: .8rem; content: '♪'; }
-
-.track__text {
-    display: grid;
-    gap: 2px;
-    min-width: 0;
-}
-
-.track__title {
-    font-size: .97rem;
-    color: var(--text);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    transition: color var(--t-fast) var(--ease);
-}
-
-.track:hover .track__title { color: var(--pink-soft); }
-
-.track__artist {
-    font-size: .82rem;
-    color: var(--text-3);
-}
-
-.track__why {
-    font-size: .8rem;
-    font-style: italic;
-    color: var(--text-4);
-    max-height: 0;
-    overflow: hidden;
-    opacity: 0;
-    transition: max-height var(--t-med) var(--ease), opacity var(--t-med) var(--ease), margin var(--t-med) var(--ease);
-}
-
-.track:hover .track__why {
-    max-height: 40px;
-    opacity: 1;
-    margin-top: 4px;
-}
-
-.track__album,
-.track__time {
-    font-size: .84rem;
-    color: var(--text-3);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.track__time {
-    text-align: right;
-    font-variant-numeric: tabular-nums;
-}
-
-/* --- Embeds -------------------------------------------------------------- */
-.embeds {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: clamp(14px, 2vw, 20px);
-}
-
-.embed {
-    padding: 16px;
-    border-radius: var(--r-md);
-    transition: transform var(--t-med) var(--ease-out), border-color var(--t-med) var(--ease);
-}
-
-.embed:hover {
-    transform: translateY(-4px);
-    border-color: rgba(167, 139, 250, .32);
-}
-
-.embed__frame {
-    border-radius: 12px;
-    min-height: 152px;
-}
-
-.embed__placeholder {
-    display: grid;
-    gap: 8px;
-    justify-items: start;
-    padding: 12px 6px;
-}
-
-.embed__icon {
-    font-size: 1.3rem;
+.game__rail-home {
+    position: absolute;
+    right: -4px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 13px;
+    line-height: 1;
     color: var(--pink);
 }
 
-.embed__name {
+/* --- The strip ----------------------------------------------------------- */
+.world {
+    position: relative;
+    height: clamp(230px, 34vw, 340px);
+    border-radius: var(--r-lg);
+    border: 1px solid var(--line);
+    background: linear-gradient(180deg, rgba(18, 16, 26, .9), rgba(8, 7, 12, .96));
+    overflow: hidden;
+    touch-action: manipulation;
+    user-select: none;
+    cursor: pointer;
+    isolation: isolate;
+}
+
+.world__sky {
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(70% 100% at 78% 8%, rgba(244, 114, 182, .13), transparent 62%),
+        radial-gradient(80% 100% at 12% 0%, rgba(139, 92, 246, .16), transparent 60%);
+}
+
+/* Distant hills, scrolling at a quarter of the ground's speed */
+.world__far {
+    position: absolute;
+    inset: auto 0 46px 0;
+    height: 54%;
+    opacity: .5;
+    background-repeat: repeat-x;
+    background-size: 520px 100%;
+    background-image:
+        radial-gradient(120px 60px at 60px 100%,  rgba(139, 92, 246, .30), transparent 70%),
+        radial-gradient(180px 84px at 250px 100%, rgba(91, 33, 182, .34),  transparent 70%),
+        radial-gradient(140px 52px at 430px 100%, rgba(190, 24, 93, .18),  transparent 70%);
+}
+
+.world__ground {
+    position: absolute;
+    inset: auto 0 0 0;
+    height: 46px;
+    border-top: 1px solid rgba(255, 255, 255, .14);
+    background-repeat: repeat-x;
+    background-size: 88px 100%;
+    background-image:
+        linear-gradient(180deg, rgba(255, 255, 255, .05), transparent 70%),
+        linear-gradient(90deg, rgba(255, 255, 255, .13) 0 2px, transparent 2px 88px);
+}
+
+.world__obs {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+/* --- The two of them ----------------------------------------------------- */
+.world__bubu,
+.world__dudu,
+.world__hug {
+    position: absolute;
+    bottom: 46px;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.world__bubu {
+    left: 16%;
+    animation: none;             /* the sticker entrance would fight the game */
+    opacity: 1;
+    transition: left 1.1s var(--ease-out), opacity .4s var(--ease);
+}
+
+.world__bubu.is-jumping .sticker { animation: game-hop .5s var(--ease-out); }
+
+/* Blinks while she still has mercy frames after a hit */
+.world__bubu.is-hurt { animation: game-blink .18s steps(1) 6; }
+
+.world__dudu {
+    right: -22%;
+    opacity: 0;
+    transition: right 1.2s var(--ease-out), opacity .5s var(--ease);
+}
+
+.world__dudu.is-here    { right: 8%; opacity: 1; }
+.world__bubu.is-meeting { left: 38%; }
+.world__dudu.is-meeting { right: 38%; }
+
+.world__bubu.is-done,
+.world__dudu.is-done { opacity: 0; }
+
+.world__hug {
+    left: 50%;
+    transform: translateX(-50%) scale(.7);
+    opacity: 0;
+    transition: opacity .6s var(--ease), transform .6s var(--ease-out);
+}
+
+.world__hug.is-here {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+}
+
+@keyframes game-hop {
+    0%   { transform: scale(1, 1); }
+    22%  { transform: scale(.9, 1.12); }
+    60%  { transform: scale(1.06, .94); }
+    100% { transform: scale(1, 1); }
+}
+
+@keyframes game-blink {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: .25; }
+}
+
+/* --- The things in the way ----------------------------------------------- */
+.obs {
+    position: absolute;
+    bottom: 46px;
+    left: 0;
+    display: grid;
+    place-items: center;
+    padding: 0 11px;
+    border-radius: 10px 10px 3px 3px;
+    border: 1px solid rgba(244, 114, 182, .34);
+    background: linear-gradient(180deg, rgba(190, 24, 93, .26), rgba(18, 16, 26, .9));
+    box-shadow: 0 -8px 26px rgba(190, 24, 93, .22), inset 0 1px 0 rgba(255, 255, 255, .1);
+    white-space: nowrap;
+    will-change: transform;
+    transition: opacity .4s var(--ease), transform .4s var(--ease-out);
+}
+
+/* Heights come from script.js — they're a fraction of the strip, so the
+   jump clears exactly the same things on a phone as on a laptop. */
+.obs--h3 {
+    border-color: rgba(167, 139, 250, .4);
+    background: linear-gradient(180deg, rgba(91, 33, 182, .34), rgba(18, 16, 26, .92));
+    box-shadow: 0 -8px 26px rgba(139, 92, 246, .26), inset 0 1px 0 rgba(255, 255, 255, .1);
+}
+
+.obs__label {
+    font-size: 10px;
+    font-style: normal;
+    letter-spacing: .08em;
+    color: rgba(255, 255, 255, .7);
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    max-height: 100%;
+    overflow: hidden;
+}
+
+.obs--h1 .obs__label { writing-mode: horizontal-tb; font-size: 9.5px; }
+
+/* Cleared by a milestone, or survived */
+.obs.is-gone { opacity: 0; transform: translateY(14px) scale(.9); }
+
+/* --- Milestone ----------------------------------------------------------- */
+.world.is-slow .world__far,
+.world.is-slow .world__ground { filter: brightness(.6) blur(1px); }
+
+.world__milestone {
+    position: absolute;
+    inset: auto 8% 58%;
+    z-index: 3;
+    margin: 0;
+    text-align: center;
     font-family: var(--font-display);
-    font-size: 1.2rem;
+    font-style: italic;
+    font-size: clamp(1.05rem, 2.6vw, 1.6rem);
+    line-height: 1.45;
+    color: var(--text);
+    text-shadow: 0 4px 26px rgba(0, 0, 0, .9);
+    opacity: 0;
+    transform: translateY(16px);
+    pointer-events: none;
+    transition: opacity .6s var(--ease), transform .8s var(--ease-out);
+}
+
+.world__milestone.is-on {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* --- Shake on a hit ------------------------------------------------------ */
+.world.is-shaking { animation: game-shake .4s var(--ease); }
+
+@keyframes game-shake {
+    0%, 100% { transform: translateX(0); }
+    20%      { transform: translateX(-7px); }
+    45%      { transform: translateX(6px); }
+    70%      { transform: translateX(-3px); }
+}
+
+.world.is-over::after,
+.world.is-ending::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: rgba(8, 7, 12, .6);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+}
+
+.world.is-ending::after { background: rgba(8, 7, 12, .35); }
+
+/* --- Panels over the strip ----------------------------------------------- */
+.game__panel {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    display: grid;
+    align-content: center;
+    justify-items: center;
+    gap: 10px;
+    padding: clamp(18px, 4vw, 32px);
+    text-align: center;
+    background: rgba(8, 7, 12, .82);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    animation: panel-in .5s var(--ease-out) both;
+}
+
+@keyframes panel-in {
+    from { opacity: 0; transform: scale(.985); }
+    to   { opacity: 1; transform: none; }
+}
+
+.game__panel-sticker { margin-bottom: 2px; }
+
+.game__panel-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 4.4vw, 2.3rem);
+    font-weight: 300;
+    line-height: 1.15;
     color: var(--text);
 }
 
-.embed__hint {
-    font-size: .78rem;
-    line-height: 1.6;
+.game__panel-text {
+    max-width: 46ch;
+    font-size: clamp(.85rem, 1.6vw, .96rem);
+    line-height: 1.7;
+    color: var(--text-2);
+}
+
+.game__panel-soft { color: var(--text-3); }
+.game__panel-text strong { color: var(--pink-soft); font-weight: 400; }
+
+.game__panel-btn { margin-top: 6px; }
+
+.game__panel-hint {
+    font-size: 10.5px;
+    letter-spacing: .1em;
     color: var(--text-4);
 }
 
-.embed__hint code {
-    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-    font-size: .92em;
-    color: var(--purple-soft);
+/* The one she's actually here for */
+.game__win-eyebrow {
+    font-size: 10px;
+    letter-spacing: .4em;
+    text-transform: uppercase;
+    color: var(--pink-soft);
 }
 
-/* Fake waveform so the empty slot still looks alive */
-.embed__wave {
-    display: flex;
-    align-items: flex-end;
-    gap: 3px;
-    height: 26px;
-    margin-top: 8px;
-    width: 100%;
+.game__win-title {
+    background: var(--grad-text);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
 }
 
-.embed__wave i {
-    flex: 1;
-    height: 20%;
-    border-radius: 2px;
-    background: linear-gradient(to top, rgba(139, 92, 246, .5), rgba(244, 114, 182, .8));
-    animation: wave 1.6s var(--ease) infinite alternate;
+.game__panel--win { background: rgba(8, 7, 12, .9); }
+
+/* No-motion version: the strip becomes a quiet list of the same lines */
+.game.is-calm .world { height: auto; min-height: 0; cursor: default; }
+.game.is-calm .world__sky,
+.game.is-calm .world__far,
+.game.is-calm .world__ground,
+.game.is-calm .world__bubu { display: none; }
+
+.game__panel--calm {
+    position: static;
+    background: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    animation: none;
+    padding: clamp(26px, 5vw, 44px);
 }
 
-.embed__wave i:nth-child(2n)  { animation-delay: .15s; }
-.embed__wave i:nth-child(3n)  { animation-delay: .3s;  }
-.embed__wave i:nth-child(5n)  { animation-delay: .45s; }
-.embed__wave i:nth-child(7n)  { animation-delay: .6s;  }
-
-@keyframes wave {
-    from { height: 15%; opacity: .4; }
-    to   { height: 100%; opacity: 1; }
-}
-
-.embeds__foot {
+.game__calm-lines {
+    display: grid;
+    gap: 18px;
     max-width: var(--max-text);
-    margin: clamp(30px, 4vw, 46px) auto 0;
-    text-align: center;
-    font-style: italic;
+}
+
+.game__calm-line {
     font-family: var(--font-display);
-    font-size: 1.16rem;
+    font-style: italic;
+    font-size: 1.15rem;
+    line-height: 1.6;
+    color: var(--text-2);
+}
+
+.game__calm-line--last {
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+    color: var(--pink-soft);
+}
+
+/* --- Under the strip ----------------------------------------------------- */
+.game__controls {
+    text-align: center;
+    font-size: 10.5px;
+    letter-spacing: .08em;
+    color: var(--text-4);
+}
+
+.game__controls kbd {
+    padding: 2px 6px;
+    border: 1px solid var(--line-strong);
+    border-radius: 5px;
+    background: var(--glass);
+    font: inherit;
+    font-size: 10px;
+    color: var(--text-3);
+}
+
+.game__note {
+    position: relative;
+    max-width: var(--max-text);
+    margin: clamp(34px, 6vw, 56px) auto 0;
+    text-align: center;
+    font-size: .95rem;
     color: var(--text-3);
 }
 
 
 /* ==========================================================================
-   14. COUNTDOWN
+   14. MAKE A WISH — the cake
+
+   --lit runs from 1 (every candle burning) down to 0. script.js writes it
+   onto <html> so the page background can read it too. The glow, the icing
+   and the room all key off that one number, so the scene dims by itself as
+   she blows them out. Every use has a fallback of 1, so with JS off the
+   cake simply looks lit.
    ========================================================================== */
-.countdown-wrap {
+.wish {
     display: grid;
-    gap: clamp(24px, 4vw, 40px);
+    justify-items: center;
+    gap: clamp(20px, 4vw, 34px);
+}
+
+/* Everything on the page loses light along with the candles */
+body.page-wish::before {
+    filter: brightness(calc(.45 + var(--lit, 1) * .55));
+    transition: filter 1s var(--ease);
+}
+
+.wish.is-dark { animation: wish-blackout .9s var(--ease) both; }
+
+@keyframes wish-blackout {
+    0%   { filter: none; }
+    45%  { filter: brightness(.12); }
+    100% { filter: none; }
+}
+
+/* --- The stage ----------------------------------------------------------- */
+/* Equal side columns, so the cake stays dead centre whether or not the
+   dancer has turned up yet. */
+.cake-stage {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: end;
+    gap: clamp(10px, 3vw, 40px);
+    padding-top: clamp(30px, 6vw, 56px);
+}
+
+.cake-stage__bubu  { align-self: end; justify-self: end; }
+.cake-stage__dance { justify-self: start; }
+
+.cake-stage__dance {
+    align-self: end;
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity .7s var(--ease), transform .7s var(--ease-out);
+}
+
+/* Reserve his side of the stage from the start — otherwise the cake would
+   visibly shunt left the moment he appears. */
+.cake-stage__dance[hidden] {
+    display: inline-block !important;
+    visibility: hidden;
+}
+
+.cake-stage__dance.is-here { opacity: 1; transform: none; }
+.cake-stage__dance.is-here .sticker { animation: bop .55s ease-in-out infinite alternate; }
+
+/* A small two-frame bop — barely there, but it reads as dancing */
+@keyframes bop {
+    from { transform: translateY(0)    rotate(-3deg); }
+    to   { transform: translateY(-9px) rotate(3deg); }
+}
+
+/* --- The cake ------------------------------------------------------------ */
+.cake {
+    position: relative;
+    width: clamp(200px, 46vw, 340px);
+    display: grid;
     justify-items: center;
 }
 
-.countdown {
-    width: 100%;
-    max-width: 900px;
-    padding: clamp(34px, 5vw, 62px) clamp(20px, 4vw, 50px);
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-}
-
-.countdown::before {
+/* The pool of light the candles are throwing */
+.cake::before {
     content: '';
     position: absolute;
-    inset: -40%;
-    background: conic-gradient(from 0deg,
-                transparent 0deg,
-                rgba(139, 92, 246, .10) 90deg,
-                transparent 180deg,
-                rgba(244, 114, 182, .10) 270deg,
-                transparent 360deg);
-    animation: spin 22s linear infinite;
+    left: 50%;
+    bottom: 10%;
+    width: 150%;
+    aspect-ratio: 1;
+    transform: translateX(-50%);
+    border-radius: 50%;
+    background: radial-gradient(circle,
+                rgba(255, 196, 122, calc(var(--lit, 1) * .30)) 0%,
+                rgba(244, 114, 182, calc(var(--lit, 1) * .12)) 40%,
+                transparent 68%);
+    filter: blur(6px);
+    pointer-events: none;
+    transition: background 1s var(--ease);
+}
+
+.cake__candles {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-wrap: wrap-reverse;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 4px 6px;
+    margin-bottom: -6px;
+    padding-inline: 8%;
+}
+
+/* --- One candle ---------------------------------------------------------- */
+.candle {
+    position: relative;
+    width: 9px;
+    height: 40px;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.candle:disabled { cursor: default; }
+
+.candle__wax {
+    position: absolute;
+    inset: auto 0 0 0;
+    height: 30px;
+    border-radius: 3px 3px 1px 1px;
+    background: linear-gradient(180deg, var(--pink-soft), #d9a2c4 60%, #a8779a);
+    box-shadow: inset -2px 0 0 rgba(0, 0, 0, .18);
+}
+
+/* Every other candle is a slightly different height — a real cake is messy */
+.candle:nth-child(odd)  .candle__wax { height: 26px; }
+.candle:nth-child(3n)   .candle__wax { height: 33px; }
+
+.candle__flame {
+    position: absolute;
+    left: 50%;
+    bottom: 30px;
+    width: 10px;
+    height: 16px;
+    margin-left: -5px;
+    border-radius: 50% 50% 46% 46%;
+    background: radial-gradient(ellipse at 50% 78%,
+                #fff8e1 0%, #ffd27a 34%, #ff9d4d 64%, rgba(255, 120, 60, 0) 78%);
+    box-shadow: 0 0 16px 5px rgba(255, 176, 90, .55);
+    transform-origin: 50% 100%;
+    animation: flicker 1.1s var(--ease) infinite alternate;
+    transition: opacity .18s var(--ease), transform .3s var(--ease-out);
+}
+
+.candle:nth-child(odd) .candle__flame { bottom: 26px; animation-delay: -.4s; }
+.candle:nth-child(3n)  .candle__flame { bottom: 33px; animation-delay: -.7s; }
+
+.candle:hover:not(:disabled) .candle__flame { transform: scale(1.18) translateY(-2px); }
+
+@keyframes flicker {
+    0%   { transform: scale(1)      skewX(-3deg); opacity: .92; }
+    50%  { transform: scale(1.1, .95) skewX(2deg); opacity: 1; }
+    100% { transform: scale(.95, 1.08) skewX(-2deg); opacity: .88; }
+}
+
+/* Out */
+.candle.is-out .candle__flame {
+    opacity: 0;
+    transform: scale(.2) translateY(6px);
+    animation: none;
+}
+
+.candle__smoke {
+    position: absolute;
+    left: 50%;
+    bottom: 30px;
+    width: 5px;
+    height: 5px;
+    margin-left: -2.5px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, .34);
+    opacity: 0;
     pointer-events: none;
 }
 
-@keyframes spin {
-    to { transform: rotate(360deg); }
+.candle.is-out .candle__smoke { animation: smoke 1.5s var(--ease-out) forwards; }
+
+@keyframes smoke {
+    0%   { opacity: .7; transform: translateY(0) scale(.6); filter: blur(1px); }
+    100% { opacity: 0;  transform: translateY(-46px) scale(3.4) translateX(9px); filter: blur(6px); }
 }
 
-.countdown__grid {
+.candle:focus-visible {
+    outline: 2px solid var(--purple-soft);
+    outline-offset: 4px;
+    border-radius: 4px;
+}
+
+/* --- The cake itself ----------------------------------------------------- */
+.cake__body {
     position: relative;
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    gap: clamp(6px, 1.6vw, 20px);
-}
-
-.unit {
+    z-index: 1;
+    width: 100%;
     display: grid;
-    gap: 10px;
     justify-items: center;
-    min-width: clamp(62px, 13vw, 130px);
+    filter: brightness(calc(.62 + var(--lit, 1) * .38));
+    transition: filter 1s var(--ease);
 }
 
-.unit__value {
-    font-family: var(--font-display);
-    font-size: clamp(2.6rem, 11vw, 6rem);
-    font-weight: 300;
-    line-height: 1;
+.cake__tier {
+    display: block;
+    border: 1px solid rgba(255, 255, 255, .1);
+    box-shadow: inset 0 -10px 20px rgba(0, 0, 0, .35), 0 10px 30px rgba(0, 0, 0, .4);
+}
+
+.cake__icing {
+    display: block;
+    width: 72%;
+    height: 16px;
+    border-radius: 40px 40px 14px 14px / 22px 22px 10px 10px;
+    background: linear-gradient(180deg, #fdf2f8, var(--pink-soft));
+    box-shadow: 0 6px 16px rgba(0, 0, 0, .35);
+    /* the drips */
+    clip-path: polygon(0 0, 100% 0, 100% 55%, 92% 88%, 84% 55%, 74% 96%,
+                       64% 58%, 53% 90%, 42% 55%, 32% 94%, 22% 56%, 12% 86%,
+                       5% 55%, 0 78%);
+    margin-bottom: -4px;
+}
+
+.cake__tier--top {
+    width: 70%;
+    height: 34px;
+    border-radius: 8px 8px 4px 4px;
+    background:
+        repeating-linear-gradient(90deg,
+            rgba(255, 255, 255, .06) 0 1px, transparent 1px 22px),
+        linear-gradient(180deg, #7c4a6b, #5b3450);
+}
+
+.cake__tier--mid {
+    width: 86%;
+    height: 30px;
+    border-radius: 6px;
+    background: linear-gradient(180deg, #6b3f5d, var(--purple-deep));
+    margin-top: 3px;
+}
+
+.cake__tier--base {
+    width: 100%;
+    height: 26px;
+    border-radius: 6px;
+    background: linear-gradient(180deg, #5a3350, #3b2140);
+    margin-top: 3px;
+}
+
+.cake__plate {
+    display: block;
+    width: 116%;
+    height: 9px;
+    margin-top: 4px;
+    border-radius: 50%;
+    background: linear-gradient(180deg, rgba(255, 255, 255, .2), rgba(255, 255, 255, .04));
+    box-shadow: 0 14px 40px rgba(0, 0, 0, .6);
+}
+
+/* When it's over the cake gets its light back and then some */
+.cake.is-done .cake__body { filter: brightness(1.08); }
+
+/* --- Counter + mic ------------------------------------------------------- */
+.wish__bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 10px 22px;
+}
+
+.wish__count {
+    font-size: 11px;
+    letter-spacing: .28em;
+    text-transform: uppercase;
+    color: var(--text-3);
     font-variant-numeric: tabular-nums;
-    background: var(--grad-text);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    filter: drop-shadow(0 6px 26px rgba(139, 92, 246, .35));
-    transition: transform .35s var(--ease-out);
 }
 
-/* Ticks each time the value changes (added by script.js) */
-.unit__value.is-tick { transform: translateY(-4px) scale(1.03); }
+.wish__mic {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 9px 18px;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--r-pill);
+    background: var(--glass);
+    color: var(--text-3);
+    font: inherit;
+    font-size: 12px;
+    cursor: pointer;
+    transition: color var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease),
+                background var(--t-fast) var(--ease);
+}
 
-.unit__label {
-    font-size: 9.5px;
-    letter-spacing: .3em;
+.wish__mic:hover { color: var(--text); border-color: rgba(167, 139, 250, .45); }
+
+.wish__mic-icon {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--text-4);
+    transition: background var(--t-fast) var(--ease), box-shadow var(--t-fast) var(--ease);
+}
+
+.wish__mic.is-live { color: var(--text); border-color: rgba(244, 114, 182, .5); }
+
+.wish__mic.is-live .wish__mic-icon {
+    background: var(--pink);
+    box-shadow: 0 0 0 0 rgba(244, 114, 182, .6);
+    animation: mic-pulse 1.6s var(--ease) infinite;
+}
+
+.wish__mic.is-hit { background: rgba(244, 114, 182, .16); }
+
+@keyframes mic-pulse {
+    0%   { box-shadow: 0 0 0 0 rgba(244, 114, 182, .55); }
+    100% { box-shadow: 0 0 0 11px rgba(244, 114, 182, 0); }
+}
+
+.wish__mic-note {
+    font-size: 12px;
+    color: var(--text-4);
+    text-align: center;
+}
+
+/* --- The wish ------------------------------------------------------------ */
+.wish__done {
+    max-width: var(--max-text);
+    display: grid;
+    justify-items: center;
+    gap: 16px;
+    padding: clamp(30px, 5vw, 52px) clamp(22px, 4vw, 44px);
+    text-align: center;
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    background: var(--grad-surface), rgba(255, 255, 255, .03);
+    backdrop-filter: blur(var(--blur));
+    -webkit-backdrop-filter: blur(var(--blur));
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity .9s var(--ease), transform 1.1s var(--ease-out);
+}
+
+.wish__done.is-in { opacity: 1; transform: none; }
+
+.wish__done-eyebrow {
+    font-size: 10px;
+    letter-spacing: .4em;
     text-transform: uppercase;
     color: var(--text-4);
 }
 
-.unit__sep {
+.wish__done-title {
     font-family: var(--font-display);
-    font-size: clamp(1.6rem, 6vw, 3.4rem);
-    line-height: 1.1;
-    color: var(--text-4);
-    animation: blink 2s var(--ease) infinite;
+    font-size: clamp(1.9rem, 6vw, 3.1rem);
+    font-weight: 300;
+    line-height: 1.18;
+    color: var(--text);
 }
 
-@keyframes blink {
-    0%, 100% { opacity: .5; }
-    50%      { opacity: .12; }
-}
-
-.countdown__caption {
-    position: relative;
-    margin-top: clamp(28px, 4vw, 42px);
-    font-family: var(--font-display);
+.wish__done-title em {
     font-style: italic;
-    font-size: clamp(1.2rem, 3vw, 1.8rem);
-    color: var(--text-2);
-}
-
-.countdown__done {
-    position: relative;
-    display: grid;
-    gap: 10px;
-    padding-block: 20px;
-}
-
-.countdown__done-title {
-    font-family: var(--font-display);
-    font-size: clamp(2.4rem, 9vw, 4.5rem);
     background: var(--grad-text);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
 }
 
-.countdown__done-sub { color: var(--text-2); }
-
-.countdown__facts {
+.wish__done-body {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: clamp(12px, 2vw, 20px);
-    width: 100%;
-    max-width: 900px;
+    gap: 14px;
+    max-width: 54ch;
+    color: var(--text-2);
+    font-size: clamp(.92rem, 1.7vw, 1rem);
 }
 
-.fact {
-    padding: clamp(20px, 2.6vw, 30px);
-    text-align: center;
-    border-radius: var(--r-md);
-    transition: transform var(--t-med) var(--ease-out), border-color var(--t-med) var(--ease);
-}
-
-.fact:hover {
-    transform: translateY(-4px);
-    border-color: rgba(167, 139, 250, .3);
-}
-
-.fact__value {
+.wish__done-sign {
     font-family: var(--font-display);
-    font-size: clamp(1.9rem, 5vw, 2.6rem);
-    line-height: 1;
+    font-style: italic;
+    font-size: 1.1rem;
     color: var(--pink-soft);
-    margin-bottom: 10px;
 }
 
-.fact__label {
-    font-size: .82rem;
-    color: var(--text-3);
-}
+.wish__relight { margin-top: 4px; }
 
-.countdown__note {
+.wish__note {
+    position: relative;
     max-width: var(--max-text);
-    margin-inline: auto;
+    margin-top: clamp(20px, 4vw, 34px);
     text-align: center;
-    color: var(--text-3);
     font-size: .95rem;
+    color: var(--text-3);
 }
 
 
@@ -2409,24 +2783,6 @@ body.page-final .ambient__blob { opacity: .16; }
     .lightbox__nav--next { left: auto; right: 16px; }
 }
 
-@media (max-width: 860px) {
-    .playlist-head {
-        grid-template-columns: 1fr;
-        justify-items: center;
-        text-align: center;
-        gap: 26px;
-    }
-
-    .playlist-head__art { width: min(210px, 55vw); }
-    .playlist-head__lede { margin-inline: auto; }
-
-    .tracks__head,
-    .track { grid-template-columns: 34px minmax(0, 1fr) 54px; }
-
-    .tracks__head-album,
-    .track__album { display: none; }
-}
-
 @media (max-width: 780px) {
     :root { --nav-h: 64px; }
 
@@ -2486,14 +2842,24 @@ body.page-final .ambient__blob { opacity: .16; }
     .shot__meta { display: block; }
     .shot__overlay { display: none; }
 
-    /* --- Countdown wraps into a 2×2 grid --- */
-    .countdown__grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 22px 10px;
+    /* --- Game: the best score moves out of the way of the distance --- */
+    .game__hud { flex-wrap: wrap; justify-content: center; }
+    .game__dist { order: -1; width: 100%; justify-content: center; }
+    .game__best { margin-left: auto; }
+
+    /* --- Cake: he stands under it rather than beside it --- */
+    .cake-stage {
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas:
+            "c c"
+            "b d";
+        gap: clamp(8px, 3vw, 20px);
+        justify-items: center;
     }
 
-    .unit__sep { display: none; }
+    .cake-stage > .cake     { grid-area: c; }
+    .cake-stage__bubu       { grid-area: b; justify-self: end; }
+    .cake-stage__dance      { grid-area: d; justify-self: start; }
 
     /* --- Chrome trims down --- */
     .music__label { display: none; }
@@ -2516,13 +2882,25 @@ body.page-final .ambient__blob { opacity: .16; }
 
     .letter { padding: 30px 22px; }
     .toast { bottom: 90px; }
+
+    /* Ground and characters drop together; the obstacle heights follow
+       automatically because script.js measures the room that's left. */
+    .world { height: 220px; }
+    .world__ground { height: 38px; }
+    .world__far { bottom: 38px; }
+    .world__bubu, .world__dudu, .world__hug { bottom: 38px; }
+    .obs { bottom: 38px; }
+    .world__milestone { inset: auto 6% 50%; }
+
+    /* A phone fits about eight candles a row before it gets silly */
+    .candle { width: 8px; }
+    .cake__candles { gap: 3px 5px; }
 }
 
 /* Touch devices never get the hover-dependent bits */
 @media (hover: none) {
     .cursor-glow { display: none; }
     .shot__meta { display: block; }
-    .track__why { max-height: 40px; opacity: 1; margin-top: 4px; }
     .envelope__flap { transform: rotateX(-172deg); opacity: .55; }
     .envelope__seal { opacity: 0; }
     .footer__hint-soft { opacity: .8; }
@@ -2553,12 +2931,23 @@ body.page-final .ambient__blob { opacity: .16; }
     .page { opacity: 1; animation: none; }
     .letter__body p { opacity: 1; transform: none; }
     .starfield, .ambient { display: none; }
+
+    /* The game doesn't run at all — script.js swaps in the lines instead */
+    .game__panel--calm { opacity: 1; transform: none; }
+
+    /* The candles stop dancing but still go out when she taps them */
+    .candle__flame { animation: none !important; }
+    .candle__smoke { display: none; }
+    .wish.is-dark  { animation: none !important; }
+    .wish__done    { opacity: 1 !important; transform: none !important; }
+    body.page-wish::before { filter: none !important; }
 }
 
 @media print {
     .nav, .music, .moon, .hunt, .starfield, .ambient, .cursor-glow,
     .progress-bar, .loader, .footer__next, .sticker-box,
-    .heart-find, .puzzle, .confetti { display: none !important; }
+    .heart-find, .puzzle, .confetti, .world, .game__hud,
+    .game__rail, .game__controls, .cake-stage, .wish__bar { display: none !important; }
 
     body { background: #fff; color: #111; }
     .final__body p, .final__close-line { color: #111 !important; }
@@ -2725,40 +3114,31 @@ body.page-final .ambient__blob { opacity: .16; }
 
 .envelope:hover .envelope__sticker .sticker { transform: scale(1.08) rotate(4deg); }
 
-/* --- 19.5 Playlist: one of them dances, but only while music plays ------- */
-.playlist-head { position: relative; }
-
-.playlist-head__dancer {
+/* --- 19.5 The game: script.js owns these completely ----------------------
+   These have to come after the base .sticker-box rules above, which would
+   otherwise win on equal specificity and put all three back into the flow
+   at the top of the strip. */
+.world__bubu,
+.world__dudu,
+.world__hug {
     position: absolute;
-    right: clamp(4px, 2vw, 24px);
-    bottom: 0;
-    filter: grayscale(.8) opacity(.5);
-    transition: filter .8s var(--ease);
+    animation: none;
 }
 
-body.music-playing .playlist-head__dancer { filter: none; }
+.world__bubu { opacity: 1; }
 
-body.music-playing .playlist-head__dancer .sticker {
-    animation: bop .55s ease-in-out infinite alternate;
+/* Placeholder slots inside the strip still need to be visible */
+.world .sticker-box.is-empty { opacity: 1; }
+
+/* --- 19.6 The cake: he only turns up once every candle is out ------------ */
+.cake-stage__dance { animation: none; }
+.cake-stage__dance.is-empty { opacity: 0; }
+.cake-stage__dance.is-here.is-empty { opacity: 1; }
+
+/* If the music happens to be on while she's here, he dances to it instead */
+body.music-playing .cake-stage__dance.is-here .sticker {
+    animation-duration: .42s;
 }
-
-@keyframes bop {
-    from { transform: translateY(0)   rotate(-3deg); }
-    to   { transform: translateY(-9px) rotate(3deg); }
-}
-
-/* --- 19.6 Countdown: one on each side, looking across -------------------- */
-.countdown-row {
-    width: 100%;
-    max-width: var(--max);
-    display: grid;
-    grid-template-columns: minmax(0, auto) minmax(0, 1fr) minmax(0, auto);
-    align-items: center;
-    gap: clamp(8px, 2.4vw, 36px);
-}
-
-.countdown-row__left,
-.countdown-row__right { justify-self: center; }
 
 /* --- 19.7 Final page: the walk, the hug, the last line ------------------- */
 .finale {
@@ -3230,33 +3610,9 @@ body.music-playing .playlist-head__dancer .sticker {
     }
 }
 
-@media (max-width: 860px) {
-    /* Dancer drops below the playlist header instead of floating over it */
-    .playlist-head__dancer {
-        position: static;
-        order: 3;
-        justify-self: center;
-        margin-top: 4px;
-    }
-}
-
 @media (max-width: 780px) {
     /* Timeline is a single left rail now, so stickers follow the date */
     .timeline__item--left .timeline__top { flex-direction: row; }
-
-    /* Clock on top, the two of them side by side underneath */
-    .countdown-row {
-        grid-template-columns: 1fr 1fr;
-        grid-template-areas:
-            "c c"
-            "l r";
-        gap: clamp(14px, 4vw, 26px);
-        justify-items: center;
-    }
-
-    .countdown-row > .countdown  { grid-area: c; }
-    .countdown-row__left  { grid-area: l; justify-self: end;   }
-    .countdown-row__right { grid-area: r; justify-self: start; }
 
     /* Keep the bottom-left cluster from colliding with the music button */
     .hunt { height: 34px; padding: 0 12px; font-size: 11px; }

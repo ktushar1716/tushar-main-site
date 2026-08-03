@@ -42,10 +42,10 @@ $reasons = [
          REPLACE: bubu-wave.gif / dudu-wave.gif -->
     <div class="hero__stickers" aria-hidden="true">
         <span class="sticker-box sticker-box--lg">
-            <img class="sticker" src="images/stickers/bubu-wave.gif" alt="">
+            <img class="sticker" src="images/stickers/bubu-wave.webp" alt="">
         </span>
         <span class="sticker-box sticker-box--lg">
-            <img class="sticker sticker--flip" src="images/stickers/dudu-wave.gif" alt="">
+            <img class="sticker sticker--flip" src="images/stickers/dudu-not-wave.webp" alt="">
         </span>
     </div>
 

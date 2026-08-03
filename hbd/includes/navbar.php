@@ -13,8 +13,8 @@ $navLinks = [
     'story'   => ['story.php',        'Our Story'],
     'memories'=> ['memories.php',     'Memories'],
     'letters' => ['letters.php',      'Open When'],
-    'playlist'=> ['playlist.php',     'Playlist'],
-    'countdown'=>['countdown.php',    'Countdown'],
+    'game'    => ['game.php',         'The Game'],
+    'wish'    => ['wish.php',         'Make a Wish'],
     'final'   => ['final-letter.php', 'For You'],
 ];
 ?>

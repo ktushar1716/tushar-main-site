@@ -31,13 +31,13 @@ $timeline = [
         'date'  => 'Not long after',
         'title' => 'Our first call',
         'body'  => 'Placeholder — how nervous you were, how long it lasted, and the exact moment the nervousness quietly disappeared and never came back.',
-        'sticker' => 'phone.gif',        // REPLACE: Bubu or Dudu on the phone
+        'sticker' => 'bubu-phone-call.webp',        // REPLACE: Bubu or Dudu on the phone
     ],
     [
         'date'  => 'Somewhere in there',
         'title' => 'The first time you made me laugh',
         'body'  => 'Placeholder — the joke, the timing, the fact that you laughed out loud alone in a room and had to explain yourself to someone.',
-        'sticker' => 'laugh.gif',        // REPLACE: laughing / rolling sticker
+        'sticker' => 'dudu-laughter.webp',        // REPLACE: laughing / rolling sticker
     ],
     [
         'date'  => 'The first ache',
@@ -59,13 +59,13 @@ $timeline = [
         'date'  => 'The hard part',
         'title' => 'Distance',
         'body'  => 'Placeholder — be honest here. The timezones, the missed calls, the nights it felt unfair. And then: why it has never once felt like a reason to stop.',
-        'sticker' => 'miss-you.gif',     // REPLACE: sad / longing sticker
+        'sticker' => 'bubu-miss-you.gif',     // REPLACE: sad / longing sticker
     ],
     [
         'date'  => 'Right now',
         'title' => 'Today',
         'body'  => 'Placeholder — where you both are as she reads this, and what you would be doing if the map were kinder.',
-        'sticker' => 'cake.gif',         // REPLACE: birthday cake sticker
+        'sticker' => 'bubu-birthday-cake.webp',         // REPLACE: birthday cake sticker
     ],
     [
         'date'  => 'Coming',
