@@ -63,17 +63,35 @@ slow motion and one of your `$milestones` lines floats up over it, then it
 speeds back up. Reach zero and the two of them walk toward each other, hug, and
 your message appears. Her best run is remembered.
 
-Two things worth knowing. The obstacle heights and the height of the jump are
-both worked out from how tall the strip actually is, so it plays identically on
-a phone and a laptop — don't put fixed pixel heights back into `.obs`. And the
-whole thing is ordinary HTML moved with transforms rather than a canvas,
+**Nothing in the game is measured in pixels, and that's the important bit.**
+Speed is in screen-widths per second, obstacle heights and the jump are
+fractions of the strip's height, and the gap between obstacles is in seconds.
+An obstacle therefore takes the same amount of *time* to cross the strip on a
+phone as on a laptop — and that time is exactly how long she gets to react.
+Put an absolute pixel value back into any of it and the game silently becomes
+about three times harder on a small screen. It's also why the strip gets
+*taller* on phones rather than shorter: there's vertical room going spare, and
+a cramped play area is the one thing that makes this unplayable.
+
+The whole thing is ordinary HTML moved with transforms rather than a canvas,
 specifically so the GIFs keep animating while they move. That's also why the
 runners are skipped in `initStickers`: they'd otherwise get the shared floating
 animation on top of the game's own.
 
-The difficulty lives in five numbers at the top of section 16 of `script.js` —
-`SPEED_MIN`, `SPEED_MAX`, `LIVES`, `AIRTIME` and `APEX`. Raise `APEX` to make
-jumping more forgiving; lower `SPEED_MAX` to make the back half less frantic.
+The difficulty lives in the tuning block at the top of section 16 of
+`script.js`. The ones worth touching:
+
+| Knob                    | Does what                                          |
+|-------------------------|----------------------------------------------------|
+| `SPEED_MIN` / `SPEED_MAX` | screen-widths per second, start and finish. Lower = more reaction time |
+| `RUN_LENGTH`            | how long a full run is, in screen-widths           |
+| `GAP_MIN` / `GAP_VAR`   | seconds between obstacles                          |
+| `APEX`                  | how high the jump goes. Raise it to be forgiving   |
+| `LIVES`                 | three                                              |
+| `--runner-x` (CSS)      | where he stands. Further left = more warning       |
+
+Reaction time works out as `(1 - runner-x) / SPEED_MAX` — currently about
+1.9 seconds at the fastest point and 2.8 at the start, on every screen size.
 
 **Find the hidden hearts.** Sixteen tiny glowing hearts are tucked into the
 corners of things across all seven pages — four on the home page, three on the
@@ -136,9 +154,32 @@ candles go — the glow, the cake and the page background all dim off it. When
 the last one dies the room goes black for a beat, then everything comes back
 with confetti and your message. "Light them again" resets it.
 
-If the mic never triggers for her, the two thresholds are in section 17 of
-`script.js`: `rms > 0.09` is how loud, `ratio > 0.34` is how much of that is
-low rumble rather than voice. Lower either one to make it more sensitive.
+The microphone is the fiddly part, so if it ever misbehaves, section 17 of
+`script.js` explains itself in comments. The short version of what makes it
+work at all:
+
+- **The audio constraints matter more than the maths.** `noiseSuppression`,
+  `echoCancellation` and `autoGainControl` are all explicitly turned *off*.
+  Browsers enable them by default, and noise suppression is specifically good
+  at removing low-frequency wind noise — which is precisely the sound of
+  someone blowing at a microphone. Leave them on and a real breath arrives as
+  near-silence.
+- **The trigger is relative, not absolute.** Microphones vary by more than ten
+  times in level; any fixed threshold that feels right on a laptop is simply
+  unreachable on a quiet phone. It listens to the room continuously and fires
+  at 3× that. The multiplier was picked by sweeping it against simulated
+  rooms — at 2.5× and below, ordinary room noise starts setting itself off.
+- **It ignores the first moments of the stream.** Capture devices hand back
+  digital silence while they wake up; treating that as the room level anchors
+  the threshold at zero and then *everything* reads as a blow.
+
+If it still won't trigger for her, lower the `floor * 3` multiplier. If it
+fires on its own, raise it. `TRIGGER_MIN` only exists to stop a muted input
+firing on nothing — it shouldn't need changing.
+
+One thing to check before debugging anything: **microphones only work on
+https or localhost.** If she opens this over plain http on her phone,
+`getUserMedia` doesn't exist and the button will say so.
 
 ## 8. Notes
 

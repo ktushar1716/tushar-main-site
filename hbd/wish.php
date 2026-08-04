@@ -80,13 +80,16 @@ $candles = max(1, min(40, (int) $HER_AGE));   // the cake stops looking like a
             <span id="wishOut">0</span> of <?php echo $candles; ?> out
         </p>
 
-        <button class="wish__mic" id="wishMic" type="button">
+        <!-- Nothing is requested until she presses this. The level meter is
+             there so it's obvious the page is actually hearing something. -->
+        <button class="wish__mic" id="wishMic" type="button" aria-pressed="false">
             <span class="wish__mic-icon" aria-hidden="true"></span>
-            <span class="wish__mic-label">or actually blow into your mic</span>
+            <span class="wish__mic-label" id="wishMicLabel">or actually blow into your mic</span>
+            <span class="wish__mic-level" aria-hidden="true"><i id="wishMicBar"></i></span>
         </button>
     </div>
 
-    <p class="wish__mic-note" id="wishMicNote" hidden></p>
+    <p class="wish__mic-note" id="wishMicNote" role="status" aria-live="polite" hidden></p>
 
     <!-- ----------------------------------------------------------------------
          THE WISH

@@ -41,7 +41,7 @@ THE GAME - "Bring me home"  (game.php)
                               is worth finding - it's the sticker that's on
                               screen the longest on the whole site.
   ok dudu-not-wave.webp       her, waiting at the finish line
-     hug.gif                  when he finally gets there
+  ok bubu-dudu-round-hug.webp when he finally gets there
   ok bubu-wave.webp           on the start panel
   ok bubu-crying-walk.webp    on the "not this time" panel
 
@@ -63,6 +63,15 @@ SPARE - in this folder, not used anywhere yet
      phone-call.gif
      dudu-phone-call.webp
      bubu-wave-white-bg.webp
+
+STILL MISSING - these slots show a dashed box until the file exists
+     bubu-wait.gif, dudu-arrive.gif, hug.gif      (loading screen)
+     hug.gif                                      (finished puzzle)
+     love-hug.gif                                 (timeline)
+     miss-you.gif, comfort.gif, calm.gif, sleepy.gif,
+     pat-head.gif, cheer.gif, cake.gif            (the seven envelopes)
+     bubu-walk.gif, dudu-wait.gif, hug.gif        (final letter finale)
+     peek.gif, gift.gif                           (secret page)
 
 Square-ish files with transparent backgrounds look best - anything with a
 solid white background shows as a visible box on these dark pages.

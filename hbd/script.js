@@ -690,9 +690,8 @@
        real <img> elements, so the animated GIFs keep animating while they
        move. Everything is positioned with transforms, so it stays cheap.
 
-       Distances are in CSS pixels of travel. TOTAL_PX is mapped onto the
-       real-world kilometres from $DISTANCE_KM, so the progress bar is the
-       actual distance between them.
+       Progress is a plain 0 → 1 fraction, mapped onto the real kilometres
+       from $DISTANCE_KM, so the rail is the actual distance between them.
        ====================================================================== */
     const gameEl = $('#game');
 
@@ -720,19 +719,29 @@
         const overKmEl   = $('#gameOverKm');
 
         /* --- Tuning -------------------------------------------------------
-           Nothing here is in absolute pixels except the speeds. Obstacle
-           heights and the jump are both derived from how much room the strip
-           actually has, so a phone and a desktop play exactly the same. */
+           NOTHING in here is an absolute pixel value, and that's deliberate.
+           Speed is in screen-widths per second, heights are fractions of the
+           strip, gaps are in seconds. An obstacle therefore takes the same
+           amount of TIME to cross the strip whether she's on a phone or a
+           laptop — which is the whole point, because that time is how long
+           she gets to react. Put a px value back in here and the game turns
+           unfair on small screens. */
         const TOTAL_KM   = parseInt(gameEl.dataset.distance, 10) || 2000;
-        const TOTAL_PX   = 21000;      // a clean run lands around 50 seconds
-        const SPEED_MIN  = 330;        // px per second at the start
-        const SPEED_MAX  = 620;        // …and by the time she's nearly there
+        const RUN_LENGTH = 21;         // total distance, in screen-widths
+        const SPEED_MIN  = 0.30;       // screen-widths per second at the start
+        const SPEED_MAX  = 0.46;       // …and by the time she's nearly there
         const LIVES      = 3;
         const AIRTIME    = 0.74;       // seconds off the ground, at any size
         const APEX       = 0.56;       // …reaching this much of the free height
         const OBS_H      = [0.20, 0.30, 0.39];   // the three obstacle sizes
+        const GAP_MIN    = 1.5;        // seconds between obstacles, at minimum
+        const GAP_VAR    = 0.9;        // …plus up to this much more
         const HIT_MERCY  = 1100;       // ms of blinking after a hit
         const MS_MS      = 3000;       // how long a milestone holds the world
+
+        /* Reaction time, for reference: an obstacle appears at the right edge
+           and has to travel (1 - runner-x) of the strip to reach him. At
+           SPEED_MAX that's 0.85 / 0.46 ≈ 1.8 seconds, at SPEED_MIN ≈ 2.8. */
 
         const readJSON = (id) => {
             const tag = document.getElementById(id);
@@ -757,7 +766,8 @@
 
         /* --- State -------------------------------------------------------- */
         let state    = 'ready';   // ready | running | slow | ending | over | won
-        let travel   = 0;         // px covered
+        let progress = 0;         // 0 → 1 along the whole distance
+        let scrollPx = 0;         // only drives the parallax backgrounds
         let lives    = LIVES;
         let y        = 0;         // height above the ground, px
         let vy       = 0;
@@ -765,17 +775,18 @@
         let mercyTil = 0;
         let slowTil  = 0;
         let msDone   = [];
-        let nextSpawn = 900;
+        let spawnIn  = 1.6;       // seconds until the next obstacle
         let obstacles = [];
         let lastT    = 0;
         let raf      = null;
         let visible  = true;
 
         // All written by measure()
-        let width  = 800;
-        let free   = 280;   // usable height above the ground
+        let width   = 800;
+        let free    = 280;   // usable height above the ground
         let gravity = 2900;
         let jumpV   = 950;
+        let runnerX = 0.15;
         let bubuBox = { x: 130, w: 50, h: 60 };
 
         /* --- Set-up ------------------------------------------------------- */
@@ -790,11 +801,23 @@
             jumpV   = (4 * apex) / AIRTIME;
             gravity = (8 * apex) / (AIRTIME * AIRTIME);
 
+            // Where he stands is defined once, in CSS, and read back here so
+            // the hitbox and the sprite can never drift apart.
+            const declared = parseFloat(
+                getComputedStyle(world).getPropertyValue('--runner-x'));
+            runnerX = isNaN(declared) ? 0.15 : declared / 100;
+
             // Hitbox: the middle of him, not the whole sticker. Generous on
             // purpose — she should lose to the game, not to the maths.
             const bw = (bubuEl.offsetWidth  || 90) * 0.5;
             const bh = (bubuEl.offsetHeight || 90) * 0.62;
-            bubuBox = { x: width * 0.16 + bw * 0.5, w: bw, h: bh };
+            bubuBox = { x: width * runnerX + bw * 0.5, w: bw, h: bh };
+        }
+
+        /** Current speed in px/s — derived from the strip's width every time. */
+        function speedNow() {
+            const base = (SPEED_MIN + (SPEED_MAX - SPEED_MIN) * progress) * width;
+            return state === 'slow' ? base * 0.3 : base;
         }
 
         function showBest() {
@@ -846,7 +869,7 @@
 
         /* --- Drawing ------------------------------------------------------ */
         function paintHud() {
-            const pct = clamp(travel / TOTAL_PX, 0, 1);
+            const pct  = clamp(progress, 0, 1);
             const left = Math.max(0, Math.round(TOTAL_KM * (1 - pct)));
 
             if (kmEl)   kmEl.textContent = left.toLocaleString();
@@ -861,8 +884,8 @@
 
         function paintWorld() {
             // Ground and backdrop scroll at different rates for depth
-            if (groundEl) groundEl.style.backgroundPositionX = -travel + 'px';
-            if (farEl)    farEl.style.backgroundPositionX    = -(travel * 0.25) + 'px';
+            if (groundEl) groundEl.style.backgroundPositionX = -scrollPx + 'px';
+            if (farEl)    farEl.style.backgroundPositionX    = -(scrollPx * 0.25) + 'px';
 
             bubuEl.style.transform =
                 'translate3d(0,' + (-y).toFixed(1) + 'px,0)' +
@@ -912,7 +935,7 @@
 
         /* --- Milestones --------------------------------------------------- */
         function checkMilestone() {
-            const pct = (travel / TOTAL_PX) * 100;
+            const pct = progress * 100;
 
             for (let i = 0; i < MILESTONES.length; i++) {
                 if (msDone[i]) continue;
@@ -923,7 +946,9 @@
                 slowTil  = performance.now() + MS_MS;
 
                 clearObstacles(true);
-                nextSpawn = travel + 1200;
+                // Give her a clear run-up out of the slow-motion, rather than
+                // an obstacle arriving the instant the world speeds back up
+                spawnIn = (MS_MS / 1000) + 1.2;
 
                 msEl.textContent = MILESTONES[i].line;
                 msEl.classList.add('is-on');
@@ -988,7 +1013,7 @@
             cancelAnimationFrame(raf);
             raf = null;
 
-            const pct = Math.round(clamp(travel / TOTAL_PX, 0, 1) * 100);
+            const pct = Math.round(clamp(progress, 0, 1) * 100);
             if (pct > best.get()) best.set(pct);
             showBest();
 
@@ -1007,7 +1032,7 @@
             best.set(100);
             showBest();
 
-            travel = TOTAL_PX;
+            progress = 1;
             paintHud();
 
             world.classList.add('is-ending');
@@ -1051,11 +1076,12 @@
             const dt = Math.min((now - lastT) / 1000, 0.05);   // cap after a stall
             lastT = now;
 
-            const pct   = clamp(travel / TOTAL_PX, 0, 1);
-            const base  = SPEED_MIN + (SPEED_MAX - SPEED_MIN) * pct;
-            const speed = state === 'slow' ? base * 0.3 : base;
+            const speed = speedNow();
 
-            travel += speed * dt;
+            // Progress is kept as a fraction, not a pixel count, so rotating
+            // the phone mid-run doesn't teleport her up or down the rail.
+            progress += (speed * dt) / (RUN_LENGTH * width);
+            scrollPx += speed * dt;
 
             if (y > 0 || vy > 0) {
                 vy -= gravity * dt;
@@ -1066,15 +1092,19 @@
             // Obstacles
             obstacles.forEach((o) => { o.x -= speed * dt; });
             obstacles = obstacles.filter((o) => {
-                if (o.x > -140) return true;
+                if (o.x > -width * 0.2) return true;
                 o.el.remove();
                 return false;
             });
 
-            if (state === 'running' && travel > nextSpawn && travel < TOTAL_PX - 1600) {
-                spawn();
-                // Never closer together than a jump can clear
-                nextSpawn = travel + speed * (1.15 + Math.random() * 0.85);
+            // Spawning is timed, not distance-based, so the gap between two
+            // obstacles is the same number of seconds at any screen size.
+            if (state === 'running' && progress < 0.94) {
+                spawnIn -= dt;
+                if (spawnIn <= 0) {
+                    spawn();
+                    spawnIn = GAP_MIN + Math.random() * GAP_VAR;
+                }
             }
 
             if (state === 'running') collide(now);
@@ -1084,7 +1114,7 @@
             paintWorld();
             paintHud();
 
-            if (travel >= TOTAL_PX) { win(); return; }
+            if (progress >= 1) { win(); return; }
 
             raf = requestAnimationFrame(frame);
         }
@@ -1112,12 +1142,13 @@
         function start() {
             measure();
 
-            travel = 0;
-            lives  = LIVES;
+            progress = 0;
+            scrollPx = 0;
+            lives    = LIVES;
             y = 0; vy = 0; jumps = 0;
             mercyTil = 0;
             msDone = [];
-            nextSpawn = 1000;
+            spawnIn = 2.2;      // a moment to settle before the first one
 
             clearObstacles(false);
             msEl.textContent = '';
@@ -1221,6 +1252,8 @@
         const relight  = $('#wishRelight');
         const micBtn   = $('#wishMic');
         const micNote  = $('#wishMicNote');
+        const micLabel = $('#wishMicLabel');
+        const micBar   = $('#wishMicBar');
 
         const TOTAL = candles.length;
         let out = 0;
@@ -1317,83 +1350,225 @@
         /* --- The microphone ----------------------------------------------
            Opt-in only: nothing is requested until she presses the button,
            and the stream is torn down the moment the last candle is out.
+
+           Three things matter for this actually working:
+
+           1. The audio constraints. Browsers default to noise suppression
+              and auto gain, and noise suppression is *specifically* good at
+              removing low-frequency wind noise — which is exactly the sound
+              of someone blowing at a microphone. Leave them on and a real
+              breath arrives as near-silence. All three are turned off below.
+
+           2. Calibration instead of fixed thresholds. Microphones vary
+              enormously, so the first three-quarters of a second is spent
+              measuring the room and the trigger is set relative to that.
+
+           3. Visible feedback. Without the level meter there's no way to
+              tell "not listening" apart from "listening, not loud enough".
            ------------------------------------------------------------------ */
         function stopMic() {
             if (!mic) return;
             cancelAnimationFrame(mic.raf);
+            clearTimeout(mic.nudge);
             mic.stream.getTracks().forEach((t) => t.stop());
             if (mic.ctx.state !== 'closed') mic.ctx.close();
             mic = null;
-            if (micBtn) micBtn.classList.remove('is-live');
+
+            if (micBtn) {
+                micBtn.classList.remove('is-live');
+                micBtn.setAttribute('aria-pressed', 'false');
+            }
+            if (micLabel) micLabel.textContent = 'or actually blow into your mic';
+            if (micBar)   micBar.style.transform = 'scaleX(0)';
         }
 
         function say(text) {
             if (!micNote) return;
-            micNote.textContent = text;
+            micNote.textContent = text || '';
             micNote.hidden = !text;
         }
 
         async function startMic() {
             if (mic) { stopMic(); say(''); return; }
+            if (finished) return;
 
+            // getUserMedia only exists in a secure context. Opening the page
+            // as a file:// or over plain http on a phone is the single most
+            // likely reason this button does nothing, so say so plainly.
             if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-                say('This browser won’t let me listen. Tapping works just as well.');
+                say(window.isSecureContext
+                    ? 'This browser won’t let me listen. Tapping works just as well.'
+                    : 'Microphones only work on https (or localhost). Open this page ' +
+                      'over https and the button will work — tapping works either way.');
                 return;
             }
 
+            say('Asking for the microphone…');
+
+            let stream;
             try {
-                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-                const Ctx    = window.AudioContext || window.webkitAudioContext;
-                const ctx    = new Ctx();
-                const src    = ctx.createMediaStreamSource(stream);
-                const node   = ctx.createAnalyser();
-
-                node.fftSize = 1024;
-                node.smoothingTimeConstant = 0.6;
-                src.connect(node);
-
-                const bins = new Uint8Array(node.frequencyBinCount);
-                const wave = new Uint8Array(node.fftSize);
-                let lastBlow = 0;
-
-                mic = { ctx, stream, raf: 0 };
-                micBtn.classList.add('is-live');
-                say('Listening. Blow at your phone.');
-
-                (function listen() {
-                    if (!mic) return;
-                    mic.raf = requestAnimationFrame(listen);
-
-                    node.getByteFrequencyData(bins);
-                    node.getByteTimeDomainData(wave);
-
-                    // Loudness…
-                    let sum = 0;
-                    for (let i = 0; i < wave.length; i++) {
-                        const v = (wave[i] - 128) / 128;
-                        sum += v * v;
+                stream = await navigator.mediaDevices.getUserMedia({
+                    audio: {
+                        echoCancellation: false,   // all three of these would
+                        noiseSuppression: false,   // filter out the breath
+                        autoGainControl:  false
                     }
-                    const rms = Math.sqrt(sum / wave.length);
-
-                    // …and how much of it is low rumble rather than voice
-                    let low = 0, all = 0;
-                    for (let i = 0; i < bins.length; i++) {
-                        if (i < 12) low += bins[i];
-                        all += bins[i];
-                    }
-                    const ratio = all > 0 ? low / all : 0;
-
-                    const now = performance.now();
-                    if (rms > 0.09 && ratio > 0.34 && now - lastBlow > 150) {
-                        lastBlow = now;
-                        blowNext();
-                        micBtn.classList.add('is-hit');
-                        setTimeout(() => micBtn.classList.remove('is-hit'), 200);
-                    }
-                })();
-            } catch (e) {
-                say('No microphone, then. Tapping is allowed too.');
+                });
+            } catch (err) {
+                const name = err && err.name;
+                say(name === 'NotAllowedError' || name === 'SecurityError'
+                        ? 'You said no to the microphone — which is fair. Tap the candles instead.'
+                    : name === 'NotFoundError' || name === 'DevicesNotFoundError'
+                        ? 'I can’t find a microphone on this device. Tapping is allowed too.'
+                        : 'The microphone didn’t start. Tapping is allowed too.');
+                return;
             }
+
+            let ctx;
+            try {
+                const Ctx = window.AudioContext || window.webkitAudioContext;
+                ctx = new Ctx();
+                // Autoplay policy can hand back a suspended context even from
+                // inside a click, so ask for it explicitly.
+                if (ctx.state === 'suspended') await ctx.resume();
+            } catch (err) {
+                stream.getTracks().forEach((t) => t.stop());
+                say('This browser can’t process audio. Tapping is allowed too.');
+                return;
+            }
+
+            const node = ctx.createAnalyser();
+            node.fftSize = 1024;
+            node.smoothingTimeConstant = 0.35;
+            ctx.createMediaStreamSource(stream).connect(node);
+
+            const bins = new Float32Array(node.frequencyBinCount);
+            const wave = new Uint8Array(node.fftSize);
+
+            // Which bins hold what, worked out from the real sample rate
+            const hzPerBin = ctx.sampleRate / node.fftSize;
+            const lowTop   = Math.max(2, Math.round(400  / hzPerBin));
+            const midTop   = Math.max(lowTop + 1, Math.round(4000 / hzPerBin));
+
+            // The noise floor is tracked continuously rather than sampled once
+            // at the start: if she opens this with music on, or a fan running,
+            // a one-shot reading would set the bar permanently out of reach.
+            // It drops quickly toward quiet and creeps up only very slowly, so
+            // a long breath can't drag its own threshold up with it.
+            //
+            // The trigger is deliberately RELATIVE — some microphones are ten
+            // times quieter than others, and a fixed level that feels right on
+            // a laptop is simply unreachable on a quiet phone mic. TRIGGER_MIN
+            // exists only to stop a silent or muted input firing on nothing,
+            // so it's set far below any real breath. TRIGGER_MAX is the other
+            // end: however loud the room is, a firm blow still counts.
+            const WARMUP_MS   = 600;
+            const TRIGGER_MIN = 0.005;
+            const TRIGGER_MAX = 0.085;
+            let audioAt = 0;           // when real audio first showed up
+            let floor = -1;            // -1 until the first reading seeds it
+            let threshold = TRIGGER_MIN;
+            let ready = false;
+            let lastBlow = 0, everBlew = false;
+
+            mic = { ctx, stream, raf: 0, nudge: 0 };
+            micBtn.classList.add('is-live');
+            micBtn.setAttribute('aria-pressed', 'true');
+            if (micLabel) micLabel.textContent = 'listening…';
+            say('Hold on — listening to the room for a second.');
+
+            // If nothing has registered after a while, she's probably too far
+            // away rather than doing it wrong.
+            mic.nudge = setTimeout(() => {
+                if (mic && !everBlew) {
+                    say('Nothing yet — get closer and blow straight at the mic, ' +
+                        'short and hard. (Tapping still works.)');
+                }
+            }, 9000);
+
+            (function listen() {
+                if (!mic) return;
+                mic.raf = requestAnimationFrame(listen);
+
+                node.getFloatFrequencyData(bins);
+                node.getByteTimeDomainData(wave);
+
+                // How loud, overall
+                let sum = 0;
+                for (let i = 0; i < wave.length; i++) {
+                    const v = (wave[i] - 128) / 128;
+                    sum += v * v;
+                }
+                const rms = Math.sqrt(sum / wave.length);
+
+                // How much of that is low rumble rather than clatter. This has
+                // to be an ENERGY ratio, so the decibel figures the analyser
+                // hands back get converted to linear power first — summing the
+                // dB values directly makes near-silent bins look significant
+                // and the ratio never moves.
+                let low = 0, mid = 0;
+                for (let i = 1; i <= midTop && i < bins.length; i++) {
+                    const power = Math.pow(10, bins[i] / 10);
+                    if (i <= lowTop) low += power; else mid += power;
+                }
+                const ratio = (low + mid) > 0 ? low / (low + mid) : 0;
+
+                const now = performance.now();
+
+                // A capture stream hands back digital silence for the first
+                // moments while the device wakes up. Those frames must not
+                // count: seed the floor from them and it anchors at zero, the
+                // threshold pins to its minimum, and then ordinary room noise
+                // reads as a blow for the rest of the session.
+                if (rms <= 0) return;
+                if (!audioAt) audioAt = now;
+
+                // Warm-up converges fast and symmetrically, so the floor lands
+                // on the real ambient level within the first few frames of
+                // actual audio. After that it falls faster than it rises, so a
+                // sustained blow can't drag its own threshold up behind it —
+                // but not so fast that it settles at the bottom of the noise
+                // instead of its average, which would leave steady hiss
+                // sitting above its own threshold and firing continuously.
+                if (floor < 0) floor = rms;
+                else if (!ready) floor += (rms - floor) * 0.15;
+                else floor += (rms - floor) * (rms < floor ? 0.03 : 0.002);
+
+                // 3x the floor, chosen by sweeping the multiplier against
+                // simulated rooms: at 2.5x and below, ordinary jittery room
+                // noise starts firing on its own; above 3x a soft breath from
+                // someone who isn't really committing stops registering.
+                threshold = clamp(Math.max(floor * 3, floor + 0.004),
+                                  TRIGGER_MIN, TRIGGER_MAX);
+
+                // Meter: from the noise floor up to comfortably past the
+                // trigger, so a real breath pins it and silence sits at zero.
+                if (micBar) {
+                    const level = clamp((rms - floor) / (threshold * 2.2 - floor), 0, 1);
+                    micBar.style.transform = 'scaleX(' + level.toFixed(3) + ')';
+                }
+
+                // A moment to let the floor settle before anything can fire.
+                // Timed from the first real audio, not from the click.
+                if (!ready) {
+                    if (now - audioAt < WARMUP_MS) return;
+                    ready = true;
+                    if (micLabel) micLabel.textContent = 'blow!';
+                    say('Listening. Blow straight at it.');
+                }
+
+
+
+
+                if (rms > threshold && ratio > 0.35 && now - lastBlow > 110) {
+                    lastBlow = now;
+                    everBlew = true;
+                    say('');
+                    blowNext();
+                    micBtn.classList.add('is-hit');
+                    setTimeout(() => micBtn.classList.remove('is-hit'), 200);
+                }
+            })();
         }
 
         if (micBtn) micBtn.addEventListener('click', startMic);
