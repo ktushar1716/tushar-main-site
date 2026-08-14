@@ -5,7 +5,7 @@
    02. Reset & base
    03. Typography
    04. Reveal animations
-   05. Page chrome (loader, progress, starfield, cursor, music, moon, toast)
+   05. Page chrome (loader, progress, starfield, cursor, moon, toast)
    06. Navbar
    07. Buttons & shared blocks
    08. Hero
@@ -224,9 +224,16 @@ ul, ol { list-style: none; }
     transition: opacity .35s var(--ease), transform .35s var(--ease);
 }
 
+/* The end frame must say `filter: none`, not `blur(0)`. This animation is
+   fill-mode: forwards, so whatever it lands on sticks — and ANY filter that
+   isn't the keyword `none` makes .page a containing block for its
+   position: fixed descendants. With blur(0) held here, the letter modal and
+   the gallery lightbox anchored to the full height of .page instead of the
+   viewport and got centred hundreds of pixels down the page. blur(0) and
+   none render identically; only `none` avoids the containing block. */
 @keyframes pageIn {
     from { opacity: 0; transform: translateY(14px); filter: blur(6px); }
-    to   { opacity: 1; transform: none;             filter: blur(0); }
+    to   { opacity: 1; transform: none;             filter: none; }
 }
 
 /* Lock scroll while a modal is open */
@@ -553,74 +560,7 @@ em { font-style: italic; }
 
 .cursor-glow.is-on { opacity: 1; }
 
-/* --- 5.5 Music toggle ---------------------------------------------------- */
-.music {
-    position: fixed;
-    right: clamp(16px, 3vw, 30px);
-    bottom: clamp(16px, 3vw, 30px);
-    z-index: 800;
-}
-
-.music__btn {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 11px 20px 11px 15px;
-    border-radius: var(--r-pill);
-    background: var(--glass);
-    border: 1px solid var(--line);
-    backdrop-filter: blur(var(--blur)) saturate(140%);
-    -webkit-backdrop-filter: blur(var(--blur)) saturate(140%);
-    box-shadow: var(--shadow-sm);
-    color: var(--text-2);
-    font-size: 12px;
-    letter-spacing: .08em;
-    transition: all var(--t-fast) var(--ease);
-}
-
-.music__btn:hover {
-    color: var(--text);
-    border-color: var(--line-strong);
-    background: var(--glass-hi);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md), var(--glow-purple);
-}
-
-.music__bars {
-    display: flex;
-    align-items: flex-end;
-    gap: 2.5px;
-    height: 14px;
-}
-
-.music__bars i {
-    display: block;
-    width: 2.5px;
-    height: 4px;
-    border-radius: 2px;
-    background: var(--purple-soft);
-    transition: height var(--t-fast) var(--ease);
-}
-
-/* Bars dance only while the track is playing */
-.music.is-playing .music__bars i { animation: eq .9s var(--ease) infinite alternate; }
-.music.is-playing .music__bars i:nth-child(2) { animation-delay: .15s; }
-.music.is-playing .music__bars i:nth-child(3) { animation-delay: .3s;  }
-.music.is-playing .music__bars i:nth-child(4) { animation-delay: .45s; }
-
-.music.is-playing .music__btn {
-    color: var(--text);
-    border-color: rgba(244, 114, 182, .35);
-}
-
-@keyframes eq {
-    from { height: 3px;  background: var(--purple-soft); }
-    to   { height: 14px; background: var(--pink); }
-}
-
-.music__label { white-space: nowrap; }
-
-/* --- 5.6 The moon (easter egg) ------------------------------------------- */
+/* --- 5.5 The moon (easter egg) ------------------------------------------- */
 .moon {
     position: fixed;
     left: clamp(16px, 3vw, 30px);
@@ -649,7 +589,7 @@ em { font-style: italic; }
     to { transform: translateY(-7px); }
 }
 
-/* --- 5.7 Toast (hidden messages) ----------------------------------------- */
+/* --- 5.6 Toast (hidden messages) ----------------------------------------- */
 .toast {
     position: fixed;
     left: 50%;
@@ -990,7 +930,9 @@ em { font-style: italic; }
     position: relative;
     display: block;
     width: 100%;
-    aspect-ratio: 1 / 1.06;
+    /* Tall enough that the longest reason on the back fits without scrolling.
+       Both faces share this box, so the back is what sets the height. */
+    aspect-ratio: 1 / 1.28;
     text-align: left;
     transform-style: preserve-3d;
     transition: transform .8s var(--ease-out);
@@ -1042,7 +984,15 @@ em { font-style: italic; }
 .reason__face--back {
     transform: rotateY(180deg);
     justify-content: center;
-    overflow-y: auto;          /* long reasons stay readable on small cards */
+    /* Centring a flex item that overflows clips it at BOTH ends and puts the
+       top out of scroll range — the reason the first line was being cut off.
+       `safe` centres only while it fits and falls back to the start edge once
+       it doesn't, so nothing is ever unreachable. Older engines drop the line
+       and keep the plain `center` above. */
+    justify-content: safe center;
+    overflow-y: auto;          /* a safety net; the copy is sized to fit */
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
     background: linear-gradient(160deg, rgba(139, 92, 246, .14), rgba(244, 114, 182, .09));
 }
 
@@ -1084,8 +1034,8 @@ em { font-style: italic; }
 
 .reason__back-text {
     position: relative;
-    font-size: .93rem;
-    line-height: 1.72;
+    font-size: .87rem;
+    line-height: 1.66;
     color: var(--text-2);
 }
 
@@ -1689,6 +1639,16 @@ em { font-style: italic; }
 
 @keyframes letterLine {
     to { opacity: 1; transform: none; }
+}
+
+/* A companion hiding inside the envelope — only seen once it is opened.
+   It is cloned in from a <template>, so the scroll observer in script.js
+   never sees it: it fades itself in instead of waiting for .is-in. */
+.letter__body .letter__sticker {
+    display: block;
+    margin: -6px auto 26px;
+    opacity: 0;
+    animation: letterLine .8s var(--ease-out) 120ms forwards;
 }
 
 .letter__sign {
@@ -2900,9 +2860,6 @@ body.page-final .ambient__blob { opacity: .16; }
     .cake-stage__bubu       { grid-area: b; justify-self: end; }
     .cake-stage__dance      { grid-area: d; justify-self: start; }
 
-    /* --- Chrome trims down --- */
-    .music__label { display: none; }
-    .music__btn { padding: 12px; border-radius: 50%; }
     .cursor-glow { display: none; }
 }
 
@@ -2942,6 +2899,16 @@ body.page-final .ambient__blob { opacity: .16; }
     .world__bubu, .world__dudu { --sticker-size: 64px; }
 }
 
+/* Two columns on a narrow phone leave each card roughly seventeen characters
+   wide — too little for a paragraph, and where the backs start overflowing.
+   Below this, one reason per row: full width, and a shorter, wider card,
+   because the text no longer needs the height. Must come after the 520px
+   block above, since both match here and the later rule wins. */
+@media (max-width: 430px) {
+    .reasons { grid-template-columns: 1fr; }
+    .reason__card { aspect-ratio: 1 / 0.72; }
+}
+
 /* Touch devices never get the hover-dependent bits */
 @media (hover: none) {
     .cursor-glow { display: none; }
@@ -2974,7 +2941,8 @@ body.page-final .ambient__blob { opacity: .16; }
     }
 
     .page { opacity: 1; animation: none; }
-    .letter__body p { opacity: 1; transform: none; }
+    .letter__body p,
+    .letter__body .letter__sticker { opacity: 1; transform: none; }
     .starfield, .ambient { display: none; }
 
     /* The game doesn't run at all — script.js swaps in the lines instead */
@@ -2989,7 +2957,7 @@ body.page-final .ambient__blob { opacity: .16; }
 }
 
 @media print {
-    .nav, .music, .moon, .hunt, .starfield, .ambient, .cursor-glow,
+    .nav, .moon, .hunt, .starfield, .ambient, .cursor-glow,
     .progress-bar, .loader, .footer__next, .sticker-box,
     .heart-find, .puzzle, .confetti, .world, .game__hud,
     .game__rail, .game__controls, .cake-stage, .wish__bar { display: none !important; }
@@ -3179,11 +3147,6 @@ body.page-final .ambient__blob { opacity: .16; }
 .cake-stage__dance { animation: none; }
 .cake-stage__dance.is-empty { opacity: 0; }
 .cake-stage__dance.is-here.is-empty { opacity: 1; }
-
-/* If the music happens to be on while she's here, he dances to it instead */
-body.music-playing .cake-stage__dance.is-here .sticker {
-    animation-duration: .42s;
-}
 
 /* --- 19.7 Final page: the walk, the hug, the last line ------------------- */
 .finale {
@@ -3659,7 +3622,7 @@ body.music-playing .cake-stage__dance.is-here .sticker {
     /* Timeline is a single left rail now, so stickers follow the date */
     .timeline__item--left .timeline__top { flex-direction: row; }
 
-    /* Keep the bottom-left cluster from colliding with the music button */
+    /* Keep the bottom-left cluster compact on small screens */
     .hunt { height: 34px; padding: 0 12px; font-size: 11px; }
 }
 

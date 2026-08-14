@@ -2,7 +2,7 @@
 /* ==========================================================================
    HEAD.PHP
    Shared document head + fixed page chrome (loader, starfield, cursor glow,
-   scroll progress, music toggle). Included at the top of every page.
+   scroll progress). Included at the top of every page.
 
    Each page sets these BEFORE including this file:
      $page       — slug used for <body> class + active nav state
@@ -69,13 +69,13 @@ if (!function_exists('e')) {
            hug.gif        — the two of them hugging               -->
     <div class="loader__stage" aria-hidden="true">
         <span class="sticker-box sticker-box--lg loader__bubu">
-            <img class="sticker" src="images/stickers/bubu-wait.gif" alt="">
+            <img class="sticker" src="images/stickers/bubu-waiting-walk.webp" alt="">
         </span>
         <span class="sticker-box sticker-box--lg loader__dudu">
-            <img class="sticker" src="images/stickers/dudu-arrive.gif" alt="">
+            <img class="sticker" src="images/stickers/dudu-running.webp" alt="">
         </span>
         <span class="sticker-box sticker-box--xl loader__hug">
-            <img class="sticker" src="images/stickers/hug.gif" alt="">
+            <img class="sticker" src="images/stickers/hug1.webp" alt="">
         </span>
     </div>
 
@@ -102,19 +102,6 @@ if (!function_exists('e')) {
 
 <!-- Soft glow that follows the pointer (hidden on touch devices) -->
 <div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
-
-<!-- Background music toggle -->
-<div class="music" id="music">
-    <button class="music__btn" id="musicBtn" type="button" aria-pressed="false"
-            aria-label="Play background music" title="Background music">
-        <span class="music__bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
-        <span class="music__label">Play our song</span>
-    </button>
-    <!-- Drop your track at audio/background.mp3 -->
-    <audio id="bgAudio" loop preload="none">
-        <source src="audio/background.mp3" type="audio/mpeg">
-    </audio>
-</div>
 
 <!-- 🌙 Easter egg #1 — she has to be curious enough to click it -->
 <button class="moon" id="moon" type="button" aria-label="A little moon"></button>

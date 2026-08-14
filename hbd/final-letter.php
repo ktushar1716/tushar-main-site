@@ -24,47 +24,68 @@ require 'includes/navbar.php';
 
     <div class="final__body">
         <p class="final__lead reveal">
-            Placeholder — open the way you would if she were sitting in front of you
-            and you had already decided to say the whole thing out loud.
+            I have said all of this to you in pieces, badly, usually at the wrong hour.
+            So here it is properly, in one go, the way I would say it if you were sitting
+            right in front of me and I had already decided not to stop halfway.
         </p>
 
         <p class="reveal">
-            Placeholder — tell her what today means. Not birthdays in general. This one.
-            The specific fact of her being born, and how strange and lucky it is that out
-            of everything, the timing worked out enough for the two of you to find each other.
+            Today is not about birthdays. It is about the fact that you exist at all —
+            that on this date, a specific person got born, and out of every possible
+            timing in the world, the timing worked out enough for that person to end up
+            one floor above me for two or three days. I do not think about that too
+            carefully, because it would be terrifying to realise how easily it might
+            not have happened.
         </p>
 
         <p class="reveal">
-            Placeholder — be honest about the distance. Say the hard part plainly: the calls
-            that end too early, the timezones, the things you have missed. Do not pretend
-            it is easy. She knows it isn’t, and pretending would cheapen the rest.
+            And I will not pretend the rest of it is easy. It isn’t. The calls end before
+            either of us wants them to. There are days where the only version of you I get
+            is text on a screen, and days where I know something is wrong and there is
+            physically nothing I can do about it. I have missed things I should have been
+            at. I hate that part, and I am not going to dress it up, because pretending it
+            is fine would cheapen everything else on this page.
         </p>
 
         <p class="reveal">
-            Placeholder — then turn it. Everything the distance has proven. That this was
-            never propped up by convenience. That you have both chosen it, over and over,
-            on days when it would have been easier not to.
+            But here is what the distance has proved. Nothing about us is convenient.
+            Nobody is bumping into anybody, nothing is happening by accident. Every single
+            day, both of us have to choose this again — and we do, including on the days
+            when it would have been so much easier not to. Most people never find out
+            whether their thing would survive that. We already know.
         </p>
 
         <p class="reveal">
-            Placeholder — the thank you. For patience. For the times she was kind when she
-            had every reason not to be. For staying, in the small ordinary ways that nobody
+            Thank you. For the patience, which I have tested. For being kind to me on days
+            when you had every reason not to be. For looking after me when I was ill and
+            useless and could not even bring myself to ask, and for never once holding it
+            over my head afterwards. For staying, in the small unremarkable ways nobody
             writes songs about.
         </p>
 
         <p class="reveal">
-            Placeholder — what she has changed in you. Be specific and slightly unflattering
-            about who you were before. That is what makes it land.
+            You changed something in me, and I want to be specific about it. Before you,
+            I was quietly convinced that being fully known by someone would end badly —
+            so I stayed at arm’s length from everyone and called it being independent.
+            Then you asked me actual questions, read me back to myself, and did not leave.
+            You made honesty feel survivable. That is not a small edit to a person. That
+            is the whole architecture.
         </p>
 
         <p class="reveal">
-            Placeholder — the promise. Not a grand one. A true one, small enough that you
-            can keep it on your worst day.
+            So the promise is a small one, because small ones are the ones people actually
+            keep. I will not go quiet on you. When my head gets loud I will tell you it is
+            loud instead of disappearing and letting you guess. And I will keep getting
+            better at taking care of you — not perfectly, not overnight, but genuinely,
+            as the thing I am actually working on.
         </p>
 
         <p class="reveal">
-            Placeholder — and the future. One image of it. A morning, a kitchen, no plans,
-            no flights booked, nothing to count down to.
+            And the future I keep coming back to is not a grand one. It is a morning.
+            A kitchen that is ours, both of us moving around it badly, no plans for the
+            day, no flight booked, nothing to count down to. You are talking too fast
+            about something you love. I am half listening and completely happy. That
+            is it. That is the whole ambition.
         </p>
 
         <span class="final__rule final__rule--short reveal" aria-hidden="true"></span>
@@ -93,18 +114,17 @@ require 'includes/navbar.php';
          THE FINALE
          Scrolls into view → Bubu walks toward Dudu → they hug → confetti,
          once → the last line fades in. Sequenced in script.js.
-         REPLACE: bubu-walk.gif / dudu-wait.gif / hug.gif
          ---------------------------------------------------------------------- -->
     <section class="finale" id="finale" aria-label="A small goodbye">
         <div class="finale__stage" aria-hidden="true">
             <span class="sticker-box sticker-box--lg finale__bubu">
-                <img class="sticker" src="images/stickers/bubu-walk.gif" alt="">
+                <img class="sticker" src="images/stickers/bubu-waiting-walk.webp" alt="">
             </span>
             <span class="sticker-box sticker-box--lg finale__dudu">
-                <img class="sticker sticker--flip" src="images/stickers/dudu-wait.gif" alt="">
+                <img class="sticker sticker--flip" src="images/stickers/dudu-not-wave.webp" alt="">
             </span>
             <span class="sticker-box sticker-box--xl finale__hug">
-                <img class="sticker" src="images/stickers/hug.gif" alt="">
+                <img class="sticker" src="images/stickers/hug1.webp" alt="">
             </span>
         </div>
 

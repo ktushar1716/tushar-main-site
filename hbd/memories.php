@@ -17,18 +17,18 @@ require 'includes/navbar.php';
    'tall' => true  makes a card span two rows (use it for portrait shots).
    -------------------------------------------------------------------------- */
 $memories = [
-    ['src' => 'images/memory-01.jpg', 'date' => 'The first photo',   'caption' => 'The one that started the folder', 'desc' => 'Placeholder — the first picture of her you ever saved, and the slightly embarrassing reason you saved it.', 'tall' => true],
-    ['src' => 'images/memory-02.jpg', 'date' => 'A random Tuesday',  'caption' => 'Nothing happening at all',        'desc' => 'Placeholder — a completely uneventful day that somehow became one of your favourites.'],
-    ['src' => 'images/memory-03.jpg', 'date' => 'Late night',        'caption' => '3:14 AM, apparently',             'desc' => 'Placeholder — the screenshot of a call that went far too long and ended far too early.'],
-    ['src' => 'images/memory-04.jpg', 'date' => 'That trip',         'caption' => 'You, laughing at me',             'desc' => 'Placeholder — what you had just said to cause that face.'],
-    ['src' => 'images/memory-05.jpg', 'date' => 'Festival season',   'caption' => 'All dressed up',                  'desc' => 'Placeholder — how long she took, and how completely worth it it was.', 'tall' => true],
-    ['src' => 'images/memory-06.jpg', 'date' => 'Sunday morning',    'caption' => 'Hair everywhere',                 'desc' => 'Placeholder — the unposed one she told you to delete. You did not delete it.'],
-    ['src' => 'images/memory-07.jpg', 'date' => 'The airport',       'caption' => 'Before, or after',                'desc' => 'Placeholder — arrivals or departures. Both hurt in different ways.'],
-    ['src' => 'images/memory-08.jpg', 'date' => 'Our spot',          'caption' => 'The usual place',                 'desc' => 'Placeholder — the café, the bench, the corner of a room that belongs to the two of you now.'],
-    ['src' => 'images/memory-09.jpg', 'date' => 'Silly hour',        'caption' => 'Absolute nonsense',               'desc' => 'Placeholder — the photo that makes no sense to anyone else on earth.'],
-    ['src' => 'images/memory-10.jpg', 'date' => 'Golden hour',       'caption' => 'The light liked you',             'desc' => 'Placeholder — the evening you took forty photos and every single one was good.', 'tall' => true],
-    ['src' => 'images/memory-11.jpg', 'date' => 'Screenshot',        'caption' => 'The text I kept',                 'desc' => 'Placeholder — the message you screenshotted and still open sometimes.'],
-    ['src' => 'images/memory-12.jpg', 'date' => 'Someday soon',      'caption' => 'Reserved',                        'desc' => 'Placeholder — this frame is deliberately empty. It is for the next time.'],
+    ['src' => 'images/memory-01.jpg', 'date' => 'The first photo',   'caption' => 'The one that started the folder', 'desc' => 'The first picture of you I ever saved. I told myself it was for no reason. There is now a folder, and the folder has subfolders, so we both know how that went.', 'tall' => true],
+    ['src' => 'images/memory-02.jpg', 'date' => 'A random Tuesday',  'caption' => 'Nothing happening at all',        'desc' => 'Nothing happened this day. No plan, no occasion, nothing to report to anyone. It is still one of my favourites, and I think that is the entire point of you.'],
+    ['src' => 'images/memory-03.jpg', 'date' => 'Late night',        'caption' => '3:14 AM, apparently',             'desc' => 'A call that went on far too long and still ended far too early. Neither of us wanted to be the one to hang up, so we just kept finding new things to say.'],
+    ['src' => 'images/memory-04.jpg', 'date' => 'That trip',         'caption' => 'You, laughing at me',             'desc' => 'I have no memory of what I said. I remember exactly what your face did afterwards. I would happily be the joke every single day for that reaction.'],
+    ['src' => 'images/memory-05.jpg', 'date' => 'Festival season',   'caption' => 'All dressed up',                  'desc' => 'You took an absurd amount of time getting ready and then walked out and made the entire wait look like a rounding error. I did not say much. I did not really have anything.', 'tall' => true],
+    ['src' => 'images/memory-06.jpg', 'date' => 'Sunday morning',    'caption' => 'Hair everywhere',                 'desc' => 'The unposed one you told me to delete. I did not delete it. This is you before you have decided to be anything for anyone, and it is my favourite version.'],
+    ['src' => 'images/memory-07.jpg', 'date' => 'The airport',       'caption' => 'Before, or after',                'desc' => 'Arrivals or departures — I genuinely cannot tell any more, and both of them hurt in their own way. One day we will go to one of these and nobody will be leaving.'],
+    ['src' => 'images/memory-08.jpg', 'date' => 'Our spot',          'caption' => 'The usual place',                 'desc' => 'A corner of the world that quietly became ours without either of us announcing it. Nobody else knows it means anything. That is what makes it ours.'],
+    ['src' => 'images/memory-09.jpg', 'date' => 'Silly hour',        'caption' => 'Absolute nonsense',               'desc' => 'This one makes no sense to anyone else on earth and perfect sense to the two of us. Ninety per cent of what we have is this, and I would not trade it for anything more dignified.'],
+    ['src' => 'images/memory-10.jpg', 'date' => 'Golden hour',       'caption' => 'The light liked you',             'desc' => 'I took about forty photos that evening and every single one of them was good, which had nothing to do with the light and everything to do with you.', 'tall' => true],
+    ['src' => 'images/memory-11.jpg', 'date' => 'Screenshot',        'caption' => 'The text I kept',                 'desc' => 'You probably typed this without thinking twice and forgot it the same hour. I screenshotted it. I still open it on the bad days. You have no idea how much work this one message has done.'],
+    ['src' => 'images/memory-12.jpg', 'date' => 'Someday soon',      'caption' => 'Reserved',                        'desc' => 'This frame is empty on purpose. It belongs to the next time — the one where I do not have to count down to it, and neither do you.'],
 ];
 ?>
 
@@ -119,14 +119,14 @@ $memories = [
         <!-- Revealed only once every piece is home -->
         <div class="puzzle__done" id="puzzleDone" hidden>
             <span class="sticker-box sticker-box--md puzzle__done-sticker" aria-hidden="true">
-                <!-- REPLACE: hug.gif -->
-                <img class="sticker" src="images/stickers/hug.gif" alt="">
+                <img class="sticker" src="images/stickers/hug1.webp" alt="">
             </span>
             <p class="puzzle__done-title">You put us back together.</p>
             <p class="puzzle__done-text">
-                Placeholder — write the message she gets for finishing it. Something about
-                how this is basically what the two of you have been doing all year: taking
-                something scattered across a map and quietly fitting it back into place.
+                Which is more or less what we have been doing all year, just with fewer
+                pieces and a lot more patience. Something scattered across a map, quietly
+                being fitted back into place, one small move at a time. You have been doing
+                most of the moving. I noticed.
             </p>
         </div>
     </div>

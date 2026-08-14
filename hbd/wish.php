@@ -104,16 +104,21 @@ $candles = max(1, min(40, (int) $HER_AGE));   // the cake stops looking like a
 
         <div class="wish__done-body">
             <p>
-                Placeholder — the first line she reads after the room goes dark and comes back.
-                Keep it short. This one is allowed to be plain.
+                There. That’s all of them. I would have lit a hundred more if it meant
+                keeping you here a little longer.
             </p>
             <p>
-                Placeholder — tell her what you wished for. You are not supposed to say it out
-                loud, which is exactly why writing it down here works.
+                You’re not supposed to say a wish out loud, so I’ll write it down instead
+                and call it a loophole: I wished for the boring version. Same city, same
+                bed, no counting down to anything. Nothing dramatic. Just you, close enough
+                to reach, on an ordinary evening with nothing planned.
             </p>
             <p>
-                Placeholder — and then the small one. The thing you want for her this year
-                that has nothing to do with you.
+                And one that has nothing to do with me: I want this to be the year the
+                effort finally pays you back. That the thing you have been quietly working
+                at works out, that you stop measuring yourself so harshly, and that someone
+                takes care of you as well as you take care of everyone else. I’d like that
+                someone to be me. But mostly I just want it to happen.
             </p>
         </div>
 
@@ -125,8 +130,8 @@ $candles = max(1, min(40, (int) $HER_AGE));   // the cake stops looking like a
     </div>
 
     <p class="wish__note reveal">
-        Placeholder — one quiet line under everything. What you would be doing right now
-        if the map were kinder, in one sentence.
+        If the map were kinder, I would be standing behind you right now with my hands
+        over your eyes, holding this cake badly, and you would already be laughing at me.
     </p>
 </section>
 

@@ -11,24 +11,28 @@ require 'includes/navbar.php';
 /* --------------------------------------------------------------------------
    THE 16 REASONS — replace the front/back text of each card.
    'front' is the teaser she sees. 'back' is what she gets for being curious.
+
+   Keep 'back' under roughly 230 characters. The card is a fixed box — both
+   faces share it — so anything much longer starts scrolling inside the flip
+   instead of simply being read.
    -------------------------------------------------------------------------- */
 $reasons = [
-    ['no' => '01', 'front' => 'The way you laugh',            'back' => 'Placeholder — write about the exact sound of it, and the fact that you can hear it in your head right now without trying.'],
-    ['no' => '02', 'front' => 'You listen properly',          'back' => 'Placeholder — the way she remembers small things you mentioned once, months ago, in passing.'],
-    ['no' => '03', 'front' => 'Your kindness is not loud',    'back' => 'Placeholder — a specific time she was gentle with someone when nobody was watching.'],
-    ['no' => '04', 'front' => 'You are stupidly funny',       'back' => 'Placeholder — the joke of hers that still makes you laugh alone, badly, in public.'],
-    ['no' => '05', 'front' => 'How hard you try',             'back' => 'Placeholder — something she works at relentlessly, and how it makes you want to be better.'],
-    ['no' => '06', 'front' => 'Your voice at 2am',            'back' => 'Placeholder — the sleepy version of her voice, and why it is your favourite version.'],
-    ['no' => '07', 'front' => 'You make ordinary days good',  'back' => 'Placeholder — a completely boring day that she somehow turned into a good memory.'],
-    ['no' => '08', 'front' => 'The way you say my name',      'back' => 'Placeholder — how it sounds different from the way anyone else says it.'],
-    ['no' => '09', 'front' => 'You are honest with me',       'back' => 'Placeholder — a time she told you something true that was hard to say.'],
-    ['no' => '10', 'front' => 'Your excitement',              'back' => 'Placeholder — the thing she talks about too fast because she loves it too much.'],
-    ['no' => '11', 'front' => 'You never made me feel small', 'back' => 'Placeholder — how safe it feels to be unimpressive around her.'],
-    ['no' => '12', 'front' => 'How you handle hard days',     'back' => 'Placeholder — something difficult she carried, and carried well.'],
-    ['no' => '13', 'front' => 'Your hands in photos',         'back' => 'Placeholder — a small physical detail you noticed early and never stopped noticing.'],
-    ['no' => '14', 'front' => 'You choose me daily',          'back' => 'Placeholder — the quiet, unglamorous, everyday choosing that distance demands.'],
-    ['no' => '15', 'front' => 'You feel like home',           'back' => 'Placeholder — the fact that home stopped being a place at some point this year.'],
-    ['no' => '16', 'front' => 'And fifteen wasn’t enough',    'back' => 'Placeholder — the reason that would not fit in a card, so you built a whole website instead.'],
+    ['no' => '01', 'front' => 'The way you laugh',            'back' => 'It arrives before you mean it to — too loud, completely unguarded, ending in that small breath before the next one. I can hear it right now without trying, and I have embarrassed myself plenty of times just to get it out of you.'],
+    ['no' => '02', 'front' => 'You listen properly',          'back' => 'You listen all the way to the end. No waiting for your turn, no fixing it before I have finished. And then weeks later you bring back something I mentioned once, in passing, at 2am.'],
+    ['no' => '03', 'front' => 'Your kindness is not loud',    'back' => 'Kind in the way that costs something and never gets announced. To people who can do nothing for you, on days when nobody is watching. It is the rarest thing about you, and you think it is normal.'],
+    ['no' => '04', 'front' => 'You are stupidly funny',       'back' => 'Not trying-to-be-funny funny. Casually, accidentally, devastatingly funny — usually in one line, usually while I am being serious. I still laugh at things you said months ago, alone, in public.'],
+    ['no' => '05', 'front' => 'How hard you try',             'back' => 'You work at things long past the point most people would call it enough, and then you don’t count any of it. You have never once said “look what I did.” It makes me want to be less lazy about my own life.'],
+    ['no' => '06', 'front' => 'Your voice at 2am',            'back' => 'Slower, lower, half of it swallowed, saying whatever comes into your head with nothing left in the way. That version only goes to people you feel safe with, and you give it to me.'],
+    ['no' => '07', 'front' => 'You make ordinary days good',  'back' => 'Nothing happened. Neither of us had anything to report. We were both doing our own boring things with the call running in the background — and I remember it better than most days with plans in them.'],
+    ['no' => '08', 'front' => 'The way you say my name',      'back' => 'You stretch it out until it stops being a name and turns into a whole sentence. Nobody else on earth calls me that. I did not know I wanted a name only one person uses until you started using it.'],
+    ['no' => '09', 'front' => 'You are honest with me',       'back' => 'You tell me the true thing even when the polite thing would end the conversation faster. You have told me things about myself I did not enjoy hearing and needed to hear. I trust you because of it.'],
+    ['no' => '10', 'front' => 'Your excitement',              'back' => 'When you love something you talk about it too fast, jumping three steps ahead because you cannot get it out quickly enough. I follow about half. I am not really listening to the words at that point.'],
+    ['no' => '11', 'front' => 'You never made me feel small', 'back' => 'I have been unimpressive around you. Broke, ill, blank, in no state to be anybody’s anything. You never once used it or made me perform being okay. Do you know how rare it is to be allowed to be ordinary?'],
+    ['no' => '12', 'front' => 'How you handle hard days',     'back' => 'You go quiet and stubborn and you keep going. You carried things this year that would have folded most people, without turning them into anyone else’s problem. I love who you are when things go wrong.'],
+    ['no' => '13', 'front' => 'Your hands in photos',         'back' => 'A small thing I noticed embarrassingly early and never stopped noticing. In half the photos I have of you, you are doing something with your hands mid-sentence. You have no idea you do it.'],
+    ['no' => '14', 'front' => 'You choose me daily',          'back' => 'Nothing about us is convenient. Nobody is bumping into anybody. Every day, from that distance, you have to decide again — and you keep deciding it. That is not romance, that is character.'],
+    ['no' => '15', 'front' => 'You feel like home',           'back' => 'Somewhere along the way home stopped being a place and became a person, and now every city I am in is just somewhere I am waiting. I do not feel far from a house. I feel far from you.'],
+    ['no' => '16', 'front' => 'And fifteen wasn’t enough',    'back' => 'This one would not fit on a card, and it would not fit in a message either. So I built you an entire website instead — and even that is not big enough. It is just the biggest thing I know how to make.'],
 ];
 ?>
 

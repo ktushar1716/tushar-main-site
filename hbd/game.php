@@ -19,10 +19,10 @@ require 'includes/navbar.php';
    stop feeling like a reward. 'at' is a percentage of the total distance.
    -------------------------------------------------------------------------- */
 $milestones = [
-    ['at' => 20, 'line' => 'Placeholder — the first thing you thought when you realised this was going to be long distance.'],
-    ['at' => 44, 'line' => 'Placeholder — the night it nearly got too hard, and the thing she said that fixed it.'],
-    ['at' => 68, 'line' => 'Placeholder — something you have never told her that you do while you wait for her to text back.'],
-    ['at' => 88, 'line' => 'Placeholder — how close you are now, in the real world, not in this game.'],
+    ['at' => 20, 'line' => 'When I realised this was going to be long distance, my first thought was not “can we do this.” It was “I am not letting this go.”'],
+    ['at' => 44, 'line' => 'There was a night it nearly got too heavy. You didn’t argue me out of it. You just stayed on the call and said you weren’t going anywhere, and that was enough.'],
+    ['at' => 68, 'line' => 'Something I’ve never told you: while I wait for you to reply, I open the chat, read the last thing you sent, and close it. Repeatedly. Like an idiot.'],
+    ['at' => 88, 'line' => 'This is a game, so it ends in a few minutes. In the real world it takes longer — but it ends the same way. I’m still running.'],
 ];
 
 /* --------------------------------------------------------------------------
@@ -163,9 +163,11 @@ $obstacles = [
                 <p class="game__win-eyebrow">0 km to go</p>
                 <h2 class="game__panel-title game__win-title">You brought me home.</h2>
                 <p class="game__panel-text game__win-text">
-                    Placeholder — write what she gets for finishing it. Something about how
-                    the distance was always going to be a thing you got through rather than
-                    a thing that got you, and that she has been doing the jumping too.
+                    The distance was always going to be something we got through, not
+                    something that got us. And you should know: you have been doing the
+                    jumping too, this whole time, on your side of the map, without a
+                    scoreboard and without ever making it my problem. This one was never
+                    only my run.
                 </p>
                 <button class="btn btn--ghost game__panel-btn" id="gameAgainBtn" type="button">
                     Run it again
@@ -185,8 +187,8 @@ $obstacles = [
     </div>
 
     <p class="game__note reveal">
-        Placeholder — one line under the game. Something like: I have played this more
-        times than I would like to admit, and I still get caught by the airport.
+        I have played this more times than I would like to admit, and the airport still
+        catches me. That feels about right.
     </p>
 </section>
 

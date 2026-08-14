@@ -11,20 +11,19 @@
    08. Cursor glow
    09. Starfield
    10. Parallax
-   11. Background music
-   12. Image fallbacks
-   13. Reason cards (flip)
-   14. Gallery lightbox
-   15. Open-when letters
-   16. The game ("Bring me home")
-   17. Make a wish (the cake)
-   18. Easter eggs
-   19. Stickers
-   20. Confetti
-   21. Hidden hearts
-   22. The puzzle
-   23. The finale
-   24. Secret page gate
+   11. Image fallbacks
+   12. Reason cards (flip)
+   13. Gallery lightbox
+   14. Open-when letters
+   15. The game ("Bring me home")
+   16. Make a wish (the cake)
+   17. Easter eggs
+   18. Stickers
+   19. Confetti
+   20. Hidden hearts
+   21. The puzzle
+   22. The finale
+   23. Secret page gate
    ========================================================================== */
 
 (function () {
@@ -33,6 +32,21 @@
     /* ======================================================================
        01. HELPERS
        ====================================================================== */
+
+    /**
+     * Re-parents a full-screen overlay to <body>.
+     *
+     * Both modals are authored inside .page, which runs an intro animation
+     * using transform and filter. While ANY of those is in effect, .page
+     * becomes the containing block for its position: fixed children, so
+     * `inset: 0` resolves against the whole scrolling page rather than the
+     * viewport and the panel gets centred far below the fold. Hoisting the
+     * overlay out means it can never inherit that problem again, whatever
+     * effects land on .page later.
+     */
+    function portalToBody(el) {
+        if (el && el.parentNode !== document.body) document.body.appendChild(el);
+    }
     const $  = (sel, ctx = document) => ctx.querySelector(sel);
     const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
 
@@ -433,90 +447,8 @@
         heroInner.style.opacity   = String(clamp(1 - y / (window.innerHeight * 0.75), 0, 1));
     }
 
-
     /* ======================================================================
-       11. BACKGROUND MUSIC
-       Remembers whether it was playing (and where) across page changes.
-       ====================================================================== */
-    const musicWrap = $('#music');
-    const musicBtn  = $('#musicBtn');
-    const audio     = $('#bgAudio');
-
-    if (musicWrap && musicBtn && audio) {
-        audio.volume = 0;
-        let fadeTimer = null;
-
-        /** Gentle fade so the music never slams in or out. */
-        function fadeTo(target, done) {
-            clearInterval(fadeTimer);
-            fadeTimer = setInterval(() => {
-                const diff = target - audio.volume;
-                if (Math.abs(diff) < 0.02) {
-                    audio.volume = target;
-                    clearInterval(fadeTimer);
-                    if (done) done();
-                    return;
-                }
-                audio.volume = clamp(audio.volume + diff * 0.12, 0, 1);
-            }, 40);
-        }
-
-        function setPlayingState(playing) {
-            musicWrap.classList.toggle('is-playing', playing);
-            // The cake dancer picks up the tempo when there's a tempo to pick up
-            document.body.classList.toggle('music-playing', playing);
-            musicBtn.setAttribute('aria-pressed', String(playing));
-            musicBtn.setAttribute('aria-label', playing ? 'Pause background music' : 'Play background music');
-            const label = $('.music__label', musicBtn);
-            if (label) label.textContent = playing ? 'Playing' : 'Play our song';
-        }
-
-        function play() {
-            const resumeAt = parseFloat(store.get('bgmTime') || '0');
-            if (resumeAt > 0 && isFinite(resumeAt)) {
-                try { audio.currentTime = resumeAt; } catch (e) { /* not seekable yet */ }
-            }
-
-            const attempt = audio.play();
-            if (attempt && typeof attempt.then === 'function') {
-                attempt.then(() => {
-                    setPlayingState(true);
-                    store.set('bgm', 'on');
-                    fadeTo(0.35);
-                }).catch(() => {
-                    // Browser blocked it, or audio/background.mp3 isn't there yet
-                    setPlayingState(false);
-                    store.set('bgm', 'off');
-                });
-            }
-        }
-
-        function pause() {
-            fadeTo(0, () => audio.pause());
-            setPlayingState(false);
-            store.set('bgm', 'off');
-        }
-
-        musicBtn.addEventListener('click', () => {
-            if (audio.paused) play(); else pause();
-        });
-
-        // Keep the position so the track continues across pages
-        ['pagehide', 'beforeunload'].forEach((evt) => {
-            window.addEventListener(evt, () => {
-                if (!audio.paused) store.set('bgmTime', String(audio.currentTime));
-            });
-        });
-
-        // If it was on before this page loaded, try to resume it silently.
-        if (store.get('bgm') === 'on') {
-            pageReady.then(() => setTimeout(play, 400));
-        }
-    }
-
-
-    /* ======================================================================
-       12. IMAGE FALLBACKS
+       11. IMAGE FALLBACKS
        Any photo that hasn't been added yet becomes a soft gradient card
        with its caption written across it, so the layout never breaks.
        ====================================================================== */
@@ -535,7 +467,7 @@
 
 
     /* ======================================================================
-       13. REASON CARDS — click or Enter/Space to flip
+       12. REASON CARDS — click or Enter/Space to flip
        ====================================================================== */
     $$('.reason__card').forEach((card) => {
         card.addEventListener('click', () => {
@@ -546,9 +478,10 @@
 
 
     /* ======================================================================
-       14. GALLERY LIGHTBOX
+       13. GALLERY LIGHTBOX
        ====================================================================== */
     const lightbox = $('#lightbox');
+    portalToBody(lightbox);
 
     if (lightbox) {
         const shots     = $$('.shot__btn');
@@ -633,9 +566,10 @@
 
 
     /* ======================================================================
-       15. OPEN-WHEN LETTERS
+       14. OPEN-WHEN LETTERS
        ====================================================================== */
     const letterModal = $('#letterModal');
+    portalToBody(letterModal);
 
     if (letterModal) {
         const letterTitle = $('#letterTitle');
@@ -684,7 +618,7 @@
 
 
     /* ======================================================================
-       16. THE GAME — "Bring me home"
+       15. THE GAME — "Bring me home"
 
        A DOM runner rather than a canvas one, on purpose: the characters are
        real <img> elements, so the animated GIFs keep animating while they
@@ -1235,7 +1169,7 @@
 
 
     /* ======================================================================
-       17. MAKE A WISH — the cake
+       16. MAKE A WISH — the cake
 
        One candle per year. Tap them, or actually blow into the microphone
        if she lets the page listen. The whole scene dims as they go out and
@@ -1571,15 +1505,29 @@
             })();
         }
 
-        if (micBtn) micBtn.addEventListener('click', startMic);
-        window.addEventListener('pagehide', stopMic);
+        /* Browsers only hand out a microphone on a secure origin — https, or
+           localhost. Served over plain http (a bare IP, say) getUserMedia is
+           not merely blocked, it does not exist, and no amount of tapping
+           "allow" will bring it back. Rather than leave a button that can only
+           ever apologise, take it off the page and let tapping be the way.
+           The moment the site is on https this comes back on its own. */
+        const canListen = window.isSecureContext &&
+                          !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
+
+        if (micBtn && !canListen) {
+            micBtn.remove();
+            if (micNote) micNote.remove();
+        } else if (micBtn) {
+            micBtn.addEventListener('click', startMic);
+            window.addEventListener('pagehide', stopMic);
+        }
 
         setLit();
     })();
 
 
     /* ======================================================================
-       18. EASTER EGGS
+       17. EASTER EGGS
        Four of them. Find all four and you get a fifth.
        ====================================================================== */
     const foundEggs = new Set();
@@ -1678,7 +1626,7 @@
 
 
     /* ======================================================================
-       19. STICKERS
+       18. STICKERS
        Bubu & Dudu fade in with a small bounce the first time they scroll
        into view, then float gently. Any GIF that hasn't been added yet
        turns into a labelled dashed slot so you can see where it belongs.
@@ -1732,7 +1680,7 @@
 
 
     /* ======================================================================
-       20. CONFETTI
+       19. CONFETTI
        A single soft burst. Draws itself, then removes its own canvas.
        ====================================================================== */
     function confetti(duration = 2600) {
@@ -1812,7 +1760,7 @@
 
 
     /* ======================================================================
-       21. HIDDEN HEARTS
+       20. HIDDEN HEARTS
        Sixteen hearts, spread over the seven pages. Each one is dropped into
        the corner of an existing element, so they never land on top of text.
        Progress is kept in localStorage — she can find them over several days.
@@ -1855,24 +1803,24 @@
         ]
     };
 
-    // One line per heart, in order. Replace these with your own.
+    // One line per heart, in order.
     const HEART_LINES = [
-        'Placeholder — because you text me the boring parts of your day too.',
-        'Placeholder — because you never once made me feel like too much.',
-        'Placeholder — because of the face you make before you laugh.',
-        'Placeholder — because you remember things I only said once.',
-        'Placeholder — because you apologise properly, which almost nobody does.',
-        'Placeholder — because you are kind to people who cannot do anything for you.',
-        'Placeholder — because of the way you say goodnight.',
-        'Placeholder — because you let me be quiet without asking what is wrong.',
-        'Placeholder — because you got me through that week. You know the one.',
-        'Placeholder — because you are the only person whose call I always answer.',
-        'Placeholder — because you are braver than you give yourself credit for.',
-        'Placeholder — because you make me want to be less of a coward.',
-        'Placeholder — because your excitement about small things is my favourite thing.',
-        'Placeholder — because you stayed, on the days it would have been easier not to.',
-        'Placeholder — because somehow, out of everyone, it was you.',
-        'Placeholder — because I ran out of hiding places before I ran out of reasons.'
+        'because you text me the boring parts of your day too, and I want all of them.',
+        'because you have never once made me feel like too much.',
+        'because of the face you make in the half-second before you laugh.',
+        'because you remember things I only said once, months ago, in passing.',
+        'because you apologise properly — no excuses attached — which almost nobody does.',
+        'because you are kind to people who can do absolutely nothing for you.',
+        'because of the way you say goodnight, like you are reluctant about it.',
+        'because you let me be quiet without asking what is wrong.',
+        'because you got me through that week. You know the one.',
+        'because you are the only person whose call I answer no matter what I am doing.',
+        'because you are far braver than you give yourself credit for.',
+        'because you make me want to be less of a coward about my own life.',
+        'because your excitement about small things is my favourite thing on earth.',
+        'because you stayed, on the days it would have been much easier not to.',
+        'because somehow, out of everyone, it turned out to be you.',
+        'because I ran out of places to hide these long before I ran out of reasons.'
     ];
 
     const hearts = {
@@ -1993,7 +1941,7 @@
 
 
     /* ======================================================================
-       22. THE PUZZLE
+       21. THE PUZZLE
        Drag a piece onto another to swap them, or tap one then the other.
        Keyboard works the same way: Enter to pick up, Enter to place.
        ====================================================================== */
@@ -2201,7 +2149,7 @@
 
 
     /* ======================================================================
-       23. THE FINALE
+       22. THE FINALE
        Scrolls into view → they walk toward each other → hug → confetti,
        once → the last line fades in.
        ====================================================================== */
@@ -2245,7 +2193,7 @@
 
 
     /* ======================================================================
-       24. SECRET PAGE GATE
+       23. SECRET PAGE GATE
        ====================================================================== */
     if (document.body.dataset.page === 'secret') {
         const locked   = $('#secretLocked');

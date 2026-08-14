@@ -16,8 +16,7 @@ require 'includes/navbar.php';
      ========================================================================== -->
 <section class="secret-locked" id="secretLocked">
     <span class="sticker-box sticker-box--md" aria-hidden="true">
-        <!-- REPLACE: peek.gif — one of them peeking around a corner -->
-        <img class="sticker" src="images/stickers/peek.gif" alt="">
+        <img class="sticker" src="images/stickers/bubu-waiting-walk.webp" alt="">
     </span>
 
     <h1 class="secret-locked__title">Not yet.</h1>
@@ -45,34 +44,44 @@ require 'includes/navbar.php';
 
     <div class="secret__body">
         <p class="secret__lead">
-            Placeholder — tell her you genuinely didn’t expect her to find all sixteen,
-            and that of course she did.
+            I hid sixteen of these expecting you to find maybe nine and give up somewhere
+            around the letters. You found all of them. Of course you did. You are the most
+            stubbornly attentive person I have ever met, and I should have known better.
         </p>
 
         <p>
-            Placeholder — this page is the one nobody else was ever going to see.
-            Write the thing you were slightly too shy to put on the main pages.
+            So here is the page nobody else was ever going to see. Everything out there
+            was written knowing you might read it in front of someone. This one wasn’t.
+            The truth is I am completely, unreasonably in love with you, in the way that
+            is slightly embarrassing to admit at full volume — the kind where I have
+            genuinely built parts of my future around a person who is two thousand
+            kilometres away and has no idea how much space she takes up in my head.
         </p>
 
         <p>
-            Placeholder — a promise, a plan, or a confession. Whichever one you’ve been
-            carrying around.
+            And the confession underneath it: I am scared of being loved this well, because
+            I have not always known what to do with it, and there have been stretches where
+            I handled it badly. You have seen those stretches. You stayed anyway. I am not
+            going to waste that. I am going to keep learning how to hold this properly,
+            for as long as you will let me — and I intend that to be a very long time.
         </p>
 
         <p>
-            Placeholder — and then something light, so she finishes smiling rather than
-            crying. You know which story to use.
+            Anyway. You just spent a genuinely unreasonable amount of time hunting tiny
+            hearts around a website your boyfriend built instead of sleeping, which tells
+            me everything about both of us. Sixteen out of sixteen. Certified obsessed.
+            I win the argument about which one of us is worse.
         </p>
     </div>
 
     <div class="secret__gift">
         <span class="sticker-box sticker-box--lg" aria-hidden="true">
-            <!-- REPLACE: gift.gif — Bubu & Dudu with a present -->
-            <img class="sticker" src="images/stickers/gift.gif" alt="">
+            <img class="sticker" src="images/stickers/bubu-dudu-round-hug.webp" alt="">
         </span>
         <p class="secret__gift-text">
-            Placeholder — if there’s a real present, this is where you tell her
-            where to find it.
+            There is one more thing, and it is not on this website. Call me when you get
+            to this page — I have been waiting all day to tell you where it is, and I am
+            not going to let a screen do it for me.
         </p>
     </div>
 

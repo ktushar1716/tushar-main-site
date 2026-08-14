@@ -10,86 +10,115 @@ require 'includes/navbar.php';
 
 /* --------------------------------------------------------------------------
    THE LETTERS
-   'label'  — what she reads on the closed envelope
-   'note'   — small line under the label
-   'body'   — array of paragraphs (add as many as you like)
-   'sign'   — the closing line
+   'label'   — what she reads on the closed envelope
+   'note'    — small line under the label
+   'sticker' — sits on the closed envelope (optional)
+   'open'    — sticker revealed INSIDE the letter, only once she opens it (optional)
+   'body'    — array of paragraphs (add as many as you like)
+   'sign'    — the closing line
    -------------------------------------------------------------------------- */
 $letters = [
     [
         'label' => 'Open when you miss me',
-        'note'  => 'for the nights the distance gets loud',
-        'sticker' => 'miss-you.gif',   // REPLACE with your GIF
+        'note'  => 'for the hours I’m not next to you',
+        'sticker' => 'bubu-miss-you.gif',
+        // He's missing her on the envelope; opening it hands her the phone.
+        'open'  => 'bubu-phone-call.webp',
         'body'  => [
-            'Placeholder — start by telling her you miss her too, right now, at whatever moment she is reading this. Do not be brave about it.',
-            'Placeholder — remind her of something small and physical. The sound of your voice. A specific hug. The way she fits somewhere.',
-            'Placeholder — end with the maths. The number of days, the plan, the plane ticket, the certainty. Missing someone is easier when it has an end date.',
+            'Whatever time it is right now, I miss you too. Not in a poetic way — in a boring, physical, where-are-you way. So don’t be brave about it. You’re allowed to miss me loudly.',
+            'Think about the weight of my arm when you’re falling asleep, and the way you fit under it without either of us deciding to. That hasn’t gone anywhere. It’s just waiting for you.',
+            'And this one is fixable, which is the best part. Call me. Even if it’s late, even if you have nothing to say, even if you just want to stay on the line while you do something else. I’ll pick up. I always pick up for you.',
         ],
-        'sign'  => 'I miss you more. Always have.',
+        'sign'  => 'I miss you more. And I missed you first, every single time.',
     ],
     [
         'label' => 'Open when you’re sad',
         'note'  => 'no advice, promise',
-        'sticker' => 'comfort.gif',   // REPLACE with your GIF
+        'sticker' => 'bubu-crying-walk.webp',
+        // Sad on the outside, someone sitting with her on the inside.
+        'open'  => 'dudu-consoling-bubu.webp',
         'body'  => [
-            'Placeholder — do not fix anything here. Just tell her it is allowed. That she does not have to be okay to be loved.',
-            'Placeholder — remind her of a time she felt like this before and it passed, because she will not remember that on her own right now.',
-            'Placeholder — tell her exactly what you would do if you were there. Be specific. Specific is what makes it feel real.',
+            'You don’t have to be okay right now. Not for me, not for anyone. Nothing about how much I love you depends on you holding it together today.',
+            'You have felt exactly this before. I know you can’t remember that at the moment, so I’ll remember it for you — it passed. It always passed. It didn’t take courage, it just took time.',
+            'If I’m not there right now, here’s what I would be doing: sitting next to you, saying nothing, one hand on your head, asking no questions and fixing nothing. You can have that whenever you want it. Just say the word and I’ll come.',
         ],
         'sign'  => 'Sit here as long as you need. I’m not going anywhere.',
     ],
     [
         'label' => 'Open when you’re stressed',
         'note'  => 'read slowly, breathe first',
-        'sticker' => 'calm.gif',   // REPLACE with your GIF
+        'sticker' => 'bubu-waiting-walk.webp',
         'body'  => [
-            'Placeholder — tell her to put the phone down for ten seconds first. Actually mean it.',
-            'Placeholder — remind her of everything she has already survived that once looked exactly this impossible.',
-            'Placeholder — give her permission to do it badly. To do the minimum. To rest without earning it.',
+            'Stop for ten seconds. Actually stop. Breathe in properly, all the way down, and let it out slower than you took it in. I’ll wait — this letter isn’t going anywhere.',
+            'Now think of everything you have already survived that looked exactly this unmanageable while you were inside it. All of it is behind you now. This is going to join that list too, and sooner than it feels.',
+            'You’re allowed to do it badly. You’re allowed to do the bare minimum today and the rest tomorrow. You’re allowed to rest before you’ve earned it — you have been earning it for years.',
         ],
         'sign'  => 'It will get done. And if it doesn’t, you’ll still be enough.',
     ],
     [
         'label' => 'Open when you can’t sleep',
         'note'  => 'for 3am, when the ceiling is boring',
-        'sticker' => 'sleepy.gif',   // REPLACE with your GIF
+        'sticker' => 'phone-call.gif',
         'body'  => [
-            'Placeholder — write this one softly. Short sentences. Like you are actually whispering.',
-            'Placeholder — tell her a slow, pointless, comforting story. The future apartment. The imaginary morning. The plan for a day you have not had yet.',
-            'Placeholder — end by telling her to close her eyes. Then say goodnight properly.',
+            'Hi. Quiet voice only. It’s late, and neither of us is going to solve anything at this hour, so let’s not try.',
+            'Here’s what I’d rather you think about instead. A place that’s ours. Good work, no money worry sitting on the end of the month, a slow morning with nowhere to be. You’d sleep in. I’d let you. That’s the whole plan.',
+            'Now close your eyes. Really. Put the phone face down and imagine I’m right behind you with my arm over you — because in every way that counts, I am.',
         ],
         'sign'  => 'Goodnight. I’ve got the worrying covered tonight.',
     ],
     [
+        'label' => 'Open when you have a headache',
+        'note'  => 'water first, argue later',
+        // no sticker on the envelope — Dudu is the surprise waiting inside
+        'open'  => 'dudu-hit-bubu.webp',
+        'body'  => [
+            'Before you read one more line: go and drink a full glass of water. Not a sip, not the last inch of whatever is on your desk. A full one. Nine times out of ten your head hurts because you have been running on chai, deadlines and almost no water since morning.',
+            'Now the medicine. If it is the usual headache, take one. If it is the kind that starts in your stomach and climbs up, take something for the acidity instead — and eat something proper first, not a biscuit. You always know which one it is, and you always wait far too long before doing anything about it.',
+            'Then: lights off, phone face down, twenty minutes of absolutely nothing. I am not asking. And if it is still there by tonight, you tell me — you look after me better than you look after yourself, and today I am returning the favour whether you like it or not.',
+        ],
+        'sign'  => 'Water. Medicine. Rest. In that order. Go.',
+    ],
+    [
         'label' => 'Open after a bad day',
         'note'  => 'the world was rude to you today',
-        'sticker' => 'pat-head.gif',   // REPLACE with your GIF
+        'sticker' => 'bubu-dudu-round-hug.webp',
         'body'  => [
-            'Placeholder — let her be angry first. Take her side completely and unfairly.',
-            'Placeholder — then remind her that today is one day, and it does not get to represent her.',
-            'Placeholder — tell her what you love about who she is when things go wrong, not just when they go right.',
+            'Whoever it was, they were wrong, and I’m on your side. Completely, unfairly, without hearing the other version. Be angry first. I’ll be angry with you.',
+            'Now the true part: today was one day. It doesn’t get to describe you, and it definitely doesn’t get to predict tomorrow.',
+            'I love who you are when things go wrong, not just when they go right. You go quiet, and stubborn, and you keep going anyway. I have watched you do it up close. It is the most impressive thing about you.',
         ],
         'sign'  => 'Today was bad. You weren’t.',
     ],
     [
         'label' => 'Open when you need motivation',
         'note'  => 'in case you forgot who you are',
-        'sticker' => 'cheer.gif',   // REPLACE with your GIF
+        'sticker' => 'bubu-running.webp',
         'body'  => [
-            'Placeholder — list the things she has done that she does not give herself any credit for.',
-            'Placeholder — name the exact quality of hers that you would steal if you could.',
-            'Placeholder — tell her you believe her. Not in her — her. There is a difference and she will feel it.',
+            'You looked after a man with typhoid before you were even officially his. You carried things most people would have folded under, and then didn’t count a single one of them as an achievement. So let me count them for you.',
+            'The thing I would steal from you if I could: you actually show up. Not in words — in doing. You did it for me when it cost you something, and you have never once held it over my head.',
+            'I believe you. Not just in you — you. Whatever you have decided you’re going to do, go and do it. Your track record is far better than the version of it you keep in your head.',
         ],
         'sign'  => 'Now go. I’ll be here when you get back.',
     ],
     [
-        'label' => 'Open on our anniversary',
-        'note'  => 'not to be opened early. I mean it.',
-        'sticker' => 'cake.gif',   // REPLACE with your GIF
+        'label' => 'Open when I’ve messed up',
+        'note'  => 'because I will, and you deserve better than silence',
+        'sticker' => 'hug1.webp',
         'body'  => [
-            'Placeholder — start with the date. Where you both were. Who you both were then.',
-            'Placeholder — the honest part: what this year cost, what it taught you, what you would not trade.',
-            'Placeholder — the promise for the next one. Keep it small and keep it real, because those are the ones you keep.',
+            'If you’re reading this, I’ve probably been distant, or short with you, or just not there in the way you needed me to be. I’m not going to explain it away. You were right to feel it.',
+            'It was never that I stopped caring. It’s that I’m still learning how to look after someone properly while my own head is loud. That’s my work to do, not yours to absorb.',
+            'I am trying. I’ll keep trying, and I’ll keep getting better at this — not as a promise made in a good mood, but as the actual thing I’m working on. Tell me when I fall short. I would much rather hear it than lose you slowly.',
+        ],
+        'sign'  => 'Still yours, still learning. Don’t give up on me.',
+    ],
+    [
+        'label' => 'Open on our anniversary',
+        'note'  => '27th of July. Not to be opened early. I mean it.',
+        'sticker' => 'bubu-birthday-dance.webp',
+        'body'  => [
+            '27 July 2025. I was ill, useless, and running on nothing, and that is somehow the day you decided to be mine. You took care of me, you helped me when I couldn’t ask for it, and you never once made it feel like charity. I have never understood the timing and I have never questioned it either.',
+            'The honest bit: this year cost us something. Every real year does. But we are still here, and I know you now in a way I didn’t twelve months ago. I wouldn’t trade a single difficult week of it.',
+            'And one small promise for the year ahead, because small ones are the ones people actually keep: I will take better care of you than I did this year. Not perfectly. Better. And the year after that, better again.',
         ],
         'sign'  => 'One more year of you. Selfishly, I want all of them.',
     ],
@@ -140,6 +169,14 @@ $letters = [
 
                 <!-- hidden content, read by script.js -->
                 <template class="envelope__content">
+                    <?php if (!empty($letter['open'])): ?>
+                        <!-- Only shows up once the envelope is opened -->
+                        <span class="sticker-box sticker-box--md letter__sticker" aria-hidden="true">
+                            <img class="sticker"
+                                 src="images/stickers/<?php echo e($letter['open']); ?>" alt="">
+                        </span>
+                    <?php endif; ?>
+
                     <?php foreach ($letter['body'] as $para): ?>
                         <p><?php echo e($para); ?></p>
                     <?php endforeach; ?>
