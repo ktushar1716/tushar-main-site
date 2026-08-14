@@ -340,6 +340,55 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     /* ==========================================
+       Reveal Safety Net
+
+       Everything below the hero is set to opacity:0 by the tweens above and
+       is only ever made visible by ScrollTrigger. That is a single point of
+       failure for the entire page: if the triggers measure the document at
+       the wrong moment, every section below the hero stays invisible for
+       good and the site reads as blank.
+
+       That is easy to hit on a phone and hard to hit on a desktop, because
+       the measurements are taken on DOMContentLoaded, before the project
+       images have downloaded, before web fonts swap, and before Swiper's
+       loop mode clones its slides — each of which changes the page height.
+       On a fast local connection those finish first; on mobile data they
+       land afterwards, leaving every start/end position stale.
+
+       So: re-measure once the page has actually settled, and then sweep up
+       anything still invisible that the reader has already scrolled to.
+       When the triggers are working normally the sweep finds nothing and
+       does nothing — it only ever acts when something has gone wrong.
+       ========================================== */
+    function revealStranded() {
+        const reach = window.innerHeight * 0.95;
+        document.querySelectorAll('.reveal-up, .timeline-reveal, .expertise-col, .skill-category')
+            .forEach((el) => {
+                if (el.closest('.hero-section')) return;      // hero has its own intro
+                const box = el.getBoundingClientRect();
+                if (box.top > reach) return;                  // not scrolled to yet
+                if (parseFloat(getComputedStyle(el).opacity) > 0.05) return;   // already shown
+                gsap.to(el, { opacity: 1, x: 0, y: 0, duration: 0.4, overwrite: 'auto' });
+            });
+    }
+
+    let sweepQueued = false;
+    function queueSweep() {
+        if (sweepQueued) return;
+        sweepQueued = true;
+        requestAnimationFrame(() => { sweepQueued = false; revealStranded(); });
+    }
+
+    window.addEventListener('load', () => {
+        // Late images/fonts have landed by now, so the positions taken at
+        // DOMContentLoaded are re-derived against the real layout.
+        ScrollTrigger.refresh();
+        setTimeout(() => { ScrollTrigger.refresh(); revealStranded(); }, 600);
+    });
+    window.addEventListener('scroll', queueSweep, { passive: true });
+    window.addEventListener('resize', queueSweep);
+
+    /* ==========================================
        Swiper.js Initialization
        ========================================== */
     const workSwiper = new Swiper('.work-swiper', {
@@ -368,6 +417,10 @@ document.addEventListener('DOMContentLoaded', () => {
         touchRatio: 1.5,
         simulateTouch: true,
     });
+
+    // Loop mode clones every slide, which changes the height of the work
+    // section after the triggers below it were measured. Re-measure.
+    ScrollTrigger.refresh();
 
     /* ==========================================
        Smooth scroll for anchor links
