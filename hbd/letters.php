@@ -59,6 +59,8 @@ $letters = [
         'label' => 'Open when you can’t sleep',
         'note'  => 'for 3am, when the ceiling is boring',
         'sticker' => 'phone-call.gif',
+        // The letter ends on "goodnight" — so does the sticker inside it.
+        'open'  => 'bubu-dudu-sleeping-2.webp',
         'body'  => [
             'Hi. Quiet voice only. It’s late, and neither of us is going to solve anything at this hour, so let’s not try.',
             'Here’s what I’d rather you think about instead. A place that’s ours. Good work, no money worry sitting on the end of the month, a slow morning with nowhere to be. You’d sleep in. I’d let you. That’s the whole plan.',

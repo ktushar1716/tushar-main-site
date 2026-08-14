@@ -16,7 +16,7 @@ require 'includes/navbar.php';
      ========================================================================== -->
 <section class="secret-locked" id="secretLocked">
     <span class="sticker-box sticker-box--md" aria-hidden="true">
-        <img class="sticker" src="images/stickers/bubu-waiting-walk.webp" alt="">
+        <img class="sticker" src="images/stickers/bubu-dudu-peeking.webp" alt="">
     </span>
 
     <h1 class="secret-locked__title">Not yet.</h1>
@@ -76,7 +76,7 @@ require 'includes/navbar.php';
 
     <div class="secret__gift">
         <span class="sticker-box sticker-box--lg" aria-hidden="true">
-            <img class="sticker" src="images/stickers/bubu-dudu-round-hug.webp" alt="">
+            <img class="sticker" src="images/stickers/bubu-giving-gift-to-dudu.webp" alt="">
         </span>
         <p class="secret__gift-text">
             There is one more thing, and it is not on this website. Call me when you get
