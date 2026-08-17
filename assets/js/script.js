@@ -66,19 +66,36 @@ document.addEventListener('DOMContentLoaded', () => {
     const mobileLinks = document.querySelectorAll('.mobile-nav-link');
 
     if (hamburger && mobileOverlay) {
+        const closeMenu = () => {
+            hamburger.classList.remove('active');
+            mobileOverlay.classList.remove('active');
+            hamburger.setAttribute('aria-expanded', 'false');
+            hamburger.setAttribute('aria-label', 'Open menu');
+            document.body.style.overflow = '';
+        };
+
         hamburger.addEventListener('click', () => {
-            hamburger.classList.toggle('active');
-            mobileOverlay.classList.toggle('active');
-            document.body.style.overflow = mobileOverlay.classList.contains('active') ? 'hidden' : '';
+            const opening = !mobileOverlay.classList.contains('active');
+            hamburger.classList.toggle('active', opening);
+            mobileOverlay.classList.toggle('active', opening);
+            hamburger.setAttribute('aria-expanded', String(opening));
+            hamburger.setAttribute('aria-label', opening ? 'Close menu' : 'Open menu');
+            document.body.style.overflow = opening ? 'hidden' : '';
         });
 
         // Close on link click
         mobileLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                hamburger.classList.remove('active');
-                mobileOverlay.classList.remove('active');
-                document.body.style.overflow = '';
-            });
+            link.addEventListener('click', closeMenu);
+        });
+
+        // Tapping the empty backdrop closes it too — the usual expectation,
+        // and a second way out if the X is ever missed.
+        mobileOverlay.addEventListener('click', (e) => {
+            if (e.target === mobileOverlay) closeMenu();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && mobileOverlay.classList.contains('active')) closeMenu();
         });
     }
 

@@ -278,7 +278,13 @@ body {
     background: rgba(2, 6, 23, 0.96);
     backdrop-filter: blur(30px);
     -webkit-backdrop-filter: blur(30px);
-    z-index: 1050;
+    /* Must stay BELOW .site-nav (z-index 1000). The hamburger turns into the
+       close X, but it lives inside .site-nav — which is position:fixed with a
+       z-index and therefore its own stacking context, so the hamburger's own
+       z-index:1100 is resolved within the nav and cannot lift it above this
+       overlay. At 1050 the near-opaque backdrop painted straight over the X,
+       leaving the menu with no visible way out. */
+    z-index: 990;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1405,13 +1411,18 @@ h1, h2, h3, h4, h5, h6 {
         padding: 2rem 1.5rem;
     }
 
-    /* Stats */
+    /* Stats — a real 2x2 grid rather than wrapped percentage flex.
+       The old approach gave each block `flex: 0 0 45/48%` and relied on the
+       pair plus the gap fitting: at 390px that came to 346px of content in
+       343px of space, so every block wrapped onto its own row and
+       justify-content:space-between left each one stranded against the left
+       edge. `1fr` columns subtract the gap themselves, so the arithmetic
+       cannot drift as the gap or viewport changes. */
     .stats-strip {
-        gap: 1.5rem;
-        padding: 2rem 0;
-    }
-    .stat-block {
-        flex: 0 0 45%;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem 1rem;
+        padding: 2.5rem 0;
     }
     .counter-num {
         font-size: 2.5rem;
@@ -1423,23 +1434,54 @@ h1, h2, h3, h4, h5, h6 {
         font-size: 0.68rem;
     }
 
-    /* Swiper / Projects */
-    .swiper-slide { width: 90%; }
-    .project-title { font-size: 1.6rem; }
-    .project-desc { font-size: 0.9rem; margin-bottom: 1rem; }
-    .project-content {
-        padding: 1.5rem;
-        bottom: 10px;
-        left: 10px;
-        width: calc(100% - 20px);
+    /* Swiper / Projects
+       On desktop the text floats over the screenshot inside a fixed 16/9
+       box. That cannot survive at phone widths: the card height is tied to
+       its width by aspect-ratio, but the title, description, five tags and
+       link do not shrink to match. At 390px the panel needed 249px inside a
+       244px card and overhung the top edge by 6px, so `overflow:hidden` cut
+       the title off — and the panel covered what little of the screenshot
+       was left.
+
+       So below this width the card stops being an overlay and becomes what
+       it actually is: a picture with a caption under it. The image gets its
+       own full-width area (and a far gentler crop), and the text gets room
+       to be whatever height it needs. */
+    .swiper-slide { width: 90%; height: auto; }
+
+    .project-card {
+        aspect-ratio: auto;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        cursor: default;
     }
-    .project-tags { gap: 6px; margin-bottom: 0.8rem; }
-    .project-tags span { font-size: 0.65rem; padding: 4px 8px; }
-    /* Always show project content on mobile (no hover) */
+    .project-image {
+        position: static;
+        width: 100%;
+        height: auto;
+        aspect-ratio: 16 / 10;
+        flex: none;
+    }
+    .project-card .overlay { display: none; }   /* only existed to darken text over the image */
+
     .project-content {
-        transform: translateY(0);
+        position: static;
+        width: auto;
+        inset: auto;
+        flex: 1 1 auto;
+        padding: 1.25rem;
+        border: none;
+        border-top: 1px solid var(--glass-border);
+        border-radius: 0;
+        background: rgba(2, 6, 23, 0.55);
+        transform: none;   /* no slide-up: there is no hover on a phone */
         opacity: 1;
     }
+    .project-title { font-size: 1.35rem; }
+    .project-desc { font-size: 0.9rem; margin-bottom: 1rem; }
+    .project-tags { gap: 6px; margin-bottom: 0.8rem; }
+    .project-tags span { font-size: 0.65rem; padding: 4px 8px; }
 
     /* AI tools */
     .ai-tools-list { gap: 8px; }
@@ -1590,10 +1632,10 @@ h1, h2, h3, h4, h5, h6 {
 
     /* Stats 2-column stays but smaller */
     .counter-num {
-        font-size: 2rem;
+        font-size: 2.2rem;
     }
     .counter-suffix {
-        font-size: 1.2rem;
+        font-size: 1.35rem;
     }
     .stat-block-label {
         font-size: 0.6rem;
@@ -1605,7 +1647,9 @@ h1, h2, h3, h4, h5, h6 {
     .work-swiper { padding: 0 1rem 3rem; }
     .project-title { font-size: 1.3rem; }
     .project-desc { font-size: 0.85rem; }
-    .project-content { padding: 1rem; bottom: 8px; left: 8px; width: calc(100% - 16px); border-radius: 8px; }
+    /* Position/size deliberately not reset here — the stacked layout from the
+       768px block owns those now. Only the inner spacing tightens. */
+    .project-content { padding: 1rem; }
     .project-link { font-size: 0.75rem; }
 
     /* Engine */
@@ -1743,23 +1787,19 @@ h1, h2, h3, h4, h5, h6 {
     }
 
     .stats-strip {
-        gap: 1rem;
-        padding: 1.5rem 0;
-    }
-    .stat-block {
-        flex: 0 0 48%;
+        gap: 1.75rem 0.75rem;
+        padding: 2rem 0;
     }
     .counter-num {
-        font-size: 1.8rem;
+        font-size: 2rem;
     }
 
     .section-title {
         font-size: 1.15rem;
     }
 
-    .project-card {
-        aspect-ratio: 4/3;
-    }
+    /* No aspect-ratio here any more: the card is image-over-text at this size
+       and its height has to follow the text. Forcing 4/3 is what clipped it. */
 
     .ai-stats-box {
         gap: 1.2rem;
