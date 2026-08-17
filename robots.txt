@@ -1,0 +1,12 @@
+# tusharkhamparia.in
+# Everything here is public and meant to be indexed.
+
+User-agent: *
+Allow: /
+
+# The birthday site is personal, not portfolio work. Keeping it out of search
+# results — note this is a request crawlers choose to honour, not access
+# control, so nothing sensitive should rely on it.
+Disallow: /hbd/
+
+Sitemap: https://tusharkhamparia.in/sitemap.xml

@@ -1,87 +1,12 @@
 <?php
 // Tushar Khamparia - Portfolio
+$PAGE       = 'home';
+$PAGE_TITLE = 'Tushar Khamparia | UI / Frontend Developer';
+$PAGE_DESC  = 'UI / Frontend Developer with 3 years of experience building responsive marketing websites, landing pages, and campaign microsites. Based in Gurugram, India.';
+$USE_SWIPER = true;                       // the Selected Works carousel
+$MAIN_CLASS = 'smooth-scroll-wrapper';
+require 'includes/header.php';
 ?>
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tushar Khamparia | UI / Frontend Developer</title>
-    <meta name="description" content="UI / Frontend Developer with 3 years of experience building responsive marketing websites, landing pages, and campaign microsites. Based in Gurugram, India.">
-
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6Y1YZSQ8YE"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-
-        gtag('config', 'G-6Y1YZSQ8YE');
-    </script>
-
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;600;800;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-
-    <!-- Bootstrap 5 (Grid only) -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap-grid.min.css" rel="stylesheet">
-
-    <!-- Swiper CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-
-    <!-- Tabler Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
-
-    <!-- Devicon (Tech Logos) -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
-
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="assets/css/style.css">
-</head>
-
-<body class="dark-theme">
-    <!-- Animated Tech Grid Background -->
-    <canvas id="techGridCanvas"></canvas>
-
-    <div class="custom-cursor"></div>
-    <div class="custom-cursor-follower"></div>
-
-    <!-- STICKY NAVBAR -->
-    <nav class="site-nav" id="siteNav">
-        <div class="container nav-inner">
-            <a href="#" class="nav-logo">TK<span class="text-accent">.</span></a>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="#about" class="nav-link">About</a></li>
-                <li><a href="#expertise" class="nav-link">Expertise</a></li>
-                <li><a href="#work" class="nav-link">Work</a></li>
-                <li><a href="#skills" class="nav-link">Skills</a></li>
-                <li><a href="#experience" class="nav-link">Experience</a></li>
-                <li><a href="#contact" class="nav-link">Contact</a></li>
-            </ul>
-            <a href="mailto:khampariatushar@gmail.com" class="nav-cta">Let's Talk <i class="ti ti-arrow-right ms-1"></i></a>
-            <button class="nav-hamburger" id="navHamburger" aria-label="Toggle menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-        </div>
-    </nav>
-
-    <!-- MOBILE NAV OVERLAY -->
-    <div class="mobile-nav-overlay" id="mobileNavOverlay">
-        <ul class="mobile-nav-links">
-            <li><a href="#about" class="mobile-nav-link">About</a></li>
-            <li><a href="#expertise" class="mobile-nav-link">Expertise</a></li>
-            <li><a href="#work" class="mobile-nav-link">Work</a></li>
-            <li><a href="#skills" class="mobile-nav-link">Skills</a></li>
-            <li><a href="#experience" class="mobile-nav-link">Experience</a></li>
-            <li><a href="#contact" class="mobile-nav-link">Contact</a></li>
-        </ul>
-    </div>
-
-    <main class="smooth-scroll-wrapper">
         <!-- 1. HERO SECTION -->
         <section class="hero-section d-flex align-items-center" id="hero">
             <div class="hero-grid-bg"></div>

@@ -1,0 +1,277 @@
+/* ==========================================================
+   Projects page styles
+   Moved out of an inline <style> in projects.php so the document
+   head could be shared via includes/header.php. Loaded after
+   style.css, which preserves the original override order.
+   ========================================================== */
+
+.projects-page-hero {
+    min-height: 50vh;
+    display: flex;
+    align-items: center;
+    padding-top: calc(var(--nav-height) + 60px);
+    position: relative;
+    overflow: hidden;
+}
+
+.projects-page-hero .hero-grid-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background-image:
+        linear-gradient(rgba(56, 189, 248, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(56, 189, 248, 0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, #000 20%, transparent 100%);
+    -webkit-mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, #000 20%, transparent 100%);
+}
+
+.back-link {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--accent-color);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    letter-spacing: 1px;
+    transition: var(--transition);
+    margin-bottom: 1.5rem;
+}
+
+.back-link:hover {
+    color: var(--text-main);
+    transform: translateX(-4px);
+}
+
+.projects-count {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+}
+
+/* Filter Tabs */
+.filter-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 3rem;
+}
+
+.filter-tab {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    padding: 10px 20px;
+    border: 1px solid var(--border-color);
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: var(--transition);
+    border-radius: 4px;
+}
+
+.filter-tab:hover {
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+}
+
+.filter-tab.active {
+    background: var(--accent-color);
+    border-color: var(--accent-color);
+    color: var(--bg-color);
+    font-weight: 700;
+}
+
+/* Client Group */
+.client-group {
+    margin-bottom: 5rem;
+}
+
+.client-group-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 2.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.client-group-name {
+    font-family: var(--font-heading);
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--text-main);
+    margin: 0;
+}
+
+.client-group-count {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--accent-color);
+    padding: 4px 12px;
+    border: 1px solid var(--accent-color);
+    border-radius: 20px;
+    letter-spacing: 1px;
+}
+
+/* Project Detail Card */
+.project-detail-card {
+    border: 1px solid var(--border-color);
+    background: rgba(255, 255, 255, 0.02);
+    padding: 0;
+    margin-bottom: 2rem;
+    transition: var(--transition);
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.project-detail-card:hover {
+    border-color: rgba(56, 189, 248, 0.35);
+    background: rgba(255, 255, 255, 0.04);
+    box-shadow: 0 8px 40px rgba(56, 189, 248, 0.08);
+    transform: translateY(-4px);
+}
+
+.project-detail-image {
+    width: 100%;
+    height: 240px;
+    background-size: cover;
+    background-position: top center;
+    position: relative;
+}
+
+.project-detail-image::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60%;
+    background: linear-gradient(transparent, var(--bg-color));
+}
+
+.project-detail-body {
+    padding: 1.8rem 2rem 2rem;
+}
+
+.project-detail-title {
+    font-family: var(--font-heading);
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: var(--text-main);
+    margin-bottom: 0.6rem;
+}
+
+.project-detail-desc {
+    font-size: 0.92rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin-bottom: 1.2rem;
+}
+
+.project-detail-highlights {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.5rem 0;
+}
+
+.project-detail-highlights li {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    padding: 4px 0;
+    padding-left: 20px;
+    position: relative;
+}
+
+.project-detail-highlights li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--accent-color);
+}
+
+.project-detail-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 1.5rem;
+}
+
+.project-detail-tags span {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 5px 12px;
+    border: 1px solid var(--border-color);
+    color: var(--accent-color);
+    border-radius: 3px;
+}
+
+.project-detail-link {
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--accent-color);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: var(--transition);
+}
+
+.project-detail-link:hover {
+    color: var(--text-main);
+}
+
+.project-role {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+}
+
+.project-role strong {
+    color: var(--accent-color);
+}
+
+/* Footer mini */
+.projects-footer {
+    text-align: center;
+    padding: 3rem 0;
+    border-top: 1px solid var(--border-color);
+    margin-top: 4rem;
+}
+
+/* Non-draggable images */
+img,
+.project-detail-image {
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    user-drag: none;
+    -webkit-user-select: none;
+    user-select: none;
+    pointer-events: auto;
+}
+
+@media (max-width: 768px) {
+    .projects-page-hero {
+        min-height: 40vh;
+    }
+
+    .project-detail-body {
+        padding: 1.2rem 1.4rem 1.5rem;
+    }
+
+    .client-group-name {
+        font-size: 1.3rem;
+    }
+}
