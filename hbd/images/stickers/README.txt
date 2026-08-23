@@ -36,7 +36,7 @@ OPEN WHEN LETTERS - two per letter, set in $letters in letters.php
   you miss me              ok bubu-waiting-walk.webp  ok hug1.webp
   you're sad               ok bubu-crying-walk.webp   ok dudu-consoling-bubu.webp
   you're stressed          ok dudu-not-wave.webp      ok bubu-dudu-sitting-under-ac.webp
-  you can't sleep          ok dudu-laughter.webp      ok bubu-dudu-sleeping-2.webp
+  you can't sleep          ok bubu-phone-call.webp    ok bubu-dudu-sleeping-2.webp
   you have a headache      ok dudu-hit-bubu.webp      ok bubu-dudu-sleeping-1.webp
   after a bad day          ok bubu-crying-walk.webp   ok bubu-dudu-round-hug.webp
   you need motivation      ok bubu-running.webp       ok bubu-dudu-peeking.webp
@@ -71,7 +71,6 @@ SECRET PAGE (unlocked by finding all 16 hearts)
 
 
 SPARE - in this folder, not used anywhere yet
-     bubu-phone-call.webp
      dudu-phone-call.webp
      dudu-peeking-1.webp, dudu-peeking-2.webp   (drawn as page-edge peekers -
                                                  they are mostly blank wall,

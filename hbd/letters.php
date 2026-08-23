@@ -61,9 +61,10 @@ $letters = [
     [
         'label' => 'Open when you can’t sleep',
         'note'  => 'for 3am, when the ceiling is boring',
-        // Outside: awake at 3am with the phone. Inside: the sticker says 晚安 —
-        // goodnight — which is exactly how the letter signs off.
-        'sticker' => 'dudu-laughter.webp',
+        // Outside: her, awake, phone still in hand — which is the thing the
+        // letter goes on to ask her to put down. Inside: the sticker says
+        // 晚安 — goodnight — which is exactly how the letter signs off.
+        'sticker' => 'bubu-phone-call.webp',
         'open'  => 'bubu-dudu-sleeping-2.webp',
         'body'  => [
             'Hi. Quiet voice only. It’s late, and neither of us is going to solve anything at this hour, so let’s not try.',
