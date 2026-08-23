@@ -27,14 +27,25 @@ OUR STORY - five moments only, set in $timeline in story.php
 MEMORIES - the finished puzzle
      hug.gif
 
-OPEN WHEN LETTERS - one perched on each envelope, set in $letters
-     miss-you.gif             open when you miss me
-     comfort.gif              open when you're sad
-     calm.gif                 open when you're stressed
-     sleepy.gif               open when you can't sleep
-     pat-head.gif             open after a bad day
-     cheer.gif                open when you need motivation
-     cake.gif                 open on our anniversary
+OPEN WHEN LETTERS - two per letter, set in $letters in letters.php
+  The rule: the CLOSED envelope carries the feeling the card is named after,
+  and OPENING it hands over the comfort. So the outside is whoever is having
+  the hard time, and the inside is always the two of them together.
+
+                              CLOSED (the feeling)      OPEN (the comfort)
+  you miss me              ok bubu-waiting-walk.webp  ok hug1.webp
+  you're sad               ok bubu-crying-walk.webp   ok dudu-consoling-bubu.webp
+  you're stressed          ok dudu-not-wave.webp      ok bubu-dudu-sitting-under-ac.webp
+  you can't sleep          ok dudu-laughter.webp      ok bubu-dudu-sleeping-2.webp
+  you have a headache      ok dudu-hit-bubu.webp      ok bubu-dudu-sleeping-1.webp
+  after a bad day          ok bubu-crying-walk.webp   ok bubu-dudu-round-hug.webp
+  you need motivation      ok bubu-running.webp       ok bubu-dudu-peeking.webp
+  I've messed up           ok dudu-writing.webp       ok bubu-dudu-under-sheets.webp
+  our anniversary          ok dudu-gift-for-bubu.webp ok bubu-giving-gift-to-dudu.webp
+
+  bubu-crying-walk is the only one used twice on the closed side - there is no
+  second "she's had enough of today" sticker in the folder yet. Drop one in and
+  give it to "after a bad day".
 
 THE GAME - "Bring me home"  (game.php)
   ok bubu-running.webp        him, running the whole way. A looping run cycle
@@ -60,16 +71,24 @@ SECRET PAGE (unlocked by finding all 16 hearts)
 
 
 SPARE - in this folder, not used anywhere yet
-     phone-call.gif
+     bubu-phone-call.webp
      dudu-phone-call.webp
-     bubu-wave-white-bg.webp
+     dudu-peeking-1.webp, dudu-peeking-2.webp   (drawn as page-edge peekers -
+                                                 they are mostly blank wall,
+                                                 so they only work flush
+                                                 against a screen edge)
+     bubu-miss-you.gif       white background
+     bubu-wave-white-bg.webp white background
+
+WHITE BACKGROUNDS - phone-call.gif is still on the timeline in story.php and
+shows as a visible white box there. bubu-miss-you.gif has the same problem,
+which is why the letters use bubu-waiting-walk instead. Replace both with
+transparent versions when you find them.
 
 STILL MISSING - these slots show a dashed box until the file exists
      bubu-wait.gif, dudu-arrive.gif, hug.gif      (loading screen)
      hug.gif                                      (finished puzzle)
      love-hug.gif                                 (timeline)
-     miss-you.gif, comfort.gif, calm.gif, sleepy.gif,
-     pat-head.gif, cheer.gif, cake.gif            (the seven envelopes)
      bubu-walk.gif, dudu-wait.gif, hug.gif        (final letter finale)
      peek.gif, gift.gif                           (secret page)
 

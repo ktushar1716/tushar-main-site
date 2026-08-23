@@ -2874,7 +2874,10 @@ body.page-final .ambient__blob { opacity: .16; }
     .gallery { grid-template-columns: 1fr; grid-auto-rows: 260px; }
     .shot--tall { grid-row: span 1; }
 
-    .envelopes { grid-template-columns: 1fr; }
+    /* One envelope per row now, and each card carries a sticker hanging above
+       its top edge — so the stacked gap has to clear that overhang, or the
+       companion lands on the bottom of the card above it. */
+    .envelopes { grid-template-columns: 1fr; row-gap: 42px; }
 
     .letter { padding: 30px 22px; }
     .toast { bottom: 90px; }
@@ -2913,7 +2916,22 @@ body.page-final .ambient__blob { opacity: .16; }
 @media (hover: none) {
     .cursor-glow { display: none; }
     .shot__meta { display: block; }
-    .envelope__flap { transform: rotateX(-172deg); opacity: .55; }
+    /* The lifted-flap look is a hover flourish, and it cannot be the resting
+       state on touch: there is no perspective on the envelope, so rotateX
+       collapses to a vertical mirror about the top edge and the triangle is
+       painted OUTSIDE the card — 56% of the card's height straight up, over
+       whatever sits above it. No gap can absorb that. On touch the flap
+       simply stays put and dims, which reads as "already open" and never
+       leaves its own card. */
+    .envelope__flap { transform: none; opacity: .38; }
+
+    /* Tapping a card can leave a sticky :hover / :focus behind on mobile
+       browsers, and those rules outrank the one above — so kill the flip
+       there too, or the spill comes back the moment she taps one. */
+    .envelope:hover .envelope__flap,
+    .envelope:focus .envelope__flap,
+    .envelope:focus-visible .envelope__flap { transform: none; opacity: .38; }
+
     .envelope__seal { opacity: 0; }
     .footer__hint-soft { opacity: .8; }
 }

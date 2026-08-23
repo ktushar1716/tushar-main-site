@@ -108,7 +108,7 @@ $timeline = [
         'body'  => 'Nothing sudden. No grand scene. Just the two of us drifting back the way we came, a little closer every month, both of us pretending we did not know where it was going.',
     ],
     [
-        'date'  => '27 July 2025',
+        'date'  => '27 June 2025',
         'title' => 'The day you said yes',
         'body'  => 'I had typhoid. I was in no condition to be anybody’s boyfriend. You showed up anyway — looked after me, kept checking on me, and helped me with money when I needed it and could not bring myself to ask. That is the day I stopped wondering what kind of person you are.',
         'sticker' => 'bubu-dudu-round-hug.webp',

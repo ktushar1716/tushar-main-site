@@ -21,9 +21,9 @@ $letters = [
     [
         'label' => 'Open when you miss me',
         'note'  => 'for the hours I’m not next to you',
-        'sticker' => 'bubu-miss-you.gif',
-        // He's missing her on the envelope; opening it hands her the phone.
-        'open'  => 'bubu-phone-call.webp',
+        // Outside: her, on her own, waiting. Inside: not on her own any more.
+        'sticker' => 'bubu-waiting-walk.webp',
+        'open'  => 'hug1.webp',
         'body'  => [
             'Whatever time it is right now, I miss you too. Not in a poetic way — in a boring, physical, where-are-you way. So don’t be brave about it. You’re allowed to miss me loudly.',
             'Think about the weight of my arm when you’re falling asleep, and the way you fit under it without either of us deciding to. That hasn’t gone anywhere. It’s just waiting for you.',
@@ -34,8 +34,8 @@ $letters = [
     [
         'label' => 'Open when you’re sad',
         'note'  => 'no advice, promise',
+        // Crying on the outside; someone holding her through it on the inside.
         'sticker' => 'bubu-crying-walk.webp',
-        // Sad on the outside, someone sitting with her on the inside.
         'open'  => 'dudu-consoling-bubu.webp',
         'body'  => [
             'You don’t have to be okay right now. Not for me, not for anyone. Nothing about how much I love you depends on you holding it together today.',
@@ -47,7 +47,10 @@ $letters = [
     [
         'label' => 'Open when you’re stressed',
         'note'  => 'read slowly, breathe first',
-        'sticker' => 'bubu-waiting-walk.webp',
+        // Outside: arms down, done with today. Inside: the two of them stopped
+        // and sitting still, which is the whole ask of this letter.
+        'sticker' => 'dudu-not-wave.webp',
+        'open'  => 'bubu-dudu-sitting-under-ac.webp',
         'body'  => [
             'Stop for ten seconds. Actually stop. Breathe in properly, all the way down, and let it out slower than you took it in. I’ll wait — this letter isn’t going anywhere.',
             'Now think of everything you have already survived that looked exactly this unmanageable while you were inside it. All of it is behind you now. This is going to join that list too, and sooner than it feels.',
@@ -58,8 +61,9 @@ $letters = [
     [
         'label' => 'Open when you can’t sleep',
         'note'  => 'for 3am, when the ceiling is boring',
-        'sticker' => 'phone-call.gif',
-        // The letter ends on "goodnight" — so does the sticker inside it.
+        // Outside: awake at 3am with the phone. Inside: the sticker says 晚安 —
+        // goodnight — which is exactly how the letter signs off.
+        'sticker' => 'dudu-laughter.webp',
         'open'  => 'bubu-dudu-sleeping-2.webp',
         'body'  => [
             'Hi. Quiet voice only. It’s late, and neither of us is going to solve anything at this hour, so let’s not try.',
@@ -71,10 +75,11 @@ $letters = [
     [
         'label' => 'Open when you have a headache',
         'note'  => 'water first, argue later',
-        // no sticker on the envelope — Dudu is the surprise waiting inside
-        'open'  => 'dudu-hit-bubu.webp',
+        // Outside: the bonk on the head. Inside: the lie-down she is being sent for.
+        'sticker' => 'dudu-hit-bubu.webp',
+        'open'  => 'bubu-dudu-sleeping-1.webp',
         'body'  => [
-            'Before you read one more line: go and drink a full glass of water. Not a sip, not the last inch of whatever is on your desk. A full one. Nine times out of ten your head hurts because you have been running on chai, deadlines and almost no water since morning.',
+            'Before you read one more line: go and drink a full glass of water. Not a sip, not the last inch of whatever is sitting next to you. A full one. Nine times out of ten your head hurts because you have gone since morning without enough water, without eating properly, and without once sitting still.',
             'Now the medicine. If it is the usual headache, take one. If it is the kind that starts in your stomach and climbs up, take something for the acidity instead — and eat something proper first, not a biscuit. You always know which one it is, and you always wait far too long before doing anything about it.',
             'Then: lights off, phone face down, twenty minutes of absolutely nothing. I am not asking. And if it is still there by tonight, you tell me — you look after me better than you look after yourself, and today I am returning the favour whether you like it or not.',
         ],
@@ -83,7 +88,9 @@ $letters = [
     [
         'label' => 'Open after a bad day',
         'note'  => 'the world was rude to you today',
-        'sticker' => 'bubu-dudu-round-hug.webp',
+        // Outside: the day got to her. Inside: the hug it earned.
+        'sticker' => 'bubu-crying-walk.webp',
+        'open'  => 'bubu-dudu-round-hug.webp',
         'body'  => [
             'Whoever it was, they were wrong, and I’m on your side. Completely, unfairly, without hearing the other version. Be angry first. I’ll be angry with you.',
             'Now the true part: today was one day. It doesn’t get to describe you, and it definitely doesn’t get to predict tomorrow.',
@@ -94,7 +101,9 @@ $letters = [
     [
         'label' => 'Open when you need motivation',
         'note'  => 'in case you forgot who you are',
+        // Outside: her, already going. Inside: him holding her up.
         'sticker' => 'bubu-running.webp',
+        'open'  => 'bubu-dudu-peeking.webp',
         'body'  => [
             'You looked after a man with typhoid before you were even officially his. You carried things most people would have folded under, and then didn’t count a single one of them as an achievement. So let me count them for you.',
             'The thing I would steal from you if I could: you actually show up. Not in words — in doing. You did it for me when it cost you something, and you have never once held it over my head.',
@@ -105,7 +114,9 @@ $letters = [
     [
         'label' => 'Open when I’ve messed up',
         'note'  => 'because I will, and you deserve better than silence',
-        'sticker' => 'hug1.webp',
+        // Outside: him writing the apology. Inside: still the two of them.
+        'sticker' => 'dudu-writing.webp',
+        'open'  => 'bubu-dudu-under-sheets.webp',
         'body'  => [
             'If you’re reading this, I’ve probably been distant, or short with you, or just not there in the way you needed me to be. I’m not going to explain it away. You were right to feel it.',
             'It was never that I stopped caring. It’s that I’m still learning how to look after someone properly while my own head is loud. That’s my work to do, not yours to absorb.',
@@ -115,10 +126,12 @@ $letters = [
     ],
     [
         'label' => 'Open on our anniversary',
-        'note'  => '27th of July. Not to be opened early. I mean it.',
-        'sticker' => 'bubu-birthday-dance.webp',
+        'note'  => '27th of June. Not to be opened early. I mean it.',
+        // His gift is on the envelope, hers is waiting inside it.
+        'sticker' => 'dudu-gift-for-bubu.webp',
+        'open'  => 'bubu-giving-gift-to-dudu.webp',
         'body'  => [
-            '27 July 2025. I was ill, useless, and running on nothing, and that is somehow the day you decided to be mine. You took care of me, you helped me when I couldn’t ask for it, and you never once made it feel like charity. I have never understood the timing and I have never questioned it either.',
+            '27 June 2025. I was ill, useless, and running on nothing, and that is somehow the day you decided to be mine. You took care of me, you helped me when I couldn’t ask for it, and you never once made it feel like charity. I have never understood the timing and I have never questioned it either.',
             'The honest bit: this year cost us something. Every real year does. But we are still here, and I know you now in a way I didn’t twelve months ago. I wouldn’t trade a single difficult week of it.',
             'And one small promise for the year ahead, because small ones are the ones people actually keep: I will take better care of you than I did this year. Not perfectly. Better. And the year after that, better again.',
         ],
