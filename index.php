@@ -71,7 +71,7 @@ require 'includes/header.php';
                             <div class="card-glow"></div>
                             <i class="ti ti-layers-intersect text-accent mb-4" style="font-size: 2.5rem;"></i>
                             <h4 class="mb-3">Frameworks & Libraries</h4>
-                            <p>Vue.js (Vue 3), React (UI Level), Bootstrap, Tailwind CSS. Building component-driven interfaces with modern JavaScript frameworks.</p>
+                            <p>Vue.js (Vue 3), React, Bootstrap, Tailwind CSS. Building component-driven interfaces with modern JavaScript frameworks.</p>
                         </div>
                     </div>
                     <div class="col-md-4 expertise-col stagger-up">
@@ -79,7 +79,7 @@ require 'includes/header.php';
                             <div class="card-glow"></div>
                             <i class="ti ti-wand text-accent mb-4" style="font-size: 2.5rem;"></i>
                             <h4 class="mb-3">Animation & Interactivity</h4>
-                            <p>GSAP, ScrollTrigger, Swiper.js — crafting scroll-triggered effects, sliders, and custom micro-interactions that bring interfaces to life.</p>
+                            <p>CSS animations, Swiper.js &amp; vanilla JavaScript — crafting scroll-based effects, sliders, and custom micro-interactions that bring interfaces to life.</p>
                         </div>
                     </div>
                 </div>
@@ -124,6 +124,44 @@ require 'includes/header.php';
                 <div class="swiper work-swiper reveal-up">
                     <div class="swiper-wrapper">
 
+                        <!-- India Influencer Awards 2026 / World Influencer Day -->
+                        <div class="swiper-slide">
+                            <div class="project-card">
+                                <div class="project-image" style="background-image: url('assets/images/projects/world-inf-day.png');"></div>
+                                <div class="overlay"></div>
+                                <div class="project-content">
+                                    <h4 class="project-title">India Influencer Awards 2026</h4>
+                                    <p class="project-desc">Six website design directions for IIGC's awards night on World Influencer Day — red-carpet heroes, key-date timelines, category showcases, and invite & partner forms.</p>
+                                    <div class="project-tags">
+                                        <span>HTML5</span>
+                                        <span>CSS3</span>
+                                        <span>JavaScript</span>
+                                        <span>Event Site</span>
+                                    </div>
+                                    <a href="https://iigc.org/events/world-inf-day/" target="_blank" rel="noopener" class="project-link">Visit Live <i class="ti ti-external-link"></i></a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- The Influence Table & Creator Summit -->
+                        <div class="swiper-slide">
+                            <div class="project-card">
+                                <div class="project-image" style="background-image: url('assets/images/projects/influence-table.png');"></div>
+                                <div class="overlay"></div>
+                                <div class="project-content">
+                                    <h4 class="project-title">The Influence Table &amp; Creator Summit</h4>
+                                    <p class="project-desc">Ten standalone event builds — black &amp; gold invitation sites and creator summit landing pages with speaker showcases and request-an-invite flows.</p>
+                                    <div class="project-tags">
+                                        <span>HTML5</span>
+                                        <span>CSS3</span>
+                                        <span>JavaScript</span>
+                                        <span>Invite Forms</span>
+                                    </div>
+                                    <a href="https://www.icubeswire.com/projects/event/" target="_blank" rel="noopener" class="project-link">Visit Live <i class="ti ti-external-link"></i></a>
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- Central Park Studioverse -->
                         <div class="swiper-slide">
                             <div class="project-card">
@@ -136,7 +174,6 @@ require 'includes/header.php';
                                         <span>HTML5</span>
                                         <span>CSS3</span>
                                         <span>JavaScript</span>
-                                        <span>GSAP</span>
                                         <span>Swiper.js</span>
                                     </div>
                                     <a href="https://www.centralpark.in/studioverse/" target="_blank" rel="noopener" class="project-link">Visit Live <i class="ti ti-external-link"></i></a>
@@ -210,10 +247,10 @@ require 'includes/header.php';
                                     <h4 class="project-title">iCubesWire 15th Anniversary</h4>
                                     <p class="project-desc">Celebratory milestone page with timeline-driven storytelling and branded animations.</p>
                                     <div class="project-tags">
-                                        <span>GSAP</span>
-                                        <span>ScrollTrigger</span>
-                                        <span>JavaScript</span>
+                                        <span>HTML5</span>
                                         <span>CSS3</span>
+                                        <span>JavaScript</span>
+                                        <span>Timeline UI</span>
                                     </div>
                                     <a href="https://www.icubeswire.com/15year/" target="_blank" rel="noopener" class="project-link">Visit Live <i class="ti ti-external-link"></i></a>
                                 </div>
@@ -226,15 +263,15 @@ require 'includes/header.php';
                                 <div class="project-image" style="background-image: url('assets/images/projects/chintamani2.png');"></div>
                                 <div class="overlay"></div>
                                 <div class="project-content">
-                                    <h4 class="project-title">Chintamani</h4>
-                                    <p class="project-desc">Movie campaign microsite with PHP blog dashboard, secure admin login, TinyMCE editor, and MongoDB integration.</p>
+                                    <h4 class="project-title">Chintamanis</h4>
+                                    <p class="project-desc">Luxury residential real estate website for Chintamanis, Gurugram — with a PHP blog dashboard, secure admin login, TinyMCE editor, and MongoDB integration.</p>
                                     <div class="project-tags">
                                         <span>PHP</span>
                                         <span>MongoDB</span>
                                         <span>TinyMCE</span>
                                         <span>Admin Panel</span>
                                     </div>
-                                    <a href="https://icubeswire.com/projects/chintamani2" target="_blank" rel="noopener" class="project-link">Visit Live <i class="ti ti-external-link"></i></a>
+                                    <a href="https://chintamanis.co.in/" target="_blank" rel="noopener" class="project-link">Visit Live <i class="ti ti-external-link"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -245,15 +282,14 @@ require 'includes/header.php';
                                 <div class="project-image" style="background-image: url('assets/images/projects/chintamani2-phase2.png');"></div>
                                 <div class="overlay"></div>
                                 <div class="project-content">
-                                    <h4 class="project-title">Chintamani — Phase 2</h4>
-                                    <p class="project-desc">Extended campaign with CRUD blog system, secure authentication, and enhanced interactive UI features.</p>
+                                    <h4 class="project-title">Chintamanis — Phase 2</h4>
+                                    <p class="project-desc">Pre-launch website for Chintamanis Phase 2 on Dwarka Expressway — pricing, location, and lead capture backed by a CRUD admin with secure authentication.</p>
                                     <div class="project-tags">
                                         <span>PHP</span>
                                         <span>MySQL</span>
-                                        <span>GSAP</span>
                                         <span>JavaScript</span>
                                     </div>
-                                    <a href="https://icubeswire.com/projects/chintamani2/phase-2" target="_blank" rel="noopener" class="project-link">Visit Live <i class="ti ti-external-link"></i></a>
+                                    <a href="https://chintamanis.co.in/phase-2/" target="_blank" rel="noopener" class="project-link">Visit Live <i class="ti ti-external-link"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -471,10 +507,9 @@ require 'includes/header.php';
                         <h3 class="section-title">03. / THE ENGINE</h3>
                         <h2 class="display-4 fw-bold mb-4 mt-4">AI-Augmented<br>Workflow</h2>
                         <p class="lead text-light-gray" style="line-height: 1.8;">
-                            I've always been a hands-on UI developer — writing every line of code myself, from pixel-perfect layouts to complex GSAP animations. Now, with AI agents like <span class="text-white fw-bold">Antigravity, Google Gemini, ChatGPT, Veo, Whisk & Stitch</span>, I use them as force multipliers — speeding up my workflow while keeping full creative control over the output. The craft stays mine, the <span class="text-accent fw-bold fs-4">speed just triples</span>.
+                            I've always been a hands-on UI developer — writing every line of code myself, from pixel-perfect layouts to smooth scroll-based animations. Now, with AI agents like <span class="text-white fw-bold">Google Gemini, ChatGPT, Veo, Whisk & Stitch</span>, I use them as force multipliers — speeding up my workflow while keeping full creative control over the output. The craft stays mine, the <span class="text-accent fw-bold fs-4">speed just triples</span>.
                         </p>
                         <div class="ai-tools-list">
-                            <span class="ai-tool-pill">Antigravity</span>
                             <span class="ai-tool-pill">Google Gemini</span>
                             <span class="ai-tool-pill">ChatGPT</span>
                             <span class="ai-tool-pill">Veo</span>
@@ -527,7 +562,7 @@ require 'includes/header.php';
                         <h5 class="skill-cat-title">Frameworks</h5>
                         <div class="skill-pills">
                             <span class="skill-pill"><i class="devicon-vuejs-plain"></i> Vue.js (Vue 3)</span>
-                            <span class="skill-pill"><i class="devicon-react-original"></i> React (UI Level)</span>
+                            <span class="skill-pill"><i class="devicon-react-original"></i> React</span>
                         </div>
                     </div>
                     <div class="skill-category">
@@ -540,9 +575,7 @@ require 'includes/header.php';
                     <div class="skill-category">
                         <h5 class="skill-cat-title">Animation & UI</h5>
                         <div class="skill-pills">
-                            <span class="skill-pill"><i class="ti ti-brand-gsap"></i> GSAP</span>
                             <span class="skill-pill"><i class="ti ti-carousel-horizontal"></i> Swiper.js</span>
-                            <span class="skill-pill"><i class="ti ti-scroll"></i> ScrollTrigger</span>
                         </div>
                     </div>
                     <div class="skill-category">
@@ -574,7 +607,6 @@ require 'includes/header.php';
                             <span class="skill-pill"><i class="devicon-git-plain"></i> Git / GitHub</span>
                             <span class="skill-pill"><i class="devicon-figma-plain"></i> Figma</span>
                             <span class="skill-pill"><i class="devicon-chrome-plain"></i> Chrome DevTools</span>
-                            <span class="skill-pill"><i class="ti ti-sparkles"></i> Antigravity</span>
                         </div>
                     </div>
                     <div class="skill-category">
@@ -601,9 +633,9 @@ require 'includes/header.php';
                 <div class="marquee-wrapper reveal-up">
                     <div class="marquee-track">
                         <div class="marquee-content">
-                            <span>HTML5</span><span>CSS3</span><span>JavaScript</span><span>Vue.js</span><span>React</span><span>Bootstrap</span><span>Tailwind CSS</span><span>GSAP</span><span>Swiper.js</span><span>ScrollTrigger</span><span>WordPress</span><span>Git</span><span>Figma</span><span>PHP</span><span>MySQL</span><span>MongoDB</span><span>AWS</span><span>Google Apps Script</span><span>Antigravity</span><span>Gemini</span><span>ChatGPT</span>
+                            <span>HTML5</span><span>CSS3</span><span>JavaScript</span><span>Vue.js</span><span>React</span><span>Bootstrap</span><span>Tailwind CSS</span><span>Swiper.js</span><span>WordPress</span><span>Git</span><span>Figma</span><span>PHP</span><span>MySQL</span><span>MongoDB</span><span>AWS</span><span>Google Apps Script</span><span>Gemini</span><span>ChatGPT</span>
                             <!-- Duplicate for seamless loop -->
-                            <span>HTML5</span><span>CSS3</span><span>JavaScript</span><span>Vue.js</span><span>React</span><span>Bootstrap</span><span>Tailwind CSS</span><span>GSAP</span><span>Swiper.js</span><span>ScrollTrigger</span><span>WordPress</span><span>Git</span><span>Figma</span><span>PHP</span><span>MySQL</span><span>MongoDB</span><span>AWS</span><span>Google Apps Script</span><span>Antigravity</span><span>Gemini</span><span>ChatGPT</span>
+                            <span>HTML5</span><span>CSS3</span><span>JavaScript</span><span>Vue.js</span><span>React</span><span>Bootstrap</span><span>Tailwind CSS</span><span>Swiper.js</span><span>WordPress</span><span>Git</span><span>Figma</span><span>PHP</span><span>MySQL</span><span>MongoDB</span><span>AWS</span><span>Google Apps Script</span><span>Gemini</span><span>ChatGPT</span>
                         </div>
                     </div>
                 </div>
@@ -639,9 +671,9 @@ require 'includes/header.php';
                             <ul class="timeline-duties">
                                 <li>Developed 20+ responsive landing pages and campaign microsites for marketing campaigns.</li>
                                 <li>Converted Figma designs into pixel-perfect responsive websites using HTML, CSS, and JavaScript.</li>
-                                <li>Implemented interactive UI components, sliders, and scroll-based animations using GSAP and Swiper.</li>
+                                <li>Implemented interactive UI components, sliders, and scroll-based animations using JavaScript and Swiper.</li>
                                 <li>Built and integrated lead-generation forms, sending user data to Google Sheets via Apps Script.</li>
-                                <li>Created a secure PHP blog dashboard with TinyMCE editor, CRUD operations, and MongoDB integration for the Chintamani campaign.</li>
+                                <li>Created a secure PHP blog dashboard with TinyMCE editor, CRUD operations, and MongoDB integration for the Chintamanis real estate website.</li>
                                 <li>Managed AWS infrastructure — EC2 instances, Elastic IPs, S3 bucket configuration, and server access via PuTTY.</li>
                                 <li>Ensured cross-browser compatibility and mobile responsiveness across major devices and browsers.</li>
                                 <li>Maintained and updated live client websites based on campaign updates and change requests.</li>

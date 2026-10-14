@@ -140,7 +140,7 @@ function nav_target(array $item, string $page, bool $isHome): array
                     'JavaScript',
                     'Vue.js',
                     'React',
-                    'GSAP',
+                    'Swiper.js',
                     'Bootstrap',
                     'Tailwind CSS',
                     'WordPress',

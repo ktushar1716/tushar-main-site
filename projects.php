@@ -40,13 +40,13 @@ require 'includes/header.php';
                                     <p class="project-role"><strong>Role:</strong> UI Developer (Full Build)</p>
                                     <p class="project-detail-desc">Luxury real estate showcase with immersive visual experience, smooth scroll-based animations, and premium UI design. Built from Figma designs with pixel-perfect responsiveness.</p>
                                     <ul class="project-detail-highlights">
-                                        <li>GSAP ScrollTrigger parallax animations</li>
+                                        <li>Smooth scroll-based parallax animations</li>
                                         <li>Swiper.js interactive galleries</li>
                                         <li>Fully responsive across all breakpoints</li>
                                         <li>Lead generation form with Google Sheets integration</li>
                                     </ul>
                                     <div class="project-detail-tags">
-                                        <span>HTML5</span><span>CSS3</span><span>JavaScript</span><span>GSAP</span><span>Swiper.js</span><span>Google Sheets</span>
+                                        <span>HTML5</span><span>CSS3</span><span>JavaScript</span><span>Swiper.js</span><span>Google Sheets</span>
                                     </div>
                                     <a href="https://www.centralpark.in/studioverse/" target="_blank" rel="noopener" class="project-detail-link">Visit Live <i class="ti ti-external-link"></i></a>
                                 </div>
@@ -186,29 +186,29 @@ require 'includes/header.php';
                 <!-- ==================== CHINTAMANI ==================== -->
                 <div class="client-group" data-group="chintamani">
                     <div class="client-group-header">
-                        <h2 class="client-group-name">Chintamani</h2>
+                        <h2 class="client-group-name">Chintamanis</h2>
                         <span class="client-group-count">3 PROJECTS</span>
                     </div>
 
                     <div class="row">
-                        <!-- Chintamani Campaign Website -->
+                        <!-- Chintamanis Main Website -->
                         <div class="col-lg-6 col-md-6">
                             <div class="project-detail-card">
                                 <div class="project-detail-image" style="background-image: url('assets/images/projects/chintamani2.png');"></div>
                                 <div class="project-detail-body">
-                                    <h3 class="project-detail-title">Chintamani — Campaign Website</h3>
+                                    <h3 class="project-detail-title">Chintamanis — Main Website</h3>
                                     <p class="project-role"><strong>Role:</strong> Full Stack Developer</p>
-                                    <p class="project-detail-desc">Movie campaign microsite featuring interactive visual storytelling, GSAP scroll-driven animations, and immersive UI design. Connected to MongoDB for data storage and deployed on AWS EC2.</p>
+                                    <p class="project-detail-desc">Corporate website for Chintamanis, a luxury residential developer in Gurugram — immersive full-screen hero, project showcase, news &amp; events, blogs, ESG and compliance pages. Connected to MongoDB for data storage and deployed on AWS EC2.</p>
                                     <ul class="project-detail-highlights">
-                                        <li>Interactive campaign microsite with scroll-based storytelling</li>
-                                        <li>GSAP ScrollTrigger animations & parallax effects</li>
+                                        <li>Multi-page real estate website with projects, blogs, news &amp; testimonials</li>
+                                        <li>Scroll-triggered animations & parallax effects</li>
                                         <li>MongoDB cluster integration for data storage</li>
                                         <li>AWS EC2 deployment with Elastic IP</li>
                                     </ul>
                                     <div class="project-detail-tags">
-                                        <span>PHP</span><span>MongoDB</span><span>GSAP</span><span>AWS</span><span>JavaScript</span>
+                                        <span>PHP</span><span>MongoDB</span><span>AWS</span><span>JavaScript</span>
                                     </div>
-                                    <a href="https://icubeswire.com/projects/chintamani2" target="_blank" rel="noopener" class="project-detail-link">Visit Live <i class="ti ti-external-link"></i></a>
+                                    <a href="https://chintamanis.co.in/" target="_blank" rel="noopener" class="project-detail-link">Visit Live <i class="ti ti-external-link"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -218,19 +218,19 @@ require 'includes/header.php';
                             <div class="project-detail-card">
                                 <div class="project-detail-image" style="background-image: url('assets/images/projects/chintamani2-phase2.png');"></div>
                                 <div class="project-detail-body">
-                                    <h3 class="project-detail-title">Chintamani — Phase 2 Website</h3>
+                                    <h3 class="project-detail-title">Chintamanis — Phase 2 Website</h3>
                                     <p class="project-role"><strong>Role:</strong> Full Stack Developer</p>
-                                    <p class="project-detail-desc">Second phase of the Chintamani campaign — a separate microsite with enhanced interactive UI, advanced GSAP animations, and MySQL-backed data management.</p>
+                                    <p class="project-detail-desc">Pre-launch website for Chintamanis Phase 2 in Sector 103, Dwarka Expressway — overview, pricing, scale and location sections with callback lead capture and MySQL-backed data management.</p>
                                     <ul class="project-detail-highlights">
-                                        <li>Separate campaign microsite with refreshed design</li>
-                                        <li>Enhanced GSAP ScrollTrigger animations</li>
+                                        <li>Standalone pre-launch landing site with request-callback flow</li>
+                                        <li>Enhanced scroll-triggered animations</li>
                                         <li>MySQL database integration</li>
                                         <li>Responsive across all devices</li>
                                     </ul>
                                     <div class="project-detail-tags">
-                                        <span>PHP</span><span>MySQL</span><span>GSAP</span><span>JavaScript</span>
+                                        <span>PHP</span><span>MySQL</span><span>JavaScript</span>
                                     </div>
-                                    <a href="https://icubeswire.com/projects/chintamani2/phase-2" target="_blank" rel="noopener" class="project-detail-link">Visit Live <i class="ti ti-external-link"></i></a>
+                                    <a href="https://chintamanis.co.in/phase-2/" target="_blank" rel="noopener" class="project-detail-link">Visit Live <i class="ti ti-external-link"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -240,11 +240,11 @@ require 'includes/header.php';
                             <div class="project-detail-card">
                                 <div class="project-detail-image" style="background-image: url('assets/images/projects/chintamani-php-dashboard.png');"></div>
                                 <div class="project-detail-body">
-                                    <h3 class="project-detail-title">Chintamani — CRM/LMS Admin Dashboard</h3>
+                                    <h3 class="project-detail-title">Chintamanis — CRM/LMS Admin Dashboard</h3>
                                     <p class="project-role"><strong>Role:</strong> Full Stack Developer (PHP)</p>
-                                    <p class="project-detail-desc">Unified real estate CRM & Lead Management dashboard powering both Chintamani campaign websites. Built entirely in PHP with AJAX-driven SPA-style navigation, complete lead lifecycle tracking, blog CMS, and role-based user management.</p>
+                                    <p class="project-detail-desc">Unified real estate CRM & Lead Management dashboard powering both Chintamanis websites. Built entirely in PHP with AJAX-driven SPA-style navigation, complete lead lifecycle tracking, blog CMS, and role-based user management.</p>
                                     <ul class="project-detail-highlights">
-                                        <li>Shared admin panel for both Campaign & Phase 2 websites</li>
+                                        <li>Shared admin panel for both Main & Phase 2 websites</li>
                                         <li>Lead lifecycle — follow-ups → site visits → booking with auto-assignment (Round Robin, Random, Manual)</li>
                                         <li>Blog CMS — list, add, edit posts with TinyMCE rich text editor</li>
                                         <li>User management with role-based login & access control</li>
@@ -266,10 +266,54 @@ require 'includes/header.php';
                 <div class="client-group" data-group="icubeswire">
                     <div class="client-group-header">
                         <h2 class="client-group-name">iCubesWire</h2>
-                        <span class="client-group-count">6 PROJECTS</span>
+                        <span class="client-group-count">8 PROJECTS</span>
                     </div>
 
                     <div class="row">
+                        <!-- India Influencer Awards 2026 / World Influencer Day -->
+                        <div class="col-lg-6 col-md-6">
+                            <div class="project-detail-card">
+                                <div class="project-detail-image" style="background-image: url('assets/images/projects/world-inf-day.png');"></div>
+                                <div class="project-detail-body">
+                                    <h3 class="project-detail-title">India Influencer Awards 2026 — World Influencer Day</h3>
+                                    <p class="project-role"><strong>Role:</strong> UI Developer (Full Build)</p>
+                                    <p class="project-detail-desc">Six complete website design directions for IIGC's awards night, each built from the event teaser and key visual and reviewable on desktop and phone.</p>
+                                    <ul class="project-detail-highlights">
+                                        <li>Six distinct themes — from spotlit centre stage to velvet editorial and bento grid</li>
+                                        <li>Key-dates timelines, countdown to nominations close, and filterable category cards</li>
+                                        <li>Request-an-invite, ticket, and partner forms</li>
+                                        <li>Fully responsive across all breakpoints</li>
+                                    </ul>
+                                    <div class="project-detail-tags">
+                                        <span>HTML5</span><span>CSS3</span><span>JavaScript</span><span>Event Site</span>
+                                    </div>
+                                    <a href="https://iigc.org/events/world-inf-day/" target="_blank" rel="noopener" class="project-detail-link">Visit Live <i class="ti ti-external-link"></i></a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- The Influence Table & Creator Summit -->
+                        <div class="col-lg-6 col-md-6">
+                            <div class="project-detail-card">
+                                <div class="project-detail-image" style="background-image: url('assets/images/projects/influence-table.png');"></div>
+                                <div class="project-detail-body">
+                                    <h3 class="project-detail-title">The Influence Table &amp; Creator Summit</h3>
+                                    <p class="project-role"><strong>Role:</strong> UI Developer (Full Build)</p>
+                                    <p class="project-detail-desc">Ten standalone event builds across two briefs — The Influence Table invitation translated from emailer to web, and a creator summit landing page in crimson and bottle-green themes.</p>
+                                    <ul class="project-detail-highlights">
+                                        <li>Four black &amp; gold invitation layouts with modal, inline, and card request forms</li>
+                                        <li>Speaker grids, cursor-following portrait roster, and expanding speaker shelf</li>
+                                        <li>Intro curtain, rotating seal CTA, and scrolling wordmark interactions</li>
+                                        <li>Accessible forms with focus trapping</li>
+                                    </ul>
+                                    <div class="project-detail-tags">
+                                        <span>HTML5</span><span>CSS3</span><span>JavaScript</span><span>Invite Forms</span>
+                                    </div>
+                                    <a href="https://www.icubeswire.com/projects/event/" target="_blank" rel="noopener" class="project-detail-link">Visit Live <i class="ti ti-external-link"></i></a>
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- 15 Year Anniversary -->
                         <div class="col-lg-6 col-md-6">
                             <div class="project-detail-card">
@@ -277,15 +321,15 @@ require 'includes/header.php';
                                 <div class="project-detail-body">
                                     <h3 class="project-detail-title">iCubesWire 15th Anniversary</h3>
                                     <p class="project-role"><strong>Role:</strong> UI Developer (Full Build)</p>
-                                    <p class="project-detail-desc">Celebratory milestone page with timeline-driven storytelling and branded animations. Heavy use of GSAP ScrollTrigger for scroll-based reveal sequences.</p>
+                                    <p class="project-detail-desc">Celebratory milestone page with timeline-driven storytelling and branded animations, with scroll-based reveal sequences throughout.</p>
                                     <ul class="project-detail-highlights">
-                                        <li>Complex GSAP ScrollTrigger timeline animations</li>
+                                        <li>Scroll-based timeline reveal animations</li>
                                         <li>Timeline-driven storytelling UX</li>
                                         <li>Branded animation sequences</li>
                                         <li>Fully responsive across devices</li>
                                     </ul>
                                     <div class="project-detail-tags">
-                                        <span>GSAP</span><span>ScrollTrigger</span><span>JavaScript</span><span>CSS3</span>
+                                        <span>HTML5</span><span>CSS3</span><span>JavaScript</span><span>Timeline UI</span>
                                     </div>
                                     <a href="https://www.icubeswire.com/15year/" target="_blank" rel="noopener" class="project-detail-link">Visit Live <i class="ti ti-external-link"></i></a>
                                 </div>
@@ -453,7 +497,7 @@ require 'includes/header.php';
                                     <div class="project-detail-tags">
                                         <span>HTML5</span><span>CSS3</span><span>PHP</span><span>Swiper.js</span><span>AOS</span><span>Bootstrap</span>
                                     </div>
-                                    <a href="https://www.daawat.com/saffron-rice" target="_blank" rel="noopener" class="project-detail-link">Visit Live <i class="ti ti-external-link"></i></a>
+                                    <a href="https://www.daawat.com/saffron-rice/" target="_blank" rel="noopener" class="project-detail-link">Visit Live <i class="ti ti-external-link"></i></a>
                                 </div>
                             </div>
                         </div>
