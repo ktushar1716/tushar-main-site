@@ -175,6 +175,15 @@ function nav_target(array $item, string $page, bool $isHome): array
         gtag('config', 'G-6Y1YZSQ8YE');
     </script>
 
+    <!-- Favicon: the navbar's "TK." mark. favicon.ico also sits at the site
+         root, where browsers look for it even without these tags. -->
+    <link rel="icon" href="favicon.ico" sizes="48x48">
+    <link rel="icon" type="image/png" sizes="32x32" href="<?php echo asset('assets/images/favicon/favicon-32x32.png'); ?>">
+    <link rel="icon" type="image/png" sizes="16x16" href="<?php echo asset('assets/images/favicon/favicon-16x16.png'); ?>">
+    <link rel="apple-touch-icon" href="<?php echo asset('assets/images/favicon/apple-touch-icon.png'); ?>">
+    <link rel="manifest" href="site.webmanifest">
+    <meta name="theme-color" content="#020617">
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
