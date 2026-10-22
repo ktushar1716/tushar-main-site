@@ -927,8 +927,8 @@ require 'includes/header.php';
         })();
     </script>
 
-    <script src="assets/js/script.js"></script>
-    <script src="assets/js/contact.js"></script>
+    <script src="<?php echo asset('assets/js/script.js'); ?>"></script>
+    <script src="<?php echo asset('assets/js/contact.js'); ?>"></script>
 </body>
 
 </html>

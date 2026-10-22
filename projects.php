@@ -685,7 +685,7 @@ require 'includes/header.php';
         })();
     </script>
 
-    <script src="assets/js/script.js"></script>
+    <script src="<?php echo asset('assets/js/script.js'); ?>"></script>
 
     <!-- Project card cursor hover (extends script.js cursor) -->
     <script>

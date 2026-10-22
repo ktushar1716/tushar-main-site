@@ -54,6 +54,18 @@ if (!function_exists('e')) {
     }
 }
 
+/**
+ * Local asset URL with its modified time appended, so browsers fetch a fresh
+ * copy whenever the file changes instead of reusing a stale cached one.
+ */
+if (!function_exists('asset')) {
+    function asset(string $path): string
+    {
+        $file = dirname(__DIR__) . '/' . $path;
+        return e(is_file($file) ? $path . '?v=' . filemtime($file) : $path);
+    }
+}
+
 /* --------------------------------------------------------------------------
    NAVIGATION
 
@@ -183,9 +195,9 @@ function nav_target(array $item, string $page, bool $isHome): array
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="<?php echo asset('assets/css/style.css'); ?>">
     <?php foreach ($PAGE_CSS as $sheet): ?>
-        <link rel="stylesheet" href="<?php echo e($sheet); ?>">
+        <link rel="stylesheet" href="<?php echo asset($sheet); ?>">
     <?php endforeach; ?>
     <?php echo $HEAD_EXTRA; ?>
 </head>
