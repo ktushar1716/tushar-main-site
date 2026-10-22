@@ -1,0 +1,204 @@
+/* ==========================================
+   Admin inbox (messages.php)
+   Same palette as style.css, without the site chrome.
+   ========================================== */
+:root {
+    --bg-color: #020617;
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --accent-color: #38bdf8;
+    --accent-subtle: rgba(56, 189, 248, 0.08);
+    --border-color: rgba(56, 189, 248, 0.15);
+    --danger: #f87171;
+    --font-body: 'Inter', sans-serif;
+    --font-mono: 'Space Mono', monospace;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    background: var(--bg-color);
+    color: var(--text-main);
+    font-family: var(--font-body);
+    line-height: 1.6;
+}
+
+.inbox {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 3rem 16px 4rem;
+}
+
+h1 {
+    margin: 0;
+    font-size: 2rem;
+}
+
+.eyebrow {
+    margin: 0 0 0.25rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    color: var(--accent-color);
+}
+
+.muted { color: var(--text-muted); margin: 0.25rem 0 0; }
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--border-color);
+    background: transparent;
+    color: var(--text-main);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-decoration: none;
+    cursor: pointer;
+}
+.btn:hover { border-color: var(--accent-color); color: var(--accent-color); }
+.btn-primary { background: var(--accent-color); border-color: var(--accent-color); color: #000; font-weight: 700; }
+.btn-primary:hover { background: #fff; border-color: #fff; color: #000; }
+.btn-danger:hover { border-color: var(--danger); color: var(--danger); }
+
+.alert {
+    padding: 0.75rem 1rem;
+    border: 1px solid rgba(248, 113, 113, 0.35);
+    background: rgba(248, 113, 113, 0.06);
+    color: var(--danger);
+}
+
+/* Login */
+.login-card {
+    max-width: 360px;
+    margin: 12vh auto 0;
+    padding: 2rem;
+    border: 1px solid var(--border-color);
+    background: rgba(255, 255, 255, 0.02);
+}
+.login-card h1 { margin-bottom: 1.5rem; }
+.login-card label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--accent-color);
+}
+.login-card input[type="password"] {
+    width: 100%;
+    margin-bottom: 1rem;
+    padding: 12px 14px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    font-size: 1rem;
+    outline: none;
+}
+.login-card input[type="password"]:focus { border-color: var(--accent-color); }
+.login-card .btn { width: 100%; padding: 0.8rem; }
+
+/* Inbox */
+.inbox-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.empty {
+    padding: 3rem 1rem;
+    text-align: center;
+    color: var(--text-muted);
+    border: 1px dashed var(--border-color);
+}
+
+.msg {
+    margin-bottom: 1rem;
+    padding: 1.25rem 1.5rem;
+    border: 1px solid var(--border-color);
+    border-left: 3px solid transparent;
+    background: rgba(255, 255, 255, 0.02);
+}
+.msg.is-unread {
+    border-left-color: var(--accent-color);
+    background: var(--accent-subtle);
+}
+
+.msg-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+}
+.msg h2 {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+}
+.msg.is-unread h2::before {
+    content: 'NEW';
+    margin-right: 0.5rem;
+    padding: 1px 6px;
+    vertical-align: 2px;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    background: var(--accent-color);
+    color: #000;
+}
+.from {
+    margin: 0.2rem 0 0;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    overflow-wrap: anywhere;
+}
+.from strong { color: var(--text-main); font-weight: 500; }
+.from a { color: var(--accent-color); }
+.msg time {
+    flex-shrink: 0;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.body {
+    margin: 1rem 0;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.msg-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+}
+.meta {
+    margin-left: auto;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--text-muted);
+}
+
+.pager {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+@media (max-width: 575px) {
+    .inbox { padding-top: 2rem; }
+    .msg { padding: 1rem; }
+    .msg-head { flex-direction: column; gap: 0.25rem; }
+    .meta { margin-left: 0; width: 100%; }
+}

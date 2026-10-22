@@ -1248,6 +1248,75 @@ h1, h2, h3, h4, h5, h6 {
     box-shadow: 0 8px 30px rgba(56, 189, 248, 0.3);
 }
 
+/* Contact form: sending state */
+.btn-spinner {
+    display: none;
+    width: 16px;
+    height: 16px;
+    margin-right: 0.75rem;
+    border: 2px solid rgba(0, 0, 0, 0.25);
+    border-top-color: #000;
+    border-radius: 50%;
+    animation: btn-spin 0.7s linear infinite;
+}
+@keyframes btn-spin {
+    to { transform: rotate(360deg); }
+}
+.btn-custom.is-loading {
+    cursor: progress;
+    opacity: 0.85;
+}
+.btn-custom.is-loading .btn-spinner { display: inline-block; }
+.btn-custom.is-loading .btn-icon { display: none; }
+.btn-custom:disabled:hover {
+    background: var(--accent-color);
+    transform: none;
+    box-shadow: none;
+}
+.btn-custom:disabled:hover::before {
+    width: 0;
+    height: 0;
+}
+
+/* Contact form: invalid fields + result message */
+.form-input.is-invalid {
+    border-color: #f87171;
+    box-shadow: 0 0 0 3px rgba(248, 113, 113, 0.1);
+}
+.form-status {
+    display: none;
+    margin-top: 1.5rem;
+    padding: 0.9rem 1.1rem;
+    font-size: 0.92rem;
+    line-height: 1.5;
+    border: 1px solid;
+}
+.form-status.is-success {
+    display: block;
+    color: #4ade80;
+    border-color: rgba(74, 222, 128, 0.35);
+    background: rgba(74, 222, 128, 0.06);
+}
+.form-status.is-error {
+    display: block;
+    color: #f87171;
+    border-color: rgba(248, 113, 113, 0.35);
+    background: rgba(248, 113, 113, 0.06);
+}
+
+/* Honeypot: off-screen rather than display:none, which some bots skip */
+.form-hp {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .btn-spinner { animation-duration: 2s; }
+}
+
 .social-links {
     display: flex;
     gap: 2rem;

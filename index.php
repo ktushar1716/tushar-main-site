@@ -724,32 +724,43 @@ require 'includes/header.php';
                 <div class="row justify-content-center reveal-up">
                     <div class="col-lg-8">
                         <div class="contact-form-wrapper">
-                            <form class="custom-form" action="" method="POST" onsubmit="event.preventDefault();">
+                            <form class="custom-form" id="contactForm" action="contact.php" method="POST" novalidate>
                                 <div class="form-grid">
                                     <div class="form-group">
                                         <label for="contact-name" class="form-label-custom">Your Name</label>
-                                        <input type="text" class="form-input" id="contact-name" placeholder="John Doe" required>
+                                        <input type="text" class="form-input" id="contact-name" name="name" placeholder="John Doe" maxlength="100" autocomplete="name" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="contact-email" class="form-label-custom">Email Address</label>
-                                        <input type="email" class="form-input" id="contact-email" placeholder="john@example.com" required>
+                                        <input type="email" class="form-input" id="contact-email" name="email" placeholder="john@example.com" maxlength="254" autocomplete="email" required>
                                     </div>
                                     <div class="form-group form-group-full">
                                         <label for="contact-subject" class="form-label-custom">Subject</label>
-                                        <input type="text" class="form-input" id="contact-subject" placeholder="Project collaboration, freelance inquiry, etc.">
+                                        <input type="text" class="form-input" id="contact-subject" name="subject" placeholder="Project collaboration, freelance inquiry, etc." maxlength="150">
                                     </div>
                                     <div class="form-group form-group-full">
                                         <label for="contact-message" class="form-label-custom">Your Message</label>
-                                        <textarea class="form-input form-textarea" id="contact-message" placeholder="Tell me about your project, timeline, and budget..." required></textarea>
+                                        <textarea class="form-input form-textarea" id="contact-message" name="message" placeholder="Tell me about your project, timeline, and budget..." minlength="10" maxlength="5000" required></textarea>
+                                    </div>
+                                    <!-- Honeypot: hidden from people, bots fill it in. -->
+                                    <div class="form-hp" aria-hidden="true">
+                                        <label for="contact-website">Website</label>
+                                        <input type="text" id="contact-website" name="website" tabindex="-1" autocomplete="off">
                                     </div>
                                 </div>
                                 <div class="form-actions">
-                                    <button type="submit" class="btn-custom">
-                                        <span>SEND MESSAGE</span>
-                                        <i class="ti ti-send ms-2 fs-4"></i>
+                                    <button type="submit" class="btn-custom" id="contactSubmit">
+                                        <span class="btn-spinner" aria-hidden="true"></span>
+                                        <span class="btn-label">SEND MESSAGE</span>
+                                        <i class="ti ti-send ms-2 fs-4 btn-icon"></i>
                                     </button>
                                     <p class="form-hint">I typically respond within 24 hours.</p>
                                 </div>
+                                <?php $contactState = $_GET['contact'] ?? ''; ?>
+                                <div class="form-status<?php echo $contactState === 'sent' ? ' is-success' : ($contactState === 'error' ? ' is-error' : ''); ?>" id="contactStatus" role="status" aria-live="polite"><?php
+                                    if ($contactState === 'sent')  echo 'Thanks! Your message has been sent.';
+                                    if ($contactState === 'error') echo "Sorry, the message couldn't be sent. Please email me directly at khampariatushar@gmail.com.";
+                                ?></div>
                             </form>
                         </div>
                     </div>
@@ -917,6 +928,7 @@ require 'includes/header.php';
     </script>
 
     <script src="assets/js/script.js"></script>
+    <script src="assets/js/contact.js"></script>
 </body>
 
 </html>
